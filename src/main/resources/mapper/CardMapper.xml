@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xidian.meiping.dao.CardMapper" >
+  <resultMap id="BaseResultMap" type="com.xidian.meiping.entity.Card" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="youxiao_cishu" property="youxiaoCishu" jdbcType="INTEGER" />
+    <result column="youxiao_tianshu" property="youxiaoTianshu" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, youxiao_cishu, youxiao_tianshu, price
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from card_types
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from card_types
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xidian.meiping.entity.Card" >
+    insert into card_types (id, name, youxiao_cishu, 
+      youxiao_tianshu, price)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{youxiaoCishu,jdbcType=INTEGER}, 
+      #{youxiaoTianshu,jdbcType=INTEGER}, #{price,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xidian.meiping.entity.Card" >
+    insert into card_types
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="youxiaoCishu != null" >
+        youxiao_cishu,
+      </if>
+      <if test="youxiaoTianshu != null" >
+        youxiao_tianshu,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="youxiaoCishu != null" >
+        #{youxiaoCishu,jdbcType=INTEGER},
+      </if>
+      <if test="youxiaoTianshu != null" >
+        #{youxiaoTianshu,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xidian.meiping.entity.Card" >
+    update card_types
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="youxiaoCishu != null" >
+        youxiao_cishu = #{youxiaoCishu,jdbcType=INTEGER},
+      </if>
+      <if test="youxiaoTianshu != null" >
+        youxiao_tianshu = #{youxiaoTianshu,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xidian.meiping.entity.Card" >
+    update card_types
+    set name = #{name,jdbcType=VARCHAR},
+      youxiao_cishu = #{youxiaoCishu,jdbcType=INTEGER},
+      youxiao_tianshu = #{youxiaoTianshu,jdbcType=INTEGER},
+      price = #{price,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

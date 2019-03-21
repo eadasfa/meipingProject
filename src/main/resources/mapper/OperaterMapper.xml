@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xidian.meiping.dao.OperaterMapper" >
+  <resultMap id="BaseResultMap" type="com.xidian.meiping.entity.Operater" >
+    <id column="operater_id" property="operaterId" jdbcType="INTEGER" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="permission" property="permission" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    operater_id, password, permission, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from operaters
+    where operater_id = #{operaterId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from operaters
+    where operater_id = #{operaterId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xidian.meiping.entity.Operater" >
+    insert into operaters (operater_id, password, permission, 
+      status)
+    values (#{operaterId,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, #{permission,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xidian.meiping.entity.Operater" >
+    insert into operaters
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="operaterId != null" >
+        operater_id,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="permission != null" >
+        permission,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="operaterId != null" >
+        #{operaterId,jdbcType=INTEGER},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null" >
+        #{permission,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xidian.meiping.entity.Operater" >
+    update operaters
+    <set >
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null" >
+        permission = #{permission,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where operater_id = #{operaterId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xidian.meiping.entity.Operater" >
+    update operaters
+    set password = #{password,jdbcType=VARCHAR},
+      permission = #{permission,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER}
+    where operater_id = #{operaterId,jdbcType=INTEGER}
+  </update>
+</mapper>

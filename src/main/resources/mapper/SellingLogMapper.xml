@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xidian.meiping.dao.SellingLogMapper" >
+  <resultMap id="BaseResultMap" type="com.xidian.meiping.entity.SellingLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="good_id" property="goodId" jdbcType="INTEGER" />
+    <result column="member_id" property="memberId" jdbcType="INTEGER" />
+    <result column="good_name" property="goodName" jdbcType="VARCHAR" />
+    <result column="selling_type" property="sellingType" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="selling_date" property="sellingDate" jdbcType="TIMESTAMP" />
+    <result column="operater_id" property="operaterId" jdbcType="INTEGER" />
+    <result column="account" property="account" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, good_id, member_id, good_name, selling_type, price, selling_date, operater_id, 
+    account
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from selling_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from selling_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xidian.meiping.entity.SellingLog" >
+    insert into selling_log (id, good_id, member_id, 
+      good_name, selling_type, price, 
+      selling_date, operater_id, account
+      )
+    values (#{id,jdbcType=INTEGER}, #{goodId,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, 
+      #{goodName,jdbcType=VARCHAR}, #{sellingType,jdbcType=INTEGER}, #{price,jdbcType=DOUBLE}, 
+      #{sellingDate,jdbcType=TIMESTAMP}, #{operaterId,jdbcType=INTEGER}, #{account,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xidian.meiping.entity.SellingLog" >
+    insert into selling_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="goodId != null" >
+        good_id,
+      </if>
+      <if test="memberId != null" >
+        member_id,
+      </if>
+      <if test="goodName != null" >
+        good_name,
+      </if>
+      <if test="sellingType != null" >
+        selling_type,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="sellingDate != null" >
+        selling_date,
+      </if>
+      <if test="operaterId != null" >
+        operater_id,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="goodId != null" >
+        #{goodId,jdbcType=INTEGER},
+      </if>
+      <if test="memberId != null" >
+        #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="goodName != null" >
+        #{goodName,jdbcType=VARCHAR},
+      </if>
+      <if test="sellingType != null" >
+        #{sellingType,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="sellingDate != null" >
+        #{sellingDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operaterId != null" >
+        #{operaterId,jdbcType=INTEGER},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xidian.meiping.entity.SellingLog" >
+    update selling_log
+    <set >
+      <if test="goodId != null" >
+        good_id = #{goodId,jdbcType=INTEGER},
+      </if>
+      <if test="memberId != null" >
+        member_id = #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="goodName != null" >
+        good_name = #{goodName,jdbcType=VARCHAR},
+      </if>
+      <if test="sellingType != null" >
+        selling_type = #{sellingType,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="sellingDate != null" >
+        selling_date = #{sellingDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operaterId != null" >
+        operater_id = #{operaterId,jdbcType=INTEGER},
+      </if>
+      <if test="account != null" >
+        account = #{account,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xidian.meiping.entity.SellingLog" >
+    update selling_log
+    set good_id = #{goodId,jdbcType=INTEGER},
+      member_id = #{memberId,jdbcType=INTEGER},
+      good_name = #{goodName,jdbcType=VARCHAR},
+      selling_type = #{sellingType,jdbcType=INTEGER},
+      price = #{price,jdbcType=DOUBLE},
+      selling_date = #{sellingDate,jdbcType=TIMESTAMP},
+      operater_id = #{operaterId,jdbcType=INTEGER},
+      account = #{account,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

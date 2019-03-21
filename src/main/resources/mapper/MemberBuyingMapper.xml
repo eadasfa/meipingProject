@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xidian.meiping.dao.MemberBuyingMapper" >
+  <resultMap id="BaseResultMap" type="com.xidian.meiping.entity.MemberBuying" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="buy_date" property="buyDate" jdbcType="TIMESTAMP" />
+    <result column="member_id" property="memberId" jdbcType="INTEGER" />
+    <result column="money" property="money" jdbcType="DOUBLE" />
+    <result column="card_type" property="cardType" jdbcType="VARCHAR" />
+    <result column="operater_id" property="operaterId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, buy_date, member_id, money, card_type, operater_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from members_buy
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from members_buy
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xidian.meiping.entity.MemberBuying" >
+    insert into members_buy (id, buy_date, member_id, 
+      money, card_type, operater_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{buyDate,jdbcType=TIMESTAMP}, #{memberId,jdbcType=INTEGER}, 
+      #{money,jdbcType=DOUBLE}, #{cardType,jdbcType=VARCHAR}, #{operaterId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xidian.meiping.entity.MemberBuying" >
+    insert into members_buy
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="buyDate != null" >
+        buy_date,
+      </if>
+      <if test="memberId != null" >
+        member_id,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="cardType != null" >
+        card_type,
+      </if>
+      <if test="operaterId != null" >
+        operater_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="buyDate != null" >
+        #{buyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memberId != null" >
+        #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="cardType != null" >
+        #{cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="operaterId != null" >
+        #{operaterId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xidian.meiping.entity.MemberBuying" >
+    update members_buy
+    <set >
+      <if test="buyDate != null" >
+        buy_date = #{buyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memberId != null" >
+        member_id = #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="money != null" >
+        money = #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="cardType != null" >
+        card_type = #{cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="operaterId != null" >
+        operater_id = #{operaterId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xidian.meiping.entity.MemberBuying" >
+    update members_buy
+    set buy_date = #{buyDate,jdbcType=TIMESTAMP},
+      member_id = #{memberId,jdbcType=INTEGER},
+      money = #{money,jdbcType=DOUBLE},
+      card_type = #{cardType,jdbcType=VARCHAR},
+      operater_id = #{operaterId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

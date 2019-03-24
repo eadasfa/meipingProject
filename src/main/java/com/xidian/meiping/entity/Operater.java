@@ -7,6 +7,10 @@ public class Operater {
 
     private Integer permission;
 
+    /*
+     * status = 0,1,2,3
+     * 其中0代表停用，123分别为3级权限
+     */
     private Integer status;
 
     public Integer getOperaterId() {

@@ -1,15 +1,16 @@
-package com.xidian.meiping.service;
+package com.xidian.meiping.service.implement;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xidian.meiping.dao.MemberMapper;
 import com.xidian.meiping.entity.Member;
+import com.xidian.meiping.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service(value = "memberService")
-public class MemberServiceIml implements MemberService {
+public class MemberServiceImpl implements MemberService {
 
     @Autowired
     private MemberMapper memberMapper;

@@ -15,6 +15,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 public class MeipingApplication {
 
     public static void main(String[] args) {
+        System.out.println();
         SpringApplication.run(MeipingApplication.class, args);
     }
 

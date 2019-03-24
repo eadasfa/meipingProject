@@ -1,6 +1,8 @@
 server:
   port: 8088
 spring:
+#  resources:
+#    static-locations: classpath:templates/,classpath:static/
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/meiping?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8
     username: root
@@ -34,4 +36,5 @@ pagehelper:
   supportMethodsArguments: true
   params: count=countSql
   returnPageInfo: check
+
 

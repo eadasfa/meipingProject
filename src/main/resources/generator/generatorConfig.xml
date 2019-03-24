@@ -70,7 +70,5 @@
         <table tableName="trainers" domainObjectName="Trainer" enableCountByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false"></table>
-
-
     </context>
 </generatorConfiguration>

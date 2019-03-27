@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xidian.meiping.dao.TrainerMapper" >
+  <resultMap id="BaseResultMap" type="com.xidian.meiping.entity.Trainer" >
+    <id column="trainer_id" property="trainerId" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    trainer_id, price
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from trainers
+    where trainer_id = #{trainerId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from trainers
+    where trainer_id = #{trainerId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xidian.meiping.entity.Trainer" >
+    insert into trainers (trainer_id, price)
+    values (#{trainerId,jdbcType=INTEGER}, #{price,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xidian.meiping.entity.Trainer" >
+    insert into trainers
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="trainerId != null" >
+        trainer_id,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="trainerId != null" >
+        #{trainerId,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xidian.meiping.entity.Trainer" >
+    update trainers
+    <set >
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where trainer_id = #{trainerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xidian.meiping.entity.Trainer" >
+    update trainers
+    set price = #{price,jdbcType=DOUBLE}
+    where trainer_id = #{trainerId,jdbcType=INTEGER}
+  </update>
+</mapper>

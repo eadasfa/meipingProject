@@ -1,0 +1,21 @@
+.left_list ul li {
+    color: #bebebe;
+}
+.left_list ul li:hover{
+    color: #2f96b4;
+}
+.left_list{
+    border-color: #222d32;
+}
+.jqx-fill-state-hover{
+    background: #222d32;
+    border-color: #222d32;
+}
+.jqx-widget-content{
+    background: #222d32;
+    font-size: 14px;
+}
+.jqx-fill-state-pressed{
+    background: #222d32;
+    border-color: #222d32;
+}

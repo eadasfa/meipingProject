@@ -1,0 +1,352 @@
+<html lang="zh-CN" >
+<section class="content-header">
+    <h1> 请购单</h1>
+    <ol class="breadcrumb">
+        <li><a href="../home.html"><i class="fa fa-object-group"></i> 首页</a></li>
+        <li> 采购管理</li>
+        <li class="active"> 请购单</li>
+    </ol>
+</section><!-- ./content-header -->
+
+<section class="container-fluid">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <form class="form-horizontal" id="paramsForm">
+                <div class="box box-info">
+
+                    <div class="box-header with-border">
+                        <div class="btn-group">
+                            <button type="button" id="plus" class="btn btn-sm btn-default">新建</button>
+                        </div><!-- ./ 新建操作组 -->
+
+                        <div class="btn-group">
+                            <button type="button" id="edit" class="btn btn-sm btn-default" disabled>修改</button>
+                            <button type="button" id="save" class="btn btn-sm btn-default" disabled>保存</button>
+                        </div><!-- ./ 修改编辑操作组 -->
+                        <div class="btn-group">
+                            <!--<button type="button" id="open" class="btn btn-sm btn-default" disabled>启用</button>-->
+                            <button type="button" id="del" class="btn btn-sm btn-default" disabled>删除</button>
+
+                            <button type="button" id="close" class="btn btn-sm btn-default" disabled>作废</button>
+                        </div><!-- ./ 审核 操作组 -->
+
+                        <div class="btn-group">
+                            <button type="button" id="review" class="btn btn-sm btn-default" disabled>审核</button>
+                            <button type="button" id="discard" class="btn btn-sm btn-default" disabled>弃审</button>
+                        </div><!-- ./ 审核 操作组 -->
+
+
+                        <div class="btn-group">
+                            <button type="button" id="print" class="btn btn-sm btn-default" disabled>打印</button>
+                            <button type="button" id="viewer" class="btn btn-sm btn-default" disabled>打印预览</button>
+                        </div><!-- ./打印 操作组 -->
+
+                        <!--<div class="btn-group">-->
+                            <!--<button type="button" id="redXsfh" class="btn btn-sm btn-default">红字发货单</button>-->
+                        <!--</div>&lt;!&ndash; ./打印操作 &ndash;&gt;-->
+
+
+
+                        <div class="box-info pull-right">
+                            <div class="btn-group">
+                                <button type="button" id="home" class="btn btn-sm btn-default"><i class="fal fa-step-backward" aria-hidden="true"></i> 首页</button>
+                                <button type="button" id="pre" class="btn btn-sm btn-default"><i class="fal fa-backward" aria-hidden="true"></i> 上一张</button>
+                                <button type="button" id="next" class="btn btn-sm btn-default"><i class="fal fa-forward" aria-hidden="true"></i> 下一张</button>
+                                <button type="button" id="last" class="btn btn-sm btn-default"><i class="fal fa-step-forward" aria-hidden="true"></i> 末页</button>
+                            </div>
+                        </div><!-- ./页面 操作组 -->
+                    </div><!-- ./box-header -->
+
+                    <div class="box-body">
+
+                        <input type="text" id="qgdId" name="qgdId" hidden>
+                        <input type="text" id="token" name="token" hidden>
+
+                        <div class="form-group">
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">请购单号</span>
+                                    <input type="text" class="form-control" id="qgdDjbh" name="qgdDjbh" placeholder="请购单号" disabled>
+
+                                </div>
+                            </div><!-- ./发货编号 -->
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">单据日期</span>
+                                    <input type="text" class="form-control calendar date" id="qgdDjrq" name="qgdDjrq" placeholder="单据日期" readonly>
+                                </div>
+                            </div><!-- ./发货日期 -->
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">计划单号</span>
+                                    <input type="text" class="form-control" id="qgdJhdjbh" name="qgdJhdjbh" placeholder="计划单号" disabled>
+                                </div>
+                            </div><!-- ./合同编号 -->
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">用料计划单号</span>
+                                    <input type="text" class="form-control" id="qgdYljhdjbh" name="qgdYljhdjbh" placeholder="用料计划单号" disabled>
+                                </div>
+                            </div><!-- ./联系人 -->
+                        </div><!-- ./第一行 -->
+
+                        <div class="form-group">
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">&nbsp;&nbsp;请购人&nbsp;&nbsp;</span>
+                                    <select class="form-control" id="qgdQgr" name="qgdQgr" data-am-selected disabled></select>
+                                </div>
+                            </div><!-- ./仓库 -->
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">请购部门</span>
+                                    <select class="form-control" id="qgdBm" name="qgdBm" data-am-selected disabled></select>
+                                </div>
+                            </div><!-- ./仓库 -->
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">请购类型</span>
+                                    <select class="form-control" id="qgdQglx" name="qgdQglx" data-am-selected disabled></select>
+                                </div>
+                            </div><!-- ./仓库 -->
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">来源单号</span>
+                                    <input type="text" class="form-control" id="qgdLydh" name="qgdLydh" placeholder="来源单号" disabled>
+                                </div>
+                            </div><!-- ./详细地址 -->
+
+                        </div><!-- ./第二行 -->
+
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">&emsp;备注&emsp;</span>
+                                    <input type="text" class="form-control" id="qgdBz" name="qgdBz" placeholder="备注" disabled>
+                                </div>
+                            </div><!-- ./详细地址 -->
+
+                        </div><!-- ./第三行 -->
+                        <!--<div class="form-group">-->
+                            <!--<div class="col-sm-12">-->
+                                <!--<div id="cover">-->
+                                    <!--<table class="table table-view" id="data-table"></table>&lt;!&ndash; ./table &ndash;&gt;-->
+                                    <!--<div id="toolbar" class="btn-group"></div>&lt;!&ndash; ./toolbar &ndash;&gt;-->
+                                <!--</div>&lt;!&ndash; ./cover &ndash;&gt;-->
+                            <!--</div>-->
+                        <!--</div>&lt;!&ndash; ./col-sm-12 &ndash;&gt;-->
+                    </div><!-- ./box-body -->
+                    <div class="box-table with-border">
+                        <div id="data-table"></div>
+
+                        <div id="findWindow">
+                            <div><i class="fal fa-search">&nbsp;&nbsp;查找记录</i></div>
+                            <div style="overflow: hidden;">
+                                <div>关键字 :</div>
+                                <div style='margin-top:5px;'>
+                                    <input id='inputField' type="text" class="jqx-input" style="width: 200px; height: 23px;" />
+                                </div>
+                                <div style="margin-top: 7px; clear: both;">类别 :</div>
+                                <div style='margin-top:5px;'>
+                                    <div id='dropdownlist'></div>
+                                </div>
+                                <div>
+                                    <input type="button" style='margin-top: 15px; margin-left: 20px; float: left;' value="确定" id="findButton" />
+                                    <input type="button" style='margin-top: 15px; margin-left: 5px; float: left;' value="清除" id="clearButton" />
+                                    <input type="button" style='margin-top: 15px; margin-left: 5px; float: left;' value="关闭" id="closeButton" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div><!-- ./box-table with-border -->
+
+                    <div class="box-footer with-border">
+                        <div class="form-group">
+                            <div class="col-sm-2">
+                                <div class="input-group">
+                                    <span class="input-group-addon">&nbsp;&nbsp;制单人&nbsp;&nbsp;</span>
+                                    <input type="text" class="form-control box-footer-input" id="qgdJdr" name="qgdJdr" placeholder="制单人" readonly>
+                                    <input type="text" id="qgdJdrbh" name="qgdJdrbh" hidden>
+                                    <input type="text" id="qgdJdrq" name="qgdJdrq" hidden>
+
+                                    <input type="text" id="qgdXgrbh" name="qgdXgrbh" hidden>
+                                    <input type="text" id="qgdXgr" name="qgdXgr" hidden>
+                                    <input type="text" id="qgdXgrq" name="qgdXgrq" hidden>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="input-group">
+                                    <span class="input-group-addon">&nbsp;&nbsp;审核人&nbsp;&nbsp;</span>
+                                    <input type="text" class="form-control box-footer-input" id="qgdShr" name="qgdShr" placeholder="审核人" readonly>
+                                    <input type="text" id="qgdShrbh" name="qgdShrbh" hidden>
+                                    <input type="text" id="qgdShrq" name="qgdShrq" hidden>
+
+                                    <input type="text" id="qgdQsrbh" name="qgdQsrbh" hidden>
+                                    <input type="text" id="qgdQsr" name="qgdQsr" hidden>
+                                    <input type="text" id="qgdQsrq" name="qgdQsrq" hidden>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="input-group">
+                                    <span class="input-group-addon">&nbsp;&nbsp;作废人&nbsp;&nbsp;</span>
+                                    <input type="text" class="form-control box-footer-input" id="qgdZfr" name="qgdZfr" placeholder="作废人" readonly>
+                                    <input id="qgdZfrbh" name="qgdZfrbh" hidden>
+                                    <input id="qgdZfrq" name="qgdZfrq" hidden>
+                                    <input type="text" id="qgdSjc" name="qgdSjc" hidden>
+                                    <input id="qgdScsm" name="qgdScsm" hidden>
+                                    <input id="qgdZfsm" name="qgdZfsm" hidden>
+                                    <!--<input id="xsfhQyrq" name="xsfhQyrq" hidden>-->
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="input-group">
+                                    <span class="input-group-addon">打印次数</span>
+                                    <input type="text" class="form-control box-footer-input" id="qgdDycs" name="qgdDycs" placeholder="打印次数" readonly>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="input-group">
+                                    <span class="input-group-addon">单据状态</span>
+                                    <input type="text" class="form-control box-footer-input" id="statusInfo" name="statusInfo" placeholder="单据状态" readonly>
+                                </div>
+                            </div>
+                        </div><!-- /.form-group -->
+                    </div><!-- ./box-footer -->
+                </div><!-- ./box-body -->
+            </form><!-- ./form-horizontal -->
+        </div><!-- ./col-sm-12 -->
+    </div><!-- ./row -->
+</section><!-- ./content container-fluid -->
+
+
+<div class="modal fade" id="doubleTableModal" role="dialog" aria-labelledby="largerModal" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-big" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="doubleTableTitle"></h4>
+            </div>
+            <div class="modal-body">
+                <form enctype="multipart/form-data" id="doubleTableForm">
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <div id="fatherTable"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <hr />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <div id="childTable"></div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="doubleTableClears" class="btn btn-sm btn-warning"><i class="far fa-check-circle"></i>&nbsp;&nbsp;清除</button>
+                <button type="button" id="doubleTableConfirm" class="btn btn-sm btn-success"><i class="far fa-check-circle"></i>&nbsp;&nbsp;确定</button>
+                <button type="button" id="doubleTableClose" class="btn btn-sm btn-danger" data-dismiss="modal"><i class="far fa-times"></i>&nbsp;&nbsp;关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="treeDataModal2" role="dialog" aria-labelledby="largerModal" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-big" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="far fa-times" style="color: red"></i></button>
+                <h4 class="modal-title" id="modalTitle2"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="col-sm-2">
+                            <h4 id="treeTitle2" style="margin-bottom: 20px"></h4>
+                            <div id="treeView2"></div>
+                        </div>
+                        <div class="col-sm-10">
+                            <h4 id="dataTitle2" style="margin-bottom: 20px"></h4>
+                            <div id="dataView2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <div class="text-info text-left"><span>请选择左侧分类,然后双击右侧信息参照</span></div>
+                    </div>
+                    <div class="col-sm-3">
+                        <!--<button type="button" id="treeDataModalConfirm" class="btn btn-sm btn-success"><i class="far fa-check-circle"></i>&nbsp;&nbsp;确定</button>-->
+                        <button type="button" id="treeDataModalClose2" class="btn btn-sm btn-danger"><i class="fa fa-times"></i>&nbsp;&nbsp;关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="treeDataModal" role="dialog" aria-labelledby="largerModal" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-big" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="far fa-times" style="color: red"></i></button>
+                <h4 class="modal-title" id="modalTitle"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="col-sm-2">
+                            <h4 id="treeTitle" style="margin-bottom: 20px"></h4>
+                            <div id="treeView"></div>
+                        </div>
+                        <div class="col-sm-10">
+                            <h4 id="dataTitle" style="margin-bottom: 20px"></h4>
+                            <div id="dataView"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <div class="text-info text-left"><span>请选择左侧分类,然后双击右侧信息参照</span></div>
+                    </div>
+                    <div class="col-sm-3">
+                        <button type="button" id="treeDataModalInfo" class="btn btn-sm btn-success" style="display: none"><i class="far fa-check-circle"></i>&nbsp;&nbsp;确定</button>
+                        <button type="button" id="treeDataModalList" class="btn btn-sm btn-success" style="display: none"><i class="far fa-check-circle"></i>&nbsp;&nbsp;确定</button>
+                        <button type="button" id="treeDataModalClose" class="btn btn-sm btn-danger"><i class="far fa-times"></i>&nbsp;&nbsp;关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style type="text/css">
+    .model-index {
+        z-index: 1000;
+    }
+
+    #findWindow {
+        z-index: 3000 !important;
+    }
+
+    #innerListBoxdropdownlist {
+        z-index: 3000 !important;
+    }
+
+</style>
+<!--<script src="js/jquery-2.1.1.js" type="text/javascript" charset="UTF-8"></script>-->
+<!--<script src="/html/assets/javascript/cggl/qgd.js"></script>-->
+</html>

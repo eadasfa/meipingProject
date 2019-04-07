@@ -1,14 +1,13 @@
 package com.xidian.meiping.controller;
 
-import com.github.pagehelper.PageInfo;
-import com.xidian.meiping.entity.Member;
 import com.xidian.meiping.entity.Menu;
 import com.xidian.meiping.entity.Operater;
-import com.xidian.meiping.service.MemberService;
 import com.xidian.meiping.service.MenuService;
 import com.xidian.meiping.service.OperaterService;
 import net.sf.json.JSONObject;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -32,22 +31,22 @@ public class HomeController {
     @Autowired
     private MenuService menuService;
 
-    @Autowired
-    private MemberService memberService;
-
-    @RequestMapping(value = { "/", "/index","/home" }, method = RequestMethod.GET)
+    @RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
     public String homePage(Model model) {
-        setHeaderModel(model);
+        setModel(model);
         return "home";
     }
-    @RequestMapping(value = "/home/{fileName}/{html}", method = RequestMethod.GET)
-    public String changeContentWrapper(@PathVariable("fileName") String fileName,                         @PathVariable("html") String html) {
+    @RequestMapping("/home/{fileName}/{html}")
+    public String changeContentWrapper(@PathVariable("fileName") String fileName,
+                                       @PathVariable("html") String html) {
+
         return fileName+"/"+html;
     }
-    //返回菜单列表
+
     @ResponseBody
-    @RequestMapping(value = "/menu/getMenuList",produces="text/html;charset=UTF-8")
+    @RequestMapping(value="/menu/getMenuList",produces = "text/html;charset=UTF-8")
     public String getMenuList(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+
         List<Menu> list = menuService.findAll();
         net.sf.json.JSONArray jsonArray = net.sf.json.JSONArray.fromObject(list);
         JSONObject jsonObject = new JSONObject();
@@ -55,18 +54,11 @@ public class HomeController {
         System.out.println(jsonArray.toString());
         return jsonArray.toString();
     }
-    @ResponseBody
-    @RequestMapping(value = "/getMember",produces="text/html;charset=UTF-8")
-    public String getMember(HttpServletRequest request, HttpServletResponse response, HttpSession session){
-        PageInfo<Member> list = memberService.findAllMember(1,11);
-        net.sf.json.JSONArray jsonArray = net.sf.json.JSONArray.fromObject(list);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("data",jsonArray.toString());
-        System.out.println(jsonArray.toString());
-        return jsonArray.toString();
+    @RequestMapping(value = "/hello", method = RequestMethod.GET)
+    public String hello() {
+        return "hello";
     }
-
-    private void setHeaderModel(Model model) {
+    private void setModel(Model model) {
         //如果登录了，name即用户名；如果没有登录，默认为 anonymousUser
         //方法一、
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -77,8 +69,8 @@ public class HomeController {
         String id = user.getUsername(); //saysky 或 空指针异常
         System.out.println(id);
         Operater operater = operaterService.findById(Integer.parseInt(id));
-        model.addAttribute("id",id);
-        model.addAttribute("permission",operater.getPermission());
+        model.addAttribute("id",operater.getOperaterId());
         model.addAttribute("name",operater.getName());
+        model.addAttribute("permission",operater.getPermission());
     }
 }

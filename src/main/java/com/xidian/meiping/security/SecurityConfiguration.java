@@ -1,5 +1,6 @@
 package com.xidian.meiping.security;
 
+import com.xidian.meiping.service.implement.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
@@ -23,9 +25,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         //  允许所有用户访问"/"和"/index.html"
         http.authorizeRequests()
-    //           .antMatchers("/home.html").permitAll()
+ //               .antMatchers("/", "/index.html").permitAll()
                 // 所有用户均可访问的资源
-                .antMatchers("/css/**", "/js/**","/img/**", "/webjars/**", "**/favicon.ico", "/index").permitAll()
+                .antMatchers("/components/**","/css/**", "/js/**","/img/**", "/webjars/**", "**/favicon.ico", "/index").permitAll()
                 .anyRequest().authenticated()   // 其他地址的访问均需验证权限
                 .and()
                 .formLogin()

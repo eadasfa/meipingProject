@@ -96,6 +96,8 @@
         bottom: 0px;
         -webkit-animation: cloud 60s linear infinite alternate;
         -moz-animation: clouds 60s linear infinite alternate;
+
+
         z-index: -10;
 
     }

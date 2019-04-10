@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class LoginController {
-
     // Login form
     @RequestMapping("/login.html")
     public String login() {
+        System.out.println("LoginController.login");
         return "login.html";
     }
     // Login form with error

@@ -1,7 +1,5 @@
 package com.xidian.meiping.service.implement;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.xidian.meiping.dao.MemberMapper;
 import com.xidian.meiping.entity.Member;
 import com.xidian.meiping.service.MemberService;
@@ -20,11 +18,11 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public PageInfo<Member> findAllMember(int pageNum, int pageSize) {
+    public List<Member> getAllMember(int pageNum, int pageSize) {
         //将参数传给这个方法就可以实现物理分页了，非常简单。
-        PageHelper.startPage(pageNum, pageSize);
-        List<Member> memberDomains = memberMapper.selectAllMember();
-        PageInfo<Member> result = new PageInfo(memberDomains);
-        return result;
+//        PageHelper.startPage(pageNum, pageSize);
+//        List<Member> memberDomains = memberMapper.selectAllMember();
+//        PageInfo<Member> result = new PageInfo(memberDomains);
+        return memberMapper.selectAllMember();
     }
 }

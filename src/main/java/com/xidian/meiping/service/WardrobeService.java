@@ -1,4 +1,8 @@
 package com.xidian.meiping.service;
 
-public class WardrobeService {
+import com.xidian.meiping.entity.Wardrobe;
+
+import java.util.List;
+
+public interface WardrobeService extends OperateBaseService<Wardrobe>{
 }

@@ -1,5 +1,7 @@
 package com.xidian.meiping.entity;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class Card {
     private Integer id;
 
@@ -49,5 +51,15 @@ public class Card {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public static Card newInstance(HttpServletRequest request){
+        Card card = new Card();
+        card.setId(Integer.parseInt(request.getParameter("id")));
+        card.setName(request.getParameter("name"));
+        card.setYouxiaoCishu(Integer.parseInt(request.getParameter("youxiaoCishu")));
+        card.setYouxiaoTianshu(Integer.parseInt(request.getParameter("youxiaoTianshu")));
+        card.setPrice(Double.parseDouble(request.getParameter("price")));
+        return card;
     }
 }

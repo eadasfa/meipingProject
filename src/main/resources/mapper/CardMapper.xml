@@ -11,6 +11,11 @@
   <sql id="Base_Column_List" >
     id, name, youxiao_cishu, youxiao_tianshu, price
   </sql>
+  <select id="selectAllCards" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from card_types
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

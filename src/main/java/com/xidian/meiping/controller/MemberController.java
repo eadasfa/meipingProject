@@ -33,7 +33,7 @@ public class MemberController {
             @RequestParam(name = "pageSize", required = false, defaultValue = "10")
                     int pageSize){
 
-        return memberService.findAllMember(pageNum,pageSize);
+        return memberService.getAllMember(pageNum,pageSize);
     }
 }
 

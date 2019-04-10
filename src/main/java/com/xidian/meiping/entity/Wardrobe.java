@@ -1,5 +1,9 @@
 package com.xidian.meiping.entity;
 
+import com.xidian.meiping.util.JSONUtil;
+
+import javax.servlet.http.HttpServletRequest;
+
 public class Wardrobe {
     private Integer id;
 
@@ -39,5 +43,20 @@ public class Wardrobe {
 
     public void setMemberId(Integer memberId) {
         this.memberId = memberId;
+    }
+
+    public static Wardrobe newInstance(HttpServletRequest request){
+        Wardrobe wardrobe = new Wardrobe();
+        wardrobe.setId(Integer.parseInt(request.getParameter("id")));
+        String name = request.getParameter("name");
+        if(name ==null) name = "";
+        wardrobe.setName(request.getParameter("name"));
+        wardrobe.setStatus(Integer.parseInt(request.getParameter("status")));
+        return wardrobe;
+    }
+
+    @Override
+    public String toString() {
+        return "{ id:"+id+",name:"+name+",status:"+status+"}";
     }
 }

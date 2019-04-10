@@ -1,21 +1,30 @@
+/*字体颜色*/
 .left_list ul li {
+    font-family:"楷体";
     color: #bebebe;
 }
+/*鼠标悬浮时字体设计*/
 .left_list ul li:hover{
+
     color: #2f96b4;
 }
+/*整体颜色*/
 .left_list{
     border-color: #222d32;
 }
+/*鼠标悬浮时背景设计*/
 .jqx-fill-state-hover{
     background: #222d32;
     border-color: #222d32;
 }
+/*jqxWidget字体，背景颜色*/
 .jqx-widget-content{
     background: #222d32;
-    font-size: 14px;
+    font-size: 20px;
 }
+/*以下为选中后的颜色设置*/
 .jqx-fill-state-pressed{
-    background: #222d32;
+    background: #c0c0c0;
     border-color: #222d32;
+    color: #000000;
 }

@@ -1,6 +1,7 @@
 package com.xidian.meiping.security;
 
 import com.xidian.meiping.service.implement.UserDetailServiceImpl;
+import org.apache.commons.collections.bag.SynchronizedSortedBag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +25,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //  允许所有用户访问"/"和"/index.html"
+        http.csrf().disable(); //CSRF 保护默认是开启的
         http.authorizeRequests()
  //               .antMatchers("/", "/index.html").permitAll()
                 // 所有用户均可访问的资源
@@ -51,15 +53,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     class MyPasswordEncoder implements PasswordEncoder {
         @Override
         public String encode(CharSequence charSequence) {
+            System.out.println("MyPasswordEncoder.encode:"+"得到帐号密码");
             //不做任何加密处理
             return charSequence.toString();
         }
         @Override
         public boolean matches(CharSequence charSequence, String s) {
+            System.out.println("MyPasswordEncoder.matches");
             //charSequence是前端传过来的密码，s是数据库中查到的密码
             if (charSequence.toString().equals(s))
-                return true; 
+                return true;
             return false;
         }
+
     }
 }

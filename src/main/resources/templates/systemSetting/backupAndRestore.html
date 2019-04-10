@@ -1,0 +1,67 @@
+<html lang="en">
+<section class="content-header">
+    <h1> 备份和还原</h1>
+    <ol class="breadcrumb">
+        <li><a href="../"><i class="fa fa-object-group"></i> 首页</a></li>
+        <li> 系统设置</li>
+        <li class="active"> 备份和还原</li>
+    </ol>
+</section><!-- ./content-header -->
+<head>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="js/systemSetting/backupAndRestore.js"></script>
+    <script type="text/javascript" src="js/demos.js"></script>
+
+    <script class="popUpWindow" type="text/html">
+        <div class="layui-tab layui-tab-card" style="width: 400px">
+            <ul class="layui-tab-title">
+                <li class="layui-this">备份</li>
+                <li>恢复</li>
+            </ul>
+            <div class="layui-tab-content" style="height: 120px;">
+                <div class="layui-tab-item layui-show">
+                    <ul>
+                        <li>
+                            <input type="button" id="start-backup" value="立刻备份数据"
+                            class="layui-btn layui-btn-radius layui-btn-normal"/>
+                        </li><br>
+                        <li>
+                            <label><input  type="checkbox" id="auto-backup" value=""/>自动备份&nbsp;&nbsp;</label>
+                            每隔<input type="number" id="number" value="1" min="0"
+                                      style="width: 60px">h备份一次&nbsp;&nbsp;
+                            <input type="button" id="auto-backup-button" value="确定"
+                                   class="layui-btn layui-btn-radius layui-btn-normal"/>
+                        </li>
+                    </ul>
+                </div>
+                <div class="layui-tab-item">
+                    <ul>
+                        <li><input type="button" id="start-restore" value="开始恢复数据"
+                                   class="layui-btn layui-btn-radius layui-btn-normal"/>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script class="loading-layer" type="text/html">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+            <legend>动态改变进度</legend>
+            </fieldset>
+
+            <div class="layui-progress layui-progress-big" lay-showpercent="true" lay-filter="demo">
+            <div class="layui-progress-bar layui-bg-red" lay-percent="0%"></div>
+            </div>
+
+            <div class="site-demo-button" style="margin-top: 20px; margin-bottom: 0;">
+            <button class="layui-btn site-demo-active" data-type="setPercent">设置50%</button>
+            <button class="layui-btn site-demo-active" data-type="loading">模拟loading</button>
+            </div>
+
+            <!-- 示例-970 -->
+            <ins class="adsbygoogle" style="display:inline-block;width:970px;height:90px" data-ad-client="ca-pub-6111334333458862" data-ad-slot="3820120620"></ins>
+
+    </script>
+</head>
+</html>

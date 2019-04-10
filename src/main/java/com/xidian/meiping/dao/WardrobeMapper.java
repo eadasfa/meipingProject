@@ -2,6 +2,8 @@ package com.xidian.meiping.dao;
 
 import com.xidian.meiping.entity.Wardrobe;
 
+import java.util.List;
+
 public interface WardrobeMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,7 @@ public interface WardrobeMapper {
     int updateByPrimaryKeySelective(Wardrobe record);
 
     int updateByPrimaryKey(Wardrobe record);
+
+    List<Wardrobe> selectAll();
+
 }

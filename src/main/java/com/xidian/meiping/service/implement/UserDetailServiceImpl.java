@@ -4,16 +4,13 @@ import com.xidian.meiping.entity.Operater;
 import com.xidian.meiping.service.OperaterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -36,7 +33,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
         }
         List<MyAuthority> authorities = new ArrayList<>();
         authorities.add(new MyAuthority(user.getPermission()+""));
-        System.out.println("id:"+user.getOperaterId()+"\npw:"+user.getPassword());
+        System.out.println("UserDetails："+"已经查询到了结果");
+//        System.out.println("id:"+user.getOperaterId()+"\npw:"+user.getPassword());
         return new User(user.getOperaterId()+"", user.getPassword(), authorities);
     }
 

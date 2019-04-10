@@ -4,10 +4,9 @@ import com.xidian.meiping.entity.Menu;
 import com.xidian.meiping.entity.Operater;
 import com.xidian.meiping.service.MenuService;
 import com.xidian.meiping.service.OperaterService;
+import com.xidian.meiping.util.JSONUtil;
 import net.sf.json.JSONObject;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -46,17 +45,10 @@ public class HomeController {
     @ResponseBody
     @RequestMapping(value="/menu/getMenuList",produces = "text/html;charset=UTF-8")
     public String getMenuList(HttpServletRequest request, HttpServletResponse response, HttpSession session){
-
-        List<Menu> list = menuService.findAll();
+        List<Menu> list = menuService.getAllMenu();
         net.sf.json.JSONArray jsonArray = net.sf.json.JSONArray.fromObject(list);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("data",jsonArray.toString());
-        System.out.println(jsonArray.toString());
+        System.out.println("getMenuList：ENTER");
         return jsonArray.toString();
-    }
-    @RequestMapping(value = "/hello", method = RequestMethod.GET)
-    public String hello() {
-        return "hello";
     }
     private void setModel(Model model) {
         //如果登录了，name即用户名；如果没有登录，默认为 anonymousUser
@@ -67,7 +59,7 @@ public class HomeController {
         //2
         User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String id = user.getUsername(); //saysky 或 空指针异常
-        System.out.println(id);
+//        System.out.println(id);
         Operater operater = operaterService.findById(Integer.parseInt(id));
         model.addAttribute("id",operater.getOperaterId());
         model.addAttribute("name",operater.getName());

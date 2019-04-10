@@ -1,4 +1,7 @@
 package com.xidian.meiping.service;
 
-public interface CardService {
+import com.xidian.meiping.entity.Card;
+
+public interface CardService extends OperateBaseService<Card> {
+
 }

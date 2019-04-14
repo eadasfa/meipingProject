@@ -1,9 +1,16 @@
 $(document).ready(function () {
     var url = "/systemSetting/wardrobe/operate";
+    var sourceUrl = "/systemSetting/getWardrobes";
     var ADD = 'add';
     var UPDATE = 'update';
     var DELETE = 'delete';
     var ADDMANY = 'addMany';
+    var SEARCH = 'search';
+    var columns=[
+        { text: '衣柜编号', datafield: 'id', width: 200 },
+        { text: '衣柜名称', datafield: 'name', width: 200 },
+        { text: '衣柜状态', datafield: 'status', width: 180 }
+    ];
     var source =
         {
             datatype: "json",
@@ -13,7 +20,7 @@ $(document).ready(function () {
                     { name: 'name' },
                     { name: 'status' },
                 ],
-            url: "/systemSetting/getWardrobes",
+            url: sourceUrl,
             async: false,
             addrow: function (rowid, rowdata, position, commit) {
                 // synchronize with the server - send insert command
@@ -37,26 +44,20 @@ $(document).ready(function () {
         };
     var dataAdapter = new $.jqx.dataAdapter(source);
     // initialize jqxGrid
-    $("#jqxGrid").jqxGrid(
-        {
+    $("#jqxGrid").jqxGrid({
             // width: getWidth('jqxGrid'),
             height: window.document.body.offsetHeight*0.805,
             // autoheight: true,
             width:window.document.body.offsetWidth*0.805,
-
             pageable: true,//设置可分页
             pagesize: 12,//设置默认页数
             pagesizeoptions: ['12', '24', '36'],//设置分页数
-
             altrows: true,//行间底色区分
             columnsresize: true,//列可适应调整
-
             sortable: true,//设置可排序
             showsortcolumnbackground: false,
-
             clipboard: false,//屏蔽jqx的复制功能
             enablebrowserselection: true,//允许使用浏览器选择内容功能
-
             source: dataAdapter,
             showtoolbar: true,
             //这里的返回值需要根绝实际情况作调整。
@@ -74,16 +75,26 @@ $(document).ready(function () {
                 //   var data = dataAdapter.recordids;
                 //   console.log(data[0].name)
                 //   var me = this;
+                setToolBar();
                 var container = $("<div style='margin: 5px;'></div>");
                 toolbar.append(container);
                 container.append('<input id="addrowbutton" type="button" value="增加" />');
-                container.append('<input id="addrowmanybutton" type="button" value="批量添加" />');
+                container.append('<input style="margin-left: 10px;" id="addrowmanybutton" type="button" value="批量添加" />');
                 container.append('<input style="margin-left: 10px;" id="updaterowbutton" type="button" value="修改" />');
                 container.append('<input style="margin-left: 10px;" id="deleterowbutton" type="button" value="删除" />');
+                container.append('<select style="margin-left: 15px;" id="searchkey"></select>');
+                container.append('<input style="margin-left: 10px; width: 80px" id="searchvalue" list="none"/>' +
+                    '<datalist id="inputlist"><option>空闲</option><option>已租</option><option>损坏</option></datalist>');
+                container.append('<span><img style="margin-left:5px;" id = "search" alt="search" width="16" height="16" src="img/search.png" /></span>');
                 $("#addrowbutton").jqxButton();
                 $("#addrowmanybutton").jqxButton();
                 $("#deleterowbutton").jqxButton();
                 $("#updaterowbutton").jqxButton();
+
+                for(var i=0;i<columns.length;i++){
+                    var temp = columns[i];
+                    $("#searchkey").append('<option value='+temp.datafield+'>'+temp.text+'</option>')
+                }
                 // update row.
                 $("#updaterowbutton").on('click', function () {
                     cardOperate(UPDATE);
@@ -99,16 +110,23 @@ $(document).ready(function () {
                 $("#deleterowbutton").on('click', function () {
                     cardOperate(DELETE);
                 });
+                $("#search").on('click', function () {
+                    var key = $("#searchkey").val();
+                    var value = $("#searchvalue").val();
+                    search(key,value);
+                });
+                $("#searchkey").change(function () {
+                    if($(this).val()=="status")
+                        $("#searchvalue").attr("list","inputlist");
+                    else $("#searchvalue").attr("list","none");
+                });
             },
-            columns: [
-                { text: '衣柜编号', datafield: 'id', width: 200 },
-                { text: '衣柜名称', datafield: 'name', width: 200 },
-                { text: '衣柜状态', datafield: 'status', width: 180 }
-            ]
+            columns: columns
         });
 
     //根据不同operateId弹出不同的窗口
     function cardOperate(operateId) {
+        var title = "添加衣柜";
         if(operateId==DELETE){
             if(isSelectedAItem()) deleteItem(url);
             else alert("请先选中要删除的记录！")
@@ -119,9 +137,11 @@ $(document).ready(function () {
                 alert("请先选中要更新的记录！")
                 return;
             }
+            title = "修改衣柜信息";
         }
         var ii = layer.open({
             async:false,
+            title: title,
             content: $('.popUpWindow').html(),
             area: ['400', '300px'],//自定义文本域宽高,
             btn: ['确定', '取消'],
@@ -189,13 +209,6 @@ $(document).ready(function () {
         show(result.data);
         return true;
     }
-    function show(data) {
-       for(var i=0;i<data.length;i++) {
-           var row = changeData(data[i]);
-           var commit = $("#jqxGrid").jqxGrid('addrow', id, row);
-       }
-        sordLikeFormer();
-    }
     function updateItem(){
         var row= getInputRow();
         if(row == false) return false;
@@ -205,9 +218,25 @@ $(document).ready(function () {
        return deleteItemCommon(url);
     }
     function getInputRow(){
-        var attributs = ['id','name','status'];
         var numCells=[{'name':'id','type':1,'label':'衣柜编号'}];
-        return getInputRowCommon(attributs,numCells)
+        return getInputRowCommon(columns,numCells)
     }
-
+    function search(key,value) {
+        if(key=="status"&&(value!=null||value!=undefined||value!=""))
+            value = value=="空闲"?0:(value=="已租"?1:2);
+        if(key=="id"&&(value!=null&&value!=undefined&&value!="")&&
+            !(/^[0-9]+$/.test(value))) {
+            alert("会员编号无效！请重新输入")
+            return false;
+        }
+        var row={};
+        row['key'] = key;
+        row['value'] = value;
+        // console.log("row:"+row['key']+","+row['value'])
+        var result = LoadAjaxJson(row,SEARCH,url);
+        // console.log(result.data)
+        $('#jqxGrid').jqxGrid('clear');
+        //  传入json数组[{},{}]
+        show(result.data)
+    }
 });

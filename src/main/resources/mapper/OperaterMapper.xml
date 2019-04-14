@@ -7,12 +7,27 @@
     <result column="permission" property="permission" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
   </resultMap>
-  <sql id="Base_Column_List" >
+  <sql id="Base_Column_List_include_pw" >
     operater_id, password, permission, name
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+  <sql id="Base_Column_List" >
+    operater_id, permission, operaters.name, position
+  </sql>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select
     <include refid="Base_Column_List" />
+    from operaters,employees as e
+    where e.id = operater_id
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from operaters,employees as e
+    where operater_id = #{operaterId,jdbcType=INTEGER} and e.id = operater_id
+  </select>
+  <select id="selectByPrimaryKeyIncludePw" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List_include_pw" />
     from operaters
     where operater_id = #{operaterId,jdbcType=INTEGER}
   </select>

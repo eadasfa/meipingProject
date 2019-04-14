@@ -9,6 +9,16 @@ public class Operater {
 
     private String name;
 
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    private String position;
+
     public Integer getOperaterId() {
         return operaterId;
     }

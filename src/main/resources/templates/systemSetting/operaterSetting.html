@@ -1,0 +1,51 @@
+<html lang="en">
+<section class="content-header">
+    <h1> 衣柜管理</h1>
+    <ol class="breadcrumb">
+        <li><a href="../"><i class="fa fa-object-group"></i> 首页</a></li>
+        <li> 系统设置</li>
+        <li class="active">操作员设置</li>
+    </ol>
+</section><!-- ./content-header -->
+<head>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="js/systemSetting/operaterSetting.js"></script>
+    <script type="text/javascript" src="js/demos.js"></script>
+
+    <script type="text/javascript">
+
+    </script>
+    <script class="popUpWindow" type="text/html">
+        <form action="">
+            <div class="popUpWindow" >
+                <table>
+                    <tr>
+                        <td >员工编号：</td>
+                        <td><input type="text" id="operaterId" placeholder="员工编号" ></td>
+                    </tr>
+                    <tr>
+                        <td>员工姓名：</td>
+                        <td><input type="text" id="name" placeholder="员工姓名" ></td>
+                    </tr>
+                    <tr>
+                        <td>员工权限：</td>
+                        <td><input type="text" id="permission" placeholder="员工权限" ></td>
+                    </tr>
+                    <tr>
+                        <td >员工职位：</td>
+                        <!--<td><input type="text" id="status" placeholder="衣柜状态"></td>-->
+                        <td><select id="position" style="width: 100%;">
+                            <option value="" selected="true" disabled="true">选择职位</option>
+                        </select></td>
+                    </tr>
+
+                </table>
+            </div>
+        </form>
+    </script>
+</head>
+<section class="container-fluid">
+    <div id="jqxGrid">
+    </div>
+</section>
+</html>

@@ -27,7 +27,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Operater user=null;
         if(!hasCharacters(username))
-            user = operaterService.findById(Integer.parseInt(username));
+            user = operaterService.findByIdIncludePw(Integer.parseInt(username));
         if (null == user) {
             throw new UsernameNotFoundException(username);
         }

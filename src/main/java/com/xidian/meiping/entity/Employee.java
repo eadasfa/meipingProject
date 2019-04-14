@@ -1,5 +1,7 @@
 package com.xidian.meiping.entity;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class Employee {
     private Integer id;
 
@@ -39,5 +41,18 @@ public class Employee {
 
     public void setPosition(String position) {
         this.position = position == null ? null : position.trim();
+    }
+
+    public static Employee newInstance(HttpServletRequest request){
+        Employee e = new Employee();
+        String temp = request.getParameter("id");
+        if (temp!=null) e.setId(Integer.parseInt(temp));
+        temp = request.getParameter("name");
+        if (temp!=null) e.setName(temp);
+        temp = request.getParameter("teleNumber");
+        if (temp!=null) e.setTeleNumber(temp);
+        temp = request.getParameter("position");
+        if (temp!=null) e.setPosition(temp);
+        return e;
     }
 }

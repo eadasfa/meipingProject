@@ -15,7 +15,7 @@ public class CardServiceImpl implements CardService {
     private CardMapper cardMapper;
 
     @Override
-    public List<Card> getAll() {
+    public List<Card> findAll() {
         return cardMapper.selectAllCards();
     }
 
@@ -30,11 +30,16 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public Card selectById(Integer Id) {
+    public Card findById(Integer Id) {
         return cardMapper.selectByPrimaryKey(Id);
     }
     @Override
     public int deleteById(Integer Id) {
         return cardMapper.deleteByPrimaryKey(Id);
+    }
+
+    @Override
+    public List<Card> searchByKeyAndValue(String key, String value) {
+        return null;
     }
 }

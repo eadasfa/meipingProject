@@ -2,6 +2,7 @@ package com.xidian.meiping.controller.SystemSettingController;
 
 import com.xidian.meiping.entity.Card;
 import com.xidian.meiping.service.CardService;
+import com.xidian.meiping.util.ConstValue;
 import com.xidian.meiping.util.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,7 @@ public class MemberCardSettingController {
     @ResponseBody
     @RequestMapping(value="/getCards",produces = "text/html;charset=UTF-8")
     public String getCards(HttpServletRequest request, HttpServletResponse response, HttpSession session){
-        List<Card> list = cardService.getAll();
+        List<Card> list = cardService.findAll();
         net.sf.json.JSONArray jsonArray = net.sf.json.JSONArray.fromObject(list);
         return jsonArray.toString();
     }
@@ -30,11 +31,11 @@ public class MemberCardSettingController {
     public String cardOperate(HttpServletRequest request, HttpServletResponse response, HttpSession session){
         String operateId = request.getParameter("operateId");
         Card card = null;
-        if(!operateId.equals("delete"))
+        if(!operateId.equals(ConstValue.DELETE))
             card = Card.newInstance(request);
         else card=new Card();
         SystemSetting.operate(operateId,cardService,request,card);
-        return JSONUtil.ObjecttoJson(cardService.selectById(card.getId()),"data",
+        return JSONUtil.ObjecttoJson(cardService.findById(card.getId()),
                 true,"I'm houtai");
     }
 }

@@ -29,11 +29,13 @@ $(document).ready(function () {
                     $("#number").val(result.context);
                     gapHoursBefore = result.context;
                 }
+                // $("#jqxLoader").jqxLoader({ html: "<div class='jqx-loader-text'>Show only text in loader...</div>", width: 100, height:35 });
             }
         });
 
         $("#start-backup").click(function () {
             // var t = layer.load();
+
             var result = LoadAjaxJson({},BACKUP,url);
             // layer.close(t);
             if(result.success == true){

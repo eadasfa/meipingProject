@@ -38,6 +38,6 @@ public class BackupAndRestoreController {
             default:
         }
         System.out.println("isAutoBackup:"+flag);
-        return JSONUtil.ObjecttoJson(null,"data",flag,context);
+        return JSONUtil.ObjecttoJson(null,flag,context);
     }
 }

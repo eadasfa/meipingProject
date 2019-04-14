@@ -19,4 +19,7 @@ public interface WardrobeMapper {
 
     List<Wardrobe> selectAll();
 
+    List<Wardrobe> selectByName(String name);
+
+    List<Wardrobe> selectByStatus(Integer status);
 }

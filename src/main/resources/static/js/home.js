@@ -1,5 +1,6 @@
 
     $(document).ready(function () {
+        var pages={};
         // prepare the data
         var source =
             {
@@ -35,12 +36,15 @@
             console.log("collapse");
         });
         $('#jqxTree').on('select', function (event) {
-            console.log(event.args);
+            // console.log(event.args);
             var item = $("#jqxTree").jqxTree('getItem', event.args.element);
             var value = item.value;
             if(value !== '') {
                 var ii = layer.load();
-                LoadAjaxContent(value);
+                if(pages[value]!=undefined)
+                    $(".content-wrapper").html(pages[value]);
+                else
+                    LoadAjaxContent(value);
                 layer.close(ii);
             }
         });
@@ -66,6 +70,7 @@
             }).done(function(data, textStatus, jqXHR){
                 var html = $(data);
                 $(".content-wrapper").html(html);
+                pages[url] = html;
             }).fail(function(jqXHR, textStatus, errorThrown){
                 swal({
                     type: "error",

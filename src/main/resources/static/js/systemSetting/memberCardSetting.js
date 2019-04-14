@@ -1,8 +1,16 @@
 $(document).ready(function () {
     var url = "/systemSetting/card/operate";
+    var sourceUrl = "/systemSetting/getCards";
     var ADD = 'add';
     var UPDATE = 'update';
     var DELETE = 'delete';
+    var columns = [
+        { text: '编号', datafield: 'id', width: 200 },
+        { text: '卡名', datafield: 'name', width: 200 },
+        { text: '有效次数', datafield: 'youxiaoCishu', width: 180 },
+        { text: '有效天数', datafield: 'youxiaoTianshu', width: 180, cellsalign: 'right' },
+        { text: '价格', datafield: 'price', width: 180, cellsalign: 'right', cellsformat: 'c2' },
+    ];
     var source =
         {
             datatype: "json",
@@ -14,7 +22,7 @@ $(document).ready(function () {
                     { name: 'youxiaoCishu' },
                     { name: 'youxiaoTianshu' }
                 ],
-            url: "/systemSetting/getCards",
+            url:sourceUrl,
             async: false,
             addrow: function (rowid, rowdata, position, commit) {
                 // synchronize with the server - send insert command
@@ -68,6 +76,7 @@ $(document).ready(function () {
                 //   var data = dataAdapter.recordids;
                 //   console.log(data[0].name)
                 //   var me = this;
+                setToolBar();
                 var container = $("<div style='margin: 5px;'></div>");
                 toolbar.append(container);
                 container.append('<input id="addrowbutton" type="button" value="增加" />');
@@ -89,17 +98,12 @@ $(document).ready(function () {
                     cardOperate(DELETE);
                 });
             },
-            columns: [
-                { text: '编号', datafield: 'id', width: 200 },
-                { text: '卡名', datafield: 'name', width: 200 },
-                { text: '有效次数', datafield: 'youxiaoCishu', width: 180 },
-                { text: '有效天数', datafield: 'youxiaoTianshu', width: 180, cellsalign: 'right' },
-                { text: '价格', datafield: 'price', width: 180, cellsalign: 'right', cellsformat: 'c2' },
-            ]
+            columns:columns
         });
 
     //根据不同operateId弹出不同的窗口
     function cardOperate(operateId) {
+        var title = "添加会员卡";
         if(operateId==DELETE){
             if(isSelectedAItem()) deleteItem(url);
             else alert("请先选中要删除的记录！")
@@ -110,9 +114,11 @@ $(document).ready(function () {
                 alert("请先选中要更新的记录！")
                 return;
             }
+            title = "修改会员卡";
         }
         var ii = layer.open({
             async:false,
+            title:title,
             content: $('.popUpWindow').html(),
             area: ['400', '300px'],//自定义文本域宽高,
             btn: ['确定', '取消'],
@@ -164,10 +170,9 @@ $(document).ready(function () {
         return deleteItemCommon(url);
     }
     function getInputRow(){
-        var attributs = ['id','name','youxiaoCishu','youxiaoTianshu','price'];
         var numCells=[{'name':'id','type':1,'label':'会员编号'},{'name':'youxiaoCishu','type':1,'label':'有效次数'},
             {'name':'youxiaoTianshu','type':1,'label':'有效天数'},{'name':'price','type':2,'label':'价格'}];
-        return getInputRowCommon(attributs,numCells)
+        return getInputRowCommon(columns,numCells)
     }
 
 });

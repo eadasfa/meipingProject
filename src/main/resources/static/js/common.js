@@ -4,11 +4,7 @@
         var rowscount = $("#jqxGrid").jqxGrid('getdatainformation').rowscount;
         if (!(selectedrowindex >= 0 && selectedrowindex < rowscount))
             return false;
-        // var rowdata = $('#jqxGrid').jqxGrid('getrowdata', selectedrowindex);
-        //getrowdata 参数为boundindex
         var id = $("#jqxGrid").jqxGrid('getrowid', selectedrowindex);
-        // console.log("selectedrowindex:"+selectedrowindex)
-        // console.log("id:"+id);
         var rowdata = $('#jqxGrid').jqxGrid('getrowdatabyid', id);
         return {"rowdata":rowdata,'id':id};
     }
@@ -60,7 +56,7 @@
             }
         }
         var result = LoadAjaxJson(row,"add",url);
-        console.log(JSON.stringify(result));
+        // console.log(JSON.stringify(result));
         if(result['success']==false){
             alert("添加失败:"+result['context']);
             return false;
@@ -105,7 +101,6 @@
             row = changeData(result['data'][0]);
         var commit = $("#jqxGrid").jqxGrid('updaterow', id, row);
         // $("#jqxGrid").jqxGrid('ensurerowvisible', selectedrowindex);
-
         return true;
     }
     //operaterId{1:增加，2：修改，3：删除，4：查询}
@@ -149,11 +144,10 @@
         }
         return true;
     }
-    function getInputRowCommon(attributes,numCells){
+    function getInputRowCommon(columns,numCells){
         var row={};
-
-        for(var i=0;i<attributes.length;i++){
-            row[attributes[i]] = $("#"+attributes[i]).val();
+        for(var i=0;i<columns.length;i++){
+            row[columns[i].datafield] = $("#"+columns[i].datafield).val();
         }
         // console.log(attributes[0])
         if(!isValidCommon(row,numCells)) return false;
@@ -165,7 +159,18 @@
     //主要是将0，1，2转换为文字
     function changeData(data){
         var row = data;
-        row['status'] = row.status==0?"空闲":(row.status==1?"已租":"损坏");
+        if(row.status!=undefined)
+            row['status'] = row.status==0?"空闲":(row.status==1?"已租":"损坏");
         return row;
+    }
+    function show(data) {
+        for(var i=0;i<data.length;i++) {
+            var row = changeData(data[i]);
+            var commit = $("#jqxGrid").jqxGrid('addrow', id, row);
+        }
+        sordLikeFormer();
+    }
+    function setToolBar() {
+        $('#jqxGrid').jqxGrid({ toolbarheight: 40});
     }
 

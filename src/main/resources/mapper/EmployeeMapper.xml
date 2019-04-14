@@ -10,8 +10,31 @@
   <sql id="Base_Column_List" >
     id, name, tele_number, position
   </sql>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from employees
+  </select>
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from employees
+    where name = #{name,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByTeleNumber" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from employees
+    where tele_number = #{teleNumber,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPosition" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from employees
+    where position = #{position,jdbcType=VARCHAR}
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from employees
     where id = #{id,jdbcType=INTEGER}

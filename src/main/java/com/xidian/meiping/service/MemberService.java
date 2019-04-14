@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface MemberService {
     int addMember(Member member);
-    List<Member> getAllMember(int pageNum, int pageSize);
+    List<Member> getAll(int pageNum, int pageSize);
 
 }

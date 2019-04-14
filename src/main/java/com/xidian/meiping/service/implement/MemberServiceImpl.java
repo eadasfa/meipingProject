@@ -18,7 +18,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public List<Member> getAllMember(int pageNum, int pageSize) {
+    public List<Member> getAll(int pageNum, int pageSize) {
         //将参数传给这个方法就可以实现物理分页了，非常简单。
 //        PageHelper.startPage(pageNum, pageSize);
 //        List<Member> memberDomains = memberMapper.selectAllMember();

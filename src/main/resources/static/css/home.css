@@ -1,30 +1,35 @@
 /*字体颜色*/
 .left_list ul li {
     font-family:"楷体";
-    color: #bebebe;
+    color: #f4f4f5;
 }
 /*鼠标悬浮时字体设计*/
 .left_list ul li:hover{
-
-    color: #2f96b4;
+    color: #0d6aad;
 }
 /*整体颜色*/
 .left_list{
-    border-color: #222d32;
+    border-color: #1a2226;
 }
 /*鼠标悬浮时背景设计*/
 .jqx-fill-state-hover{
-    background: #222d32;
-    border-color: #222d32;
+    background: #afd9ee;
+    border-color: #1a2226;
 }
 /*jqxWidget字体，背景颜色*/
 .jqx-widget-content{
-    background: #222d32;
-    font-size: 20px;
+    background: #1a2226;
+    font-size: 25px;
 }
 /*以下为选中后的颜色设置*/
 .jqx-fill-state-pressed{
-    background: #c0c0c0;
-    border-color: #222d32;
-    color: #000000;
+    background: #00dcf7;
+    border-color: #1a2226;
+    color: #1a2226;
 }
+.skin-blue .wrapper,
+.skin-blue .main-sidebar,
+.skin-blue .left-side {
+    background-color: #1a2226;
+}
+/*222d32*/

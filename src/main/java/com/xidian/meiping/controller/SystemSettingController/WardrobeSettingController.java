@@ -2,6 +2,7 @@ package com.xidian.meiping.controller.SystemSettingController;
 
 import com.xidian.meiping.entity.Wardrobe;
 import com.xidian.meiping.service.WardrobeService;
+import com.xidian.meiping.util.ConstValue;
 import com.xidian.meiping.util.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +23,7 @@ public class WardrobeSettingController {
     @ResponseBody
     @RequestMapping(value="/getWardrobes",produces = "text/html;charset=UTF-8")
     public String getWardobes(HttpServletRequest request, HttpServletResponse response, HttpSession session){
-        List<Wardrobe> list = wardrobeService.getAll();
+        List<Wardrobe> list = wardrobeService.findAll();
         net.sf.json.JSONArray jsonArray = net.sf.json.JSONArray.fromObject(list);
 //        System.out.println("得到衣柜信息:"+jsonArray.toString());
         return jsonArray.toString();
@@ -31,18 +32,20 @@ public class WardrobeSettingController {
     @RequestMapping(value="/wardrobe/operate",produces = "text/html;charset=UTF-8")
     public String wardrobeOperate(HttpServletRequest request, HttpServletResponse response, HttpSession session){
         String operateId = request.getParameter("operateId");
-        if(operateId.equals("addMany")){
+        if(operateId.equals(ConstValue.SEARCH)){
+            return SystemSetting.searchByKeyAndValue(request,wardrobeService);
+        }
+        if(operateId.equals(ConstValue.ADDMANY)){
             return addManyWardrobes(request);
         }
         Wardrobe wardrobe = null;
-        if(!operateId.equals("delete"))
+        if(!operateId.equals(ConstValue.DELETE))
             wardrobe = Wardrobe.newInstance(request);
         else wardrobe=new Wardrobe();
         SystemSetting.operate(operateId,wardrobeService,request,wardrobe);
-        return JSONUtil.ObjecttoJson(wardrobeService.selectById(wardrobe.getId()),"data",
+        return JSONUtil.ObjecttoJson(wardrobeService.findById(wardrobe.getId()),
                 true,"I'm houtai");
     }
-
     private String addManyWardrobes(HttpServletRequest request) {
         List<Wardrobe> list = new ArrayList<>();
         int from = Integer.parseInt(request.getParameter("from"));
@@ -52,11 +55,10 @@ public class WardrobeSettingController {
             Wardrobe wardrobe = new Wardrobe();
             wardrobe.setId(from);
             wardrobe.setStatus(status);
-            if(wardrobeService.add(wardrobe)==1)list.add(wardrobe);
+            if(wardrobeService.add(wardrobe)==1) list.add(wardrobe);
         }
         String context = "共插入"+list.size()+"条记录！";
         System.out.println(context);
-        return JSONUtil.toJsonString(list,"data",
-                true,context);
+        return JSONUtil.toJsonString(list, true,context);
     }
 }

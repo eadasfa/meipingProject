@@ -5,44 +5,45 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="agenda" property="agenda" jdbcType="VARCHAR" />
+    <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
     <result column="tele_number" property="teleNumber" jdbcType="VARCHAR" />
-    <result column="card_type" property="cardType" jdbcType="VARCHAR" />
+    <result column="register_date" property="registerDate" jdbcType="TIMESTAMP" />
     <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="member_card_buy_id" property="memberCardBuyId" jdbcType="INTEGER" />
     <result column="balance" property="balance" jdbcType="DOUBLE" />
     <result column="credit" property="credit" jdbcType="INTEGER" />
-    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
-    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, agenda, tele_number, card_type, status, balance, credit, start_date, end_date
+    id, name, agenda, birthday, tele_number, register_date, status, member_card_buy_id, 
+    balance, credit
   </sql>
-  <select id="selectAllMember" resultMap="BaseResultMap">
+  <select id="selectAll" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from members
+    from member
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from members
+    from member
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from members
+    delete from member
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xidian.meiping.entity.Member" >
-    insert into members (id, name, agenda, 
-      tele_number, card_type, status, 
-      balance, credit, start_date, 
-      end_date)
+    insert into member (id, name, agenda, 
+      birthday, tele_number, register_date, 
+      status, member_card_buy_id, balance, 
+      credit)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{agenda,jdbcType=VARCHAR}, 
-      #{teleNumber,jdbcType=VARCHAR}, #{cardType,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
-      #{balance,jdbcType=DOUBLE}, #{credit,jdbcType=INTEGER}, #{startDate,jdbcType=TIMESTAMP}, 
-      #{endDate,jdbcType=TIMESTAMP})
+      #{birthday,jdbcType=TIMESTAMP}, #{teleNumber,jdbcType=VARCHAR}, #{registerDate,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=INTEGER}, #{memberCardBuyId,jdbcType=INTEGER}, #{balance,jdbcType=DOUBLE}, 
+      #{credit,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.meiping.entity.Member" >
-    insert into members
+    insert into member
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -53,26 +54,26 @@
       <if test="agenda != null" >
         agenda,
       </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
       <if test="teleNumber != null" >
         tele_number,
       </if>
-      <if test="cardType != null" >
-        card_type,
+      <if test="registerDate != null" >
+        register_date,
       </if>
       <if test="status != null" >
         status,
+      </if>
+      <if test="memberCardBuyId != null" >
+        member_card_buy_id,
       </if>
       <if test="balance != null" >
         balance,
       </if>
       <if test="credit != null" >
         credit,
-      </if>
-      <if test="startDate != null" >
-        start_date,
-      </if>
-      <if test="endDate != null" >
-        end_date,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -85,14 +86,20 @@
       <if test="agenda != null" >
         #{agenda,jdbcType=VARCHAR},
       </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=TIMESTAMP},
+      </if>
       <if test="teleNumber != null" >
         #{teleNumber,jdbcType=VARCHAR},
       </if>
-      <if test="cardType != null" >
-        #{cardType,jdbcType=VARCHAR},
+      <if test="registerDate != null" >
+        #{registerDate,jdbcType=TIMESTAMP},
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
+      </if>
+      <if test="memberCardBuyId != null" >
+        #{memberCardBuyId,jdbcType=INTEGER},
       </if>
       <if test="balance != null" >
         #{balance,jdbcType=DOUBLE},
@@ -100,16 +107,10 @@
       <if test="credit != null" >
         #{credit,jdbcType=INTEGER},
       </if>
-      <if test="startDate != null" >
-        #{startDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="endDate != null" >
-        #{endDate,jdbcType=TIMESTAMP},
-      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.xidian.meiping.entity.Member" >
-    update members
+    update member
     <set >
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
@@ -117,14 +118,20 @@
       <if test="agenda != null" >
         agenda = #{agenda,jdbcType=VARCHAR},
       </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=TIMESTAMP},
+      </if>
       <if test="teleNumber != null" >
         tele_number = #{teleNumber,jdbcType=VARCHAR},
       </if>
-      <if test="cardType != null" >
-        card_type = #{cardType,jdbcType=VARCHAR},
+      <if test="registerDate != null" >
+        register_date = #{registerDate,jdbcType=TIMESTAMP},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="memberCardBuyId != null" >
+        member_card_buy_id = #{memberCardBuyId,jdbcType=INTEGER},
       </if>
       <if test="balance != null" >
         balance = #{balance,jdbcType=DOUBLE},
@@ -132,26 +139,20 @@
       <if test="credit != null" >
         credit = #{credit,jdbcType=INTEGER},
       </if>
-      <if test="startDate != null" >
-        start_date = #{startDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="endDate != null" >
-        end_date = #{endDate,jdbcType=TIMESTAMP},
-      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xidian.meiping.entity.Member" >
-    update members
+    update member
     set name = #{name,jdbcType=VARCHAR},
       agenda = #{agenda,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=TIMESTAMP},
       tele_number = #{teleNumber,jdbcType=VARCHAR},
-      card_type = #{cardType,jdbcType=VARCHAR},
+      register_date = #{registerDate,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=INTEGER},
+      member_card_buy_id = #{memberCardBuyId,jdbcType=INTEGER},
       balance = #{balance,jdbcType=DOUBLE},
-      credit = #{credit,jdbcType=INTEGER},
-      start_date = #{startDate,jdbcType=TIMESTAMP},
-      end_date = #{endDate,jdbcType=TIMESTAMP}
+      credit = #{credit,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

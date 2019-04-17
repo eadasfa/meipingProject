@@ -18,7 +18,7 @@ public class JSONUtil {
         jsonObject.put("success",success);
         jsonObject.put("context",context);
         jsonObject.put("data",jsonArray.toString());
-        System.out.println(jsonArray.toString());
+//        System.out.println(jsonArray.toString());
         net.sf.json.JSONArray returnResult = new JSONArray();
         returnResult.add(jsonObject);
         return returnResult.toString();

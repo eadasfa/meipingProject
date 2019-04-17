@@ -1,6 +1,6 @@
 <html lang="en">
 <section class="content-header">
-    <h1> 衣柜管理</h1>
+    <h1>操作员设置</h1>
     <ol class="breadcrumb">
         <li><a href="../"><i class="fa fa-object-group"></i> 首页</a></li>
         <li> 系统设置</li>
@@ -8,7 +8,7 @@
     </ol>
 </section><!-- ./content-header -->
 <head>
-    <script type="text/javascript" src="js/common.js"></script>
+    <!--<script type="text/javascript" src="js/common.js"></script>-->
     <script type="text/javascript" src="js/systemSetting/operaterSetting.js"></script>
     <script type="text/javascript" src="js/demos.js"></script>
 
@@ -21,7 +21,11 @@
                 <table>
                     <tr>
                         <td >员工编号：</td>
-                        <td><input type="text" id="operaterId" placeholder="员工编号" ></td>
+                        <td><input type="text" style="display:none">
+                            <input type="text" id="id" placeholder="员工编号"
+                                   list="id-list"/>
+                            <datalist id="id-list"></datalist>
+                        </td>
                     </tr>
                     <tr>
                         <td>员工姓名：</td>
@@ -29,14 +33,27 @@
                     </tr>
                     <tr>
                         <td>员工权限：</td>
-                        <td><input type="text" id="permission" placeholder="员工权限" ></td>
+                        <td><select id="permission" style="width: 100%;">
+                            <option value="" selected="true" disabled="true">选择权限</option>
+                            <option value="1">1 级</option>
+                            <option value="2">2 级</option>
+                            <option value="3">3 级</option>
+                        </select></td>
                     </tr>
                     <tr>
                         <td >员工职位：</td>
                         <!--<td><input type="text" id="status" placeholder="衣柜状态"></td>-->
-                        <td><select id="position" style="width: 100%;">
-                            <option value="" selected="true" disabled="true">选择职位</option>
-                        </select></td>
+                        <td><input type="text" id="position" placeholder="员工职位" ></td>
+                    </tr>
+                    <tr>
+                        <td>用户密码：</td>
+                        <td><input type="text" id="password" placeholder="用户密码"
+                        onfocus="changeText(this)" onkeyup="this.type='password'"></td>
+                    </tr>
+                    <tr>
+                        <td>确认密码：</td>
+                        <td><input type="text" id="check_password" placeholder="确认密码"
+                        onfocus="changText(this)" onkeyup="this.type='password'"></td>
                     </tr>
 
                 </table>

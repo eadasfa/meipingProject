@@ -1,7 +1,6 @@
 package com.xidian.meiping.dao;
 
 import com.xidian.meiping.entity.Employee;
-
 import java.util.List;
 
 public interface EmployeeMapper {

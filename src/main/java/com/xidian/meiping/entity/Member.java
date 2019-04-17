@@ -9,19 +9,19 @@ public class Member {
 
     private String agenda;
 
+    private Date birthday;
+
     private String teleNumber;
 
-    private String cardType;
+    private Date registerDate;
 
     private Integer status;
+
+    private Integer memberCardBuyId;
 
     private Double balance;
 
     private Integer credit;
-
-    private Date startDate;
-
-    private Date endDate;
 
     public Integer getId() {
         return id;
@@ -47,6 +47,14 @@ public class Member {
         this.agenda = agenda == null ? null : agenda.trim();
     }
 
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
     public String getTeleNumber() {
         return teleNumber;
     }
@@ -55,12 +63,12 @@ public class Member {
         this.teleNumber = teleNumber == null ? null : teleNumber.trim();
     }
 
-    public String getCardType() {
-        return cardType;
+    public Date getRegisterDate() {
+        return registerDate;
     }
 
-    public void setCardType(String cardType) {
-        this.cardType = cardType == null ? null : cardType.trim();
+    public void setRegisterDate(Date registerDate) {
+        this.registerDate = registerDate;
     }
 
     public Integer getStatus() {
@@ -69,6 +77,14 @@ public class Member {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getMemberCardBuyId() {
+        return memberCardBuyId;
+    }
+
+    public void setMemberCardBuyId(Integer memberCardBuyId) {
+        this.memberCardBuyId = memberCardBuyId;
     }
 
     public Double getBalance() {
@@ -85,21 +101,5 @@ public class Member {
 
     public void setCredit(Integer credit) {
         this.credit = credit;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
     }
 }

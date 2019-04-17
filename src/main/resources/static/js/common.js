@@ -1,11 +1,12 @@
 
-    function getSelectRow() {
-        var selectedrowindex = $("#jqxGrid").jqxGrid('getselectedrowindex');
-        var rowscount = $("#jqxGrid").jqxGrid('getdatainformation').rowscount;
+    function getSelectRow() {return getSelectRowByGrid("jqxGrid")}
+    function getSelectRowByGrid(jqxGrid) {
+        var selectedrowindex = $("#"+jqxGrid).jqxGrid('getselectedrowindex');
+        var rowscount = $("#"+jqxGrid).jqxGrid('getdatainformation').rowscount;
         if (!(selectedrowindex >= 0 && selectedrowindex < rowscount))
             return false;
-        var id = $("#jqxGrid").jqxGrid('getrowid', selectedrowindex);
-        var rowdata = $('#jqxGrid').jqxGrid('getrowdatabyid', id);
+        var id = $("#"+jqxGrid).jqxGrid('getrowid', selectedrowindex);
+        var rowdata = $("#"+jqxGrid).jqxGrid('getrowdatabyid', id);
         return {"rowdata":rowdata,'id':id};
     }
     function sordLikeFormer() {
@@ -29,17 +30,26 @@
     function isAllNumber(s,type) {
 
         //1为必须纯数字,2为可以是小数
-        if(type==1&&/^[0-9]+$/.test(s)){//这是用正则表达是检查
-            return true;
-        }else if(type==2&&/^[0-9]+(\.[0-9]+)?$/ .test(s))
+        if(type==1){//这是用正则表达是检查
+            return isInteger(s);
+        }else if(type==2)
         {
-            return true;
+            return isDecimal(s);
         }
         return false;
     }
+    function isInteger(s) {
+        return /^[0-9]+$/.test(s)
+    }
+    function isDecimal(s) {//小数
+        return /^[0-9]+(\.[0-9]+)?$/ .test(s)
+    }
     function isSelectedAItem() {
-        var selectedrowindex = $("#jqxGrid").jqxGrid('getselectedrowindex');
-        var rowscount = $("#jqxGrid").jqxGrid('getdatainformation').rowscount;
+        return isSelectedAItemByGrid("jqxGrid");
+    }
+    function isSelectedAItemByGrid(jqxGrid) {
+        var selectedrowindex = $("#"+jqxGrid).jqxGrid('getselectedrowindex');
+        var rowscount = $("#"+jqxGrid).jqxGrid('getdatainformation').rowscount;
         if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
             return true;
         }
@@ -48,14 +58,15 @@
     function addItemCommon(row,url){
         if(row == false) return false;
         var rowscount = $("#jqxGrid").jqxGrid('getdatainformation').rowscount;
+        var id = 'id';
         for(var i=0;i<rowscount;i++){
             var rowdata = $('#jqxGrid').jqxGrid('getrowdata', i);
-            if(rowdata['id']==row['id']) {
+            if(rowdata[id]==row[id]) {
                 alert("您输入的编号已存在，请重新输入");
                 return false;
             }
         }
-        var result = LoadAjaxJson(row,"add",url);
+        var result = LoadAjaxJson(row,ADD,url);
         // console.log(JSON.stringify(result));
         if(result['success']==false){
             alert("添加失败:"+result['context']);
@@ -72,14 +83,15 @@
         sordLikeFormer();
         return true;
     }
-    function deleteItemCommon(url) {
-        var row = getSelectRow();
+    function deleteItemCommon(url,row) {
+        if(row==undefined)
+            row = getSelectRow();
         var rowdata = row.rowdata;
         // console.log("DELETE:"+JSON.stringify(rowdata));
         var r=confirm("您确定要删除该记录吗?");
         if(r!=true)
             return false;
-        var result=LoadAjaxJson({'id':rowdata['id']},'delete',url);
+        var result=LoadAjaxJson({'id':rowdata['id']},DELETE,url);
         if(result['success']==false){
             alert("删除失败:"+result['context']);
             return false;
@@ -89,7 +101,7 @@
     }
     function updateItemCommon(row,url){
         if(row == false) return false;
-        var result = LoadAjaxJson(row,"update",url);
+        var result = LoadAjaxJson(row,UPDATE,url);
         // console.log(JSON.stringify(result));
         if(result['success']==false+""){
             alert("修改失败:"+result['context']);
@@ -109,7 +121,8 @@
         row['operateId'] = operateId;
         if(async==undefined)
             async = false;
-        return LoadAjax(row,url,async);
+        var result = LoadAjax(row,url,async);
+        return result[0];
     }
     function LoadAjax(row,url,async){
         var result=[];
@@ -126,7 +139,7 @@
             }
         });
         //返回为json数据,success,context,data
-        return result[0];
+        return result;
     }
     function isValidCommon(data,numCells) {
         // console.log("valid")
@@ -164,11 +177,17 @@
         return row;
     }
     function show(data) {
+        showNoSort(data)
+        sordLikeFormer();
+    }
+    function showNoSort(data) {
+        showNoSortByGrid(data,"jqxGrid")
+    }
+    function showNoSortByGrid(data,grid) {
         for(var i=0;i<data.length;i++) {
             var row = changeData(data[i]);
-            var commit = $("#jqxGrid").jqxGrid('addrow', id, row);
+            var commit = $("#"+grid).jqxGrid('addrow', id, row);
         }
-        sordLikeFormer();
     }
     function setToolBar() {
         $('#jqxGrid').jqxGrid({ toolbarheight: 40});

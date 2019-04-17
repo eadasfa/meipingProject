@@ -4,17 +4,50 @@
   <resultMap id="BaseResultMap" type="com.xidian.meiping.entity.BuyingLog" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="good_id" property="goodId" jdbcType="INTEGER" />
-    <result column="good_name" property="goodName" jdbcType="VARCHAR" />
     <result column="buying_price" property="buyingPrice" jdbcType="DOUBLE" />
     <result column="number" property="number" jdbcType="INTEGER" />
-    <result column="buying_date" property="buyingDate" jdbcType="TIMESTAMP" />
+    <result column="buying_time" property="buyingTime" jdbcType="TIMESTAMP" />
     <result column="operater_id" property="operaterId" jdbcType="INTEGER" />
+    <!--总价-->
+    <result column="total_amount" property="totalAmount" jdbcType="INTEGER" />
+    <result column="good_name" property="goodName" jdbcType="VARCHAR" />
+    <result column="operater_name" property="operaterName" jdbcType="VARCHAR" />
+
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, good_id, good_name, buying_price, number, buying_date, operater_id
+  <sql id="Base_Column_List_Sp" >
+    buying_log.id, buying_log.good_id, buying_log.buying_price, buying_log.number, buying_time, buying_log.operater_id,
+    buying_log.buying_price*buying_log.number as total_amount,employee.name as operater_name,
+    good.name as good_name
   </sql>
+  <sql id="Base_Column_List" >
+    id, good_id, buying_price, number, buying_time, operater_id,
+    buying_price*number as total_amount
+  </sql>
+  <select id="selectAll" resultMap="BaseResultMap"  >
+    select
+    <include refid="Base_Column_List_Sp" />
+    from buying_log,employee,good
+    where employee.id = buying_log.operater_id and
+          good.id = buying_log.good_id
+  </select>
+  <select id="searchByDate" resultMap="BaseResultMap"  >
+    select
+    <include refid="Base_Column_List_Sp" />
+    from buying_log,employee,good
+    where DATE_FORMAT(buying_log.buying_time,'%Y-%m-%d')
+          BETWEEN #{date1,jdbcType=VARCHAR}
+          and #{date2,jdbcType=VARCHAR}
+          and good.id = buying_log.good_id
+          and employee.id = buying_log.operater_id
+          <if test="goodId != null" >
+            and buying_log.good_id = #{goodId,jdbcType=INTEGER}
+          </if>
+          <if test="operaterId != null" >
+            and buying_log.operater_id = #{operaterId,jdbcType=INTEGER}
+          </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from buying_log
     where id = #{id,jdbcType=INTEGER}
@@ -24,12 +57,12 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xidian.meiping.entity.BuyingLog" >
-    insert into buying_log (id, good_id, good_name, 
-      buying_price, number, buying_date, 
-      operater_id)
-    values (#{id,jdbcType=INTEGER}, #{goodId,jdbcType=INTEGER}, #{goodName,jdbcType=VARCHAR}, 
-      #{buyingPrice,jdbcType=DOUBLE}, #{number,jdbcType=INTEGER}, #{buyingDate,jdbcType=TIMESTAMP}, 
-      #{operaterId,jdbcType=INTEGER})
+    insert into buying_log (id, good_id, buying_price,
+      number, buying_time, operater_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{goodId,jdbcType=INTEGER}, #{buyingPrice,jdbcType=DOUBLE},
+      #{number,jdbcType=INTEGER}, #{buyingTime,jdbcType=TIMESTAMP}, #{operaterId,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.meiping.entity.BuyingLog" >
     insert into buying_log
@@ -40,17 +73,14 @@
       <if test="goodId != null" >
         good_id,
       </if>
-      <if test="goodName != null" >
-        good_name,
-      </if>
       <if test="buyingPrice != null" >
         buying_price,
       </if>
       <if test="number != null" >
         number,
       </if>
-      <if test="buyingDate != null" >
-        buying_date,
+      <if test="buyingTime != null" >
+        buying_time,
       </if>
       <if test="operaterId != null" >
         operater_id,
@@ -63,17 +93,14 @@
       <if test="goodId != null" >
         #{goodId,jdbcType=INTEGER},
       </if>
-      <if test="goodName != null" >
-        #{goodName,jdbcType=VARCHAR},
-      </if>
       <if test="buyingPrice != null" >
         #{buyingPrice,jdbcType=DOUBLE},
       </if>
       <if test="number != null" >
         #{number,jdbcType=INTEGER},
       </if>
-      <if test="buyingDate != null" >
-        #{buyingDate,jdbcType=TIMESTAMP},
+      <if test="buyingTime != null" >
+        #{buyingTime,jdbcType=TIMESTAMP},
       </if>
       <if test="operaterId != null" >
         #{operaterId,jdbcType=INTEGER},
@@ -86,17 +113,14 @@
       <if test="goodId != null" >
         good_id = #{goodId,jdbcType=INTEGER},
       </if>
-      <if test="goodName != null" >
-        good_name = #{goodName,jdbcType=VARCHAR},
-      </if>
       <if test="buyingPrice != null" >
         buying_price = #{buyingPrice,jdbcType=DOUBLE},
       </if>
       <if test="number != null" >
         number = #{number,jdbcType=INTEGER},
       </if>
-      <if test="buyingDate != null" >
-        buying_date = #{buyingDate,jdbcType=TIMESTAMP},
+      <if test="buyingTime != null" >
+        buying_time = #{buyingTime,jdbcType=TIMESTAMP},
       </if>
       <if test="operaterId != null" >
         operater_id = #{operaterId,jdbcType=INTEGER},
@@ -107,10 +131,9 @@
   <update id="updateByPrimaryKey" parameterType="com.xidian.meiping.entity.BuyingLog" >
     update buying_log
     set good_id = #{goodId,jdbcType=INTEGER},
-      good_name = #{goodName,jdbcType=VARCHAR},
       buying_price = #{buyingPrice,jdbcType=DOUBLE},
       number = #{number,jdbcType=INTEGER},
-      buying_date = #{buyingDate,jdbcType=TIMESTAMP},
+      buying_time = #{buyingTime,jdbcType=TIMESTAMP},
       operater_id = #{operaterId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>

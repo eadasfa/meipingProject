@@ -3,27 +3,31 @@
 <mapper namespace="com.xidian.meiping.dao.TrainerMapper" >
   <resultMap id="BaseResultMap" type="com.xidian.meiping.entity.Trainer" >
     <id column="trainer_id" property="trainerId" jdbcType="INTEGER" />
-    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="price" property="price" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="rend_trainer_log_id" property="rendTrainerLogId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    trainer_id, price
+    trainer_id, price, status, rend_trainer_log_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from trainers
+    from trainer
     where trainer_id = #{trainerId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from trainers
+    delete from trainer
     where trainer_id = #{trainerId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xidian.meiping.entity.Trainer" >
-    insert into trainers (trainer_id, price)
-    values (#{trainerId,jdbcType=INTEGER}, #{price,jdbcType=DOUBLE})
+    insert into trainer (trainer_id, price, status, 
+      rend_trainer_log_id)
+    values (#{trainerId,jdbcType=INTEGER}, #{price,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{rendTrainerLogId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.meiping.entity.Trainer" >
-    insert into trainers
+    insert into trainer
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="trainerId != null" >
         trainer_id,
@@ -31,28 +35,48 @@
       <if test="price != null" >
         price,
       </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="rendTrainerLogId != null" >
+        rend_trainer_log_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="trainerId != null" >
         #{trainerId,jdbcType=INTEGER},
       </if>
       <if test="price != null" >
-        #{price,jdbcType=DOUBLE},
+        #{price,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="rendTrainerLogId != null" >
+        #{rendTrainerLogId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.xidian.meiping.entity.Trainer" >
-    update trainers
+    update trainer
     <set >
       <if test="price != null" >
-        price = #{price,jdbcType=DOUBLE},
+        price = #{price,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="rendTrainerLogId != null" >
+        rend_trainer_log_id = #{rendTrainerLogId,jdbcType=INTEGER},
       </if>
     </set>
     where trainer_id = #{trainerId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xidian.meiping.entity.Trainer" >
-    update trainers
-    set price = #{price,jdbcType=DOUBLE}
+    update trainer
+    set price = #{price,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      rend_trainer_log_id = #{rendTrainerLogId,jdbcType=INTEGER}
     where trainer_id = #{trainerId,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -2,7 +2,7 @@ package com.xidian.meiping.service.implement;
 
 import com.xidian.meiping.dao.EmployeeMapper;
 import com.xidian.meiping.entity.Employee;
-import com.xidian.meiping.service.EmployeeService;
+import com.xidian.meiping.service.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

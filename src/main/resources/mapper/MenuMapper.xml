@@ -10,7 +10,7 @@
   <sql id="Base_Column_List" >
     menu_id, menu_name, parent_menu_id, value
   </sql>
-  <select id="selectAll" resultMap="BaseResultMap" >
+  <select id="selectAll" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from menu

@@ -1,0 +1,68 @@
+<html lang="en">
+<section class="content-header">
+    <h1> 商品退货</h1>
+    <ol class="breadcrumb">
+        <li><a href="../"><i class="fa fa-object-group"></i> 首页</a></li>
+        <li> 商品设置</li>
+        <li class="active"> 商品退货</li>
+    </ol>
+</section><!-- ./content-header -->
+<head>
+    <!--<script type="text/javascript" src="js/common.js"></script>-->
+    <script type="text/javascript" src="js/goodsSetting/goodReturning.js"></script>
+    <script type="text/javascript" src="js/demos.js"></script>
+
+    <script class="popUpWindow" type="text/html">
+        <form action="">
+            <div class="popUpWindow" >
+                <table>
+                    <tr>
+                        <td >商品编号：
+                            <input type="text" id="id" disabled="disabled">
+                        </td>
+                        <td>商品名称：
+                            <input type="text" id="name" disabled="disabled">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>商品库存：
+                            <input type="text" id="leftNumber" disabled="disabled">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>退货单价：
+                            <input type="text" id="buyingPrice" placeholder="退货单价">
+                        </td>
+                        <td>参考进价：
+                            <input type="text" id="refrencePrice" disabled="disabled">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>退货数量：
+                            <input type="text" id="number" placeholder="退货数量">
+                        </td>
+                        <td>总 金 额：&nbsp;&nbsp;
+                            <input type="text" id="totalAmount" placeholder="总金额" disabled="disabled">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    </script>
+</head>
+<section class="container-fluid">
+    <!--<div id="jqxGrid">-->
+    <!--</div>-->
+    <table style="border-width:10px">
+        <tr>
+            <td>
+                <div id="jqxGrid">
+                </div></td>
+            <td>
+                <div id="jqxGrid2">
+                </div>
+            </td>
+        </tr>
+    </table>
+</section>
+</html>

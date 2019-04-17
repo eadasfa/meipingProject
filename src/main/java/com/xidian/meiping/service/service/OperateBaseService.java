@@ -1,4 +1,4 @@
-package com.xidian.meiping.service;
+package com.xidian.meiping.service.service;
 
 import java.util.List;
 

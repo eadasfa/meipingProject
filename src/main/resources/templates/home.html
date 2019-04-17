@@ -78,19 +78,20 @@
                             <!-- 右上角用户头像 -->
                             <!--<img src = "images/user-160px.png" class = "user-image" alt = "User Image">-->
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                            <span th:text="${name}"></span>
+                            <span class="employee-name"></span>
                         </a>
                         <ul class = "dropdown-menu">
                             <!-- 用户菜单头像 -->
                             <li class = "user-header">
                                 <!--<img src = "images/user-160px.png" class = "img-circle" alt = "User Image">-->
-                                <p class = "yhmc">员工姓名：<span th:text="${name}"></span></p>
-
+                                <!--<p class = "yhmc">员工姓名：<span th:text="${name}"></span></p>-->
+                                <p class = "yhmc">员工姓名：<span class="employee-name"></span></p>
                             </li>
                             <!-- Menu Body -->
                             <li class = "user-body">
-                                <p class = "yhmc">员工权限：<span th:text="${permission}"></span></p>
-                                <p class = "yhmc">员工编号：<span th:text="${id}"></span></p>
+                                <p class = "yhmc">员工权限：<span class="employee-permission"></span></p>
+                                <p class = "yhmc">员工编号：<span class="employee-id"></span></p>
+                                <p class = "yhmc">员工职位：<span class="employee-position"></span></p>
                                 <!--<div class = "row">-->
                                     <!--<div class = "col-xs-4 text-center">-->
                                         <!--<a href = "#" id = "clear">清除缓存</a>-->
@@ -155,6 +156,8 @@
 <script type="text/javascript" src="components/jqwidgets/globalization/globalize.culture.zh.js"></script>
 
 <script type="text/javascript" src="components/layui/layui.all.js"></script>
+<script type="text/javascript" src="js/commonValue.js"></script>
 <script type="text/javascript" src="js/home.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
 
 </html>

@@ -2,7 +2,7 @@ package com.xidian.meiping.service.implement;
 
 import com.xidian.meiping.dao.CardMapper;
 import com.xidian.meiping.entity.Card;
-import com.xidian.meiping.service.CardService;
+import com.xidian.meiping.service.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

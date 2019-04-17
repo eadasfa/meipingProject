@@ -1,24 +1,19 @@
 $(document).ready(function () {
     var url = "/systemSetting/operater/operate";
     var sourceUrl = "/systemSetting/getOperaters";
-    var ADD = 'add';
-    var UPDATE = 'update';
-    var DELETE = 'delete';
-    var SEARCH = 'search';
     var columns=[
-        { text: '员工编号', datafield: 'operaterId', width: 200 },
+        { text: '员工编号', datafield: 'id', width: 200 },
         { text: '员工姓名', datafield: 'name', width: 200 },
         { text: '员工权限', datafield: 'permission', width: 180 },
         { text: '员工职位', datafield: 'position', width: 180 }
     ];
-    var positions = LoadAjaxJson({},"",
-        "/systemSetting/getPosition").data;
+    var employees = LoadAjax({},"/systemSetting/getEmployees",false)
     var source =
         {
             datatype: "json",
             datafields:
                 [
-                    { name: 'operaterId' },
+                    { name: 'id' },
                     { name: 'name' },
                     { name: 'permission' },
                     { name: 'position' }
@@ -65,6 +60,7 @@ $(document).ready(function () {
         showtoolbar: true,
         rendertoolbar: function (toolbar) {
             setToolBar();
+            operaters = dataAdapter.recordids;
             var container = $("<div style='margin: 5px;'></div>");
             toolbar.append(container);
             container.append('<input id="addrowbutton" type="button" value="增加" />');
@@ -76,22 +72,30 @@ $(document).ready(function () {
 
             // update row.
             $("#updaterowbutton").on('click', function () {
-                cardOperate(UPDATE);
+                Operate(UPDATE);
             });
             // create new row.
             $("#addrowbutton").on('click', function () {
-                cardOperate(ADD);
+                Operate(ADD);
             });
             // delete row.
             $("#deleterowbutton").on('click', function () {
-                cardOperate(DELETE);
+                Operate(DELETE);
             });
         },
         columns: columns
     });
+    $('#jqxGrid').on('rowdoubleclick', function (event) {
+        var args = event.args;
+        // row's bound index.
+        var boundIndex = args.rowindex;
+        var data = $('#jqxGrid').jqxGrid('getrowdata', boundIndex);
+        var id = $('#jqxGrid').jqxGrid('getrowid', boundIndex);
+        Operate(UPDATE);
+    });
 
     //根据不同operateId弹出不同的窗口
-    function cardOperate(operateId) {
+    function Operate(operateId) {
         if(operateId==DELETE){
             if(isSelectedAItem()) deleteItem(url);
             else alert("请先选中要删除的记录！")
@@ -131,9 +135,10 @@ $(document).ready(function () {
     }
 
     function initChildWindowBeforeOpen(operateId){
-        for(var i=0;i<positions.length;i++){
-            var temp = positions[i];
-            $("#position").append('<option value='+temp.name+'>'+temp.name+'</option>')
+        function changeText(athis) {
+            if($(athis).val().length==0){
+                $(athis).attr("type","text");
+            }
         }
         if(operateId==UPDATE){
             var row = getSelectRow().rowdata;
@@ -144,12 +149,36 @@ $(document).ready(function () {
             $("#permission").val(row['permission']);
             $("#position").val(row['position']);
             $("#id").attr("disabled","disabled");
+            $("#position").attr("disabled","disabled");
+            $("#name").attr("disabled","disabled");
+        }if(operateId==ADD){
+            $("#id").change(function () {
+                for(var i=0;i<employees.length;i++){
+                    if($(this).val()==employees[i].id){
+                        $("#name").val(employees[i].name);
+                        $("#position").val(employees[i].position);
+                        $("#position").attr("disabled","disabled");
+                        $("#name").attr("disabled","disabled");
+                    }
+                }
+            });
+            for(var i=0;i<employees.length;i++){
+                $("#id-list").append('<option>'+employees[i].id+'</option>');
+            }
         }
     }
     function addItem(){
+
         var row= getInputRow();
         // console.log("getInputRow:"+JSON.stringify(row))
         if(row == false) return false;
+
+        for(var i=0;i<employees.length&&row['id']!=employees[i].id;i++);
+        if(i==employees.length) {
+            alert("您输入的员工编号不存在");
+            return false;
+        }
+
         return addItemCommon(row,url);
     }
     function updateItem(){
@@ -163,6 +192,12 @@ $(document).ready(function () {
     function getInputRow(){
         var numCells=[{'name':'id','type':1,'label':'员工编号'},
             {'name':'permission','type':1,'label':'员工权限'}];
-        return getInputRowCommon(columns,numCells)
+        row =  getInputRowCommon(columns,numCells)
+        if(row == false) return false;
+        var pw = $("#password").val();
+        if(pw==null||pw==undefined) {alert("请输入密码");return false;}
+        else if(pw!=$("#check_password").val()) {alert("密码输入不一致");return false;}
+        row["password"] = pw;
+        return row;
     }
 });

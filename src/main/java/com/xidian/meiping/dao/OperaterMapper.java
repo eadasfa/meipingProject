@@ -11,12 +11,13 @@ public interface OperaterMapper {
 
     int insertSelective(Operater record);
 
-    Operater selectByPrimaryKeyIncludePw(Integer operaterId);
-    Operater selectByPrimaryKey(Integer operaterId);
+    Operater selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(Operater record);
 
     int updateByPrimaryKey(Operater record);
+
+    Operater selectByPrimaryKeyIncludePw(Integer id);
 
     List<Operater> selectAll();
 }

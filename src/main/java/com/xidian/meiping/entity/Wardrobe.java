@@ -1,7 +1,5 @@
 package com.xidian.meiping.entity;
 
-import com.xidian.meiping.util.JSONUtil;
-
 import javax.servlet.http.HttpServletRequest;
 
 public class Wardrobe {
@@ -11,7 +9,7 @@ public class Wardrobe {
 
     private Integer status;
 
-    private Integer memberId;
+    private Integer rendWardrobeLogId;
 
     public Integer getId() {
         return id;
@@ -37,12 +35,12 @@ public class Wardrobe {
         this.status = status;
     }
 
-    public Integer getMemberId() {
-        return memberId;
+    public Integer getRendWardrobeLogId() {
+        return rendWardrobeLogId;
     }
 
-    public void setMemberId(Integer memberId) {
-        this.memberId = memberId;
+    public void setRendWardrobeLogId(Integer rendWardrobeLogId) {
+        this.rendWardrobeLogId = rendWardrobeLogId;
     }
 
     public static Wardrobe newInstance(HttpServletRequest request){

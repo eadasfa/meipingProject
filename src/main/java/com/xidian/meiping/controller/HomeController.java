@@ -2,10 +2,10 @@ package com.xidian.meiping.controller;
 
 import com.xidian.meiping.entity.Menu;
 import com.xidian.meiping.entity.Operater;
-import com.xidian.meiping.service.MenuService;
-import com.xidian.meiping.service.OperaterService;
+import com.xidian.meiping.service.service.MenuService;
+import com.xidian.meiping.service.service.OperaterService;
+
 import com.xidian.meiping.util.JSONUtil;
-import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -32,7 +32,7 @@ public class HomeController {
 
     @RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
     public String homePage(Model model) {
-        setModel(model);
+//        setModel(model);
         return "home";
     }
     @RequestMapping("/home/{fileName}/{html}")
@@ -50,6 +50,14 @@ public class HomeController {
         System.out.println("getMenuList：ENTER");
         return jsonArray.toString();
     }
+    @ResponseBody
+    @RequestMapping(value="/getCurrentOperater",produces = "text/html;charset=UTF-8")
+    public String getCurrentOperater(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String id = user.getUsername(); //saysky 或 空指针异常
+        Operater operater = operaterService.findById(Integer.parseInt(id));
+        return JSONUtil.ObjecttoJson(operater, true,"");
+    }
     private void setModel(Model model) {
         //如果登录了，name即用户名；如果没有登录，默认为 anonymousUser
         //方法一、
@@ -61,7 +69,7 @@ public class HomeController {
         String id = user.getUsername(); //saysky 或 空指针异常
 //        System.out.println(id);
         Operater operater = operaterService.findById(Integer.parseInt(id));
-        model.addAttribute("id",operater.getOperaterId());
+        model.addAttribute("id",operater.getId());
         model.addAttribute("name",operater.getName());
         model.addAttribute("permission",operater.getPermission());
     }

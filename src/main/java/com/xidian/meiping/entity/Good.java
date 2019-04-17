@@ -1,5 +1,14 @@
 package com.xidian.meiping.entity;
 
+import com.xidian.meiping.controller.CommonController;
+import com.xidian.meiping.util.CommonUtil;
+
+import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+
 public class Good {
     private Integer id;
 
@@ -9,9 +18,9 @@ public class Good {
 
     private Double sellingPrice;
 
-    private Integer needCredits;
+    private Integer credit;
 
-    private Integer number;
+    private Integer leftNumber;
 
     public Integer getId() {
         return id;
@@ -45,19 +54,20 @@ public class Good {
         this.sellingPrice = sellingPrice;
     }
 
-    public Integer getNeedCredits() {
-        return needCredits;
+    public Integer getCredit() {
+        return credit;
     }
 
-    public void setNeedCredits(Integer needCredits) {
-        this.needCredits = needCredits;
+    public void setCredit(Integer credit) {
+        this.credit = credit;
     }
 
-    public Integer getNumber() {
-        return number;
+    public Integer getLeftNumber() {
+        return leftNumber;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
+    public void setLeftNumber(Integer leftNumber) {
+        this.leftNumber = leftNumber;
     }
+
 }

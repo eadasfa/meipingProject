@@ -2,50 +2,55 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xidian.meiping.dao.OperaterMapper" >
   <resultMap id="BaseResultMap" type="com.xidian.meiping.entity.Operater" >
-    <id column="operater_id" property="operaterId" jdbcType="INTEGER" />
+    <id column="operater_id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="permission" property="permission" jdbcType="INTEGER" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="position_name" property="position" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List_include_pw" >
     operater_id, password, permission, name
   </sql>
   <sql id="Base_Column_List" >
-    operater_id, permission, operaters.name, position
+    operater_id, permission, e.name, position_name
   </sql>
   <select id="selectAll" resultMap="BaseResultMap" >
     select
     <include refid="Base_Column_List" />
-    from operaters,employees as e
+    from operater,employee as e
     where e.id = operater_id
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
     <include refid="Base_Column_List" />
-    from operaters,employees as e
-    where operater_id = #{operaterId,jdbcType=INTEGER} and e.id = operater_id
+    from operater,employee as e
+    where operater_id = #{id,jdbcType=INTEGER}
+          and e.id = operater_id
   </select>
   <select id="selectByPrimaryKeyIncludePw" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
     <include refid="Base_Column_List_include_pw" />
-    from operaters
-    where operater_id = #{operaterId,jdbcType=INTEGER}
+    from operater
+    where operater_id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from operaters
-    where operater_id = #{operaterId,jdbcType=INTEGER}
+    delete from operater
+    where operater_id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xidian.meiping.entity.Operater" >
-    insert into operaters (operater_id, password, permission, 
-      name)
-    values (#{operaterId,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, #{permission,jdbcType=INTEGER}, 
-      #{name,jdbcType=VARCHAR})
+    insert into operater (operater_id, name, password, 
+      permission)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+      #{permission,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.meiping.entity.Operater" >
-    insert into operaters
+    insert into operater
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="operaterId != null" >
+      <if test="id != null" >
         operater_id,
+      </if>
+      <if test="name != null" >
+        name,
       </if>
       <if test="password != null" >
         password,
@@ -53,13 +58,13 @@
       <if test="permission != null" >
         permission,
       </if>
-      <if test="name != null" >
-        name,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="operaterId != null" >
-        #{operaterId,jdbcType=INTEGER},
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
       </if>
       <if test="password != null" >
         #{password,jdbcType=VARCHAR},
@@ -67,31 +72,28 @@
       <if test="permission != null" >
         #{permission,jdbcType=INTEGER},
       </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.xidian.meiping.entity.Operater" >
-    update operaters
+    update operater
     <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
       <if test="password != null" >
         password = #{password,jdbcType=VARCHAR},
       </if>
       <if test="permission != null" >
         permission = #{permission,jdbcType=INTEGER},
       </if>
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
-      </if>
     </set>
-    where operater_id = #{operaterId,jdbcType=INTEGER}
+    where operater_id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xidian.meiping.entity.Operater" >
-    update operaters
-    set password = #{password,jdbcType=VARCHAR},
-      permission = #{permission,jdbcType=INTEGER},
-      name = #{name,jdbcType=VARCHAR}
-    where operater_id = #{operaterId,jdbcType=INTEGER}
+    update operater
+    set name = #{name,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      permission = #{permission,jdbcType=INTEGER}
+    where operater_id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

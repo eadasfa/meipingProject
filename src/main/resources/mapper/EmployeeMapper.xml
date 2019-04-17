@@ -5,52 +5,53 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="tele_number" property="teleNumber" jdbcType="VARCHAR" />
-    <result column="position" property="position" jdbcType="VARCHAR" />
+    <result column="position_name" property="position" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, tele_number, position
+    id, name, tele_number, position_name, status
   </sql>
-  <select id="selectAll" resultMap="BaseResultMap" >
+  <select id="selectAll" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from employees
+    from employee
   </select>
-  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String">
     select
     <include refid="Base_Column_List" />
-    from employees
+    from employee
     where name = #{name,jdbcType=VARCHAR}
   </select>
-  <select id="selectByTeleNumber" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByTeleNumber" resultMap="BaseResultMap" parameterType="java.lang.String">
     select
     <include refid="Base_Column_List" />
-    from employees
+    from employee
     where tele_number = #{teleNumber,jdbcType=VARCHAR}
   </select>
-  <select id="selectByPosition" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPosition" resultMap="BaseResultMap" parameterType="java.lang.String">
     select
     <include refid="Base_Column_List" />
-    from employees
-    where position = #{position,jdbcType=VARCHAR}
+    from employee
+    where position_name = #{position,jdbcType=VARCHAR}
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select
+    select 
     <include refid="Base_Column_List" />
-    from employees
+    from employee
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from employees
+    delete from employee
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xidian.meiping.entity.Employee" >
-    insert into employees (id, name, tele_number, 
-      position)
+    insert into employee (id, name, tele_number, 
+      position_name, status)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{teleNumber,jdbcType=VARCHAR}, 
-      #{position,jdbcType=VARCHAR})
+      #{position,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.meiping.entity.Employee" >
-    insert into employees
+    insert into employee
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -62,7 +63,10 @@
         tele_number,
       </if>
       <if test="position != null" >
-        position,
+        position_name,
+      </if>
+      <if test="status != null" >
+        status,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -78,10 +82,13 @@
       <if test="position != null" >
         #{position,jdbcType=VARCHAR},
       </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.xidian.meiping.entity.Employee" >
-    update employees
+    update employee
     <set >
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
@@ -90,16 +97,20 @@
         tele_number = #{teleNumber,jdbcType=VARCHAR},
       </if>
       <if test="position != null" >
-        position = #{position,jdbcType=VARCHAR},
+        position_name = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xidian.meiping.entity.Employee" >
-    update employees
+    update employee
     set name = #{name,jdbcType=VARCHAR},
       tele_number = #{teleNumber,jdbcType=VARCHAR},
-      position = #{position,jdbcType=VARCHAR}
+      position_name = #{position,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

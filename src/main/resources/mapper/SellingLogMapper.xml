@@ -5,19 +5,56 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="good_id" property="goodId" jdbcType="INTEGER" />
     <result column="member_id" property="memberId" jdbcType="INTEGER" />
-    <result column="good_name" property="goodName" jdbcType="VARCHAR" />
+    <result column="number" property="number" jdbcType="INTEGER" />
     <result column="selling_type" property="sellingType" jdbcType="INTEGER" />
-    <result column="price" property="price" jdbcType="DOUBLE" />
-    <result column="selling_date" property="sellingDate" jdbcType="TIMESTAMP" />
-    <result column="operater_id" property="operaterId" jdbcType="INTEGER" />
+    <result column="selling_price" property="sellingPrice" jdbcType="DOUBLE" />
+    <result column="selling_time" property="sellingTime" jdbcType="TIMESTAMP" />
     <result column="account" property="account" jdbcType="DOUBLE" />
+    <result column="operater_id" property="operaterId" jdbcType="INTEGER" />
+    <!--总价-->
+    <result column="total_amount" property="totalAmount" jdbcType="INTEGER" />
+    <result column="good_name" property="goodName" jdbcType="VARCHAR" />
+    <result column="operater_name" property="operaterName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, good_id, member_id, good_name, selling_type, price, selling_date, operater_id, 
-    account
+    id, good_id, member_id, number, selling_type, selling_price, selling_time, account,
+    operater_id
   </sql>
+  <sql id="Base_Column_List_Sp" >
+    selling_time,good_id,good.name as good_name,selling_log.selling_price,
+    selling_log.number,operater_id,employee.name as operater_name,
+    selling_log.selling_price*selling_log.number as total_amount
+  </sql>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List_Sp" />
+    from selling_log,good,employee
+    where employee.id = selling_log.operater_id and
+          good.id = selling_log.good_id and
+          selling_log.selling_type = 0
+  </select>
+  <select id="searchByDate" resultMap="BaseResultMap"  >
+    select
+    <include refid="Base_Column_List_Sp" />
+    from selling_log,employee,good
+    where DATE_FORMAT(selling_log.selling_time,'%Y-%m-%d')
+    BETWEEN #{date1,jdbcType=VARCHAR}
+    and #{date2,jdbcType=VARCHAR}
+    and good.id = selling_log.good_id
+    and employee.id = selling_log.operater_id
+    and selling_log.selling_type = 0
+    <if test="goodId != null" >
+      and selling_log.good_id = #{goodId,jdbcType=INTEGER}
+    </if>
+    <if test="operaterId != null" >
+      and selling_log.operater_id = #{operaterId,jdbcType=INTEGER}
+    </if>
+    <if test="memberId != null" >
+      and selling_log.member_id = #{memberId,jdbcType=INTEGER}
+    </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from selling_log
     where id = #{id,jdbcType=INTEGER}
@@ -28,12 +65,12 @@
   </delete>
   <insert id="insert" parameterType="com.xidian.meiping.entity.SellingLog" >
     insert into selling_log (id, good_id, member_id, 
-      good_name, selling_type, price, 
-      selling_date, operater_id, account
+      number, selling_type, selling_price, 
+      selling_time, account, operater_id
       )
     values (#{id,jdbcType=INTEGER}, #{goodId,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, 
-      #{goodName,jdbcType=VARCHAR}, #{sellingType,jdbcType=INTEGER}, #{price,jdbcType=DOUBLE}, 
-      #{sellingDate,jdbcType=TIMESTAMP}, #{operaterId,jdbcType=INTEGER}, #{account,jdbcType=DOUBLE}
+      #{number,jdbcType=INTEGER}, #{sellingType,jdbcType=INTEGER}, #{sellingPrice,jdbcType=DOUBLE}, 
+      #{sellingTime,jdbcType=TIMESTAMP}, #{account,jdbcType=DOUBLE}, #{operaterId,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.meiping.entity.SellingLog" >
@@ -48,23 +85,23 @@
       <if test="memberId != null" >
         member_id,
       </if>
-      <if test="goodName != null" >
-        good_name,
+      <if test="number != null" >
+        number,
       </if>
       <if test="sellingType != null" >
         selling_type,
       </if>
-      <if test="price != null" >
-        price,
+      <if test="sellingPrice != null" >
+        selling_price,
       </if>
-      <if test="sellingDate != null" >
-        selling_date,
-      </if>
-      <if test="operaterId != null" >
-        operater_id,
+      <if test="sellingTime != null" >
+        selling_time,
       </if>
       <if test="account != null" >
         account,
+      </if>
+      <if test="operaterId != null" >
+        operater_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -77,23 +114,23 @@
       <if test="memberId != null" >
         #{memberId,jdbcType=INTEGER},
       </if>
-      <if test="goodName != null" >
-        #{goodName,jdbcType=VARCHAR},
+      <if test="number != null" >
+        #{number,jdbcType=INTEGER},
       </if>
       <if test="sellingType != null" >
         #{sellingType,jdbcType=INTEGER},
       </if>
-      <if test="price != null" >
-        #{price,jdbcType=DOUBLE},
+      <if test="sellingPrice != null" >
+        #{sellingPrice,jdbcType=DOUBLE},
       </if>
-      <if test="sellingDate != null" >
-        #{sellingDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="operaterId != null" >
-        #{operaterId,jdbcType=INTEGER},
+      <if test="sellingTime != null" >
+        #{sellingTime,jdbcType=TIMESTAMP},
       </if>
       <if test="account != null" >
         #{account,jdbcType=DOUBLE},
+      </if>
+      <if test="operaterId != null" >
+        #{operaterId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -106,23 +143,23 @@
       <if test="memberId != null" >
         member_id = #{memberId,jdbcType=INTEGER},
       </if>
-      <if test="goodName != null" >
-        good_name = #{goodName,jdbcType=VARCHAR},
+      <if test="number != null" >
+        number = #{number,jdbcType=INTEGER},
       </if>
       <if test="sellingType != null" >
         selling_type = #{sellingType,jdbcType=INTEGER},
       </if>
-      <if test="price != null" >
-        price = #{price,jdbcType=DOUBLE},
+      <if test="sellingPrice != null" >
+        selling_price = #{sellingPrice,jdbcType=DOUBLE},
       </if>
-      <if test="sellingDate != null" >
-        selling_date = #{sellingDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="operaterId != null" >
-        operater_id = #{operaterId,jdbcType=INTEGER},
+      <if test="sellingTime != null" >
+        selling_time = #{sellingTime,jdbcType=TIMESTAMP},
       </if>
       <if test="account != null" >
         account = #{account,jdbcType=DOUBLE},
+      </if>
+      <if test="operaterId != null" >
+        operater_id = #{operaterId,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -131,12 +168,12 @@
     update selling_log
     set good_id = #{goodId,jdbcType=INTEGER},
       member_id = #{memberId,jdbcType=INTEGER},
-      good_name = #{goodName,jdbcType=VARCHAR},
+      number = #{number,jdbcType=INTEGER},
       selling_type = #{sellingType,jdbcType=INTEGER},
-      price = #{price,jdbcType=DOUBLE},
-      selling_date = #{sellingDate,jdbcType=TIMESTAMP},
-      operater_id = #{operaterId,jdbcType=INTEGER},
-      account = #{account,jdbcType=DOUBLE}
+      selling_price = #{sellingPrice,jdbcType=DOUBLE},
+      selling_time = #{sellingTime,jdbcType=TIMESTAMP},
+      account = #{account,jdbcType=DOUBLE},
+      operater_id = #{operaterId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

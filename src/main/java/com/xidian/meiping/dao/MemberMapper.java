@@ -17,5 +17,5 @@ public interface MemberMapper {
 
     int updateByPrimaryKey(Member record);
 
-    List<Member> selectAllMember();
+    List<Member> selectAll();
 }

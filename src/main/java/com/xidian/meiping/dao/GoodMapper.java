@@ -2,6 +2,8 @@ package com.xidian.meiping.dao;
 
 import com.xidian.meiping.entity.Good;
 
+import java.util.List;
+
 public interface GoodMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,8 @@ public interface GoodMapper {
     int updateByPrimaryKeySelective(Good record);
 
     int updateByPrimaryKey(Good record);
+
+    List<Good> selectAll();
+
+    List<Good> selectByName(String name);
 }

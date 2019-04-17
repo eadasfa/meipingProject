@@ -6,32 +6,43 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="buying_price" property="buyingPrice" jdbcType="DOUBLE" />
     <result column="selling_price" property="sellingPrice" jdbcType="DOUBLE" />
-    <result column="need_credits" property="needCredits" jdbcType="INTEGER" />
-    <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="credit" property="credit" jdbcType="INTEGER" />
+    <result column="left_number" property="leftNumber" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, buying_price, selling_price, need_credits, number
+    id, name, buying_price, selling_price, credit, left_number
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+  <select id="selectAll" resultMap="BaseResultMap"  >
+    select
     <include refid="Base_Column_List" />
-    from goods
+    from good
+  </select>
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from good
+    where name = #{name,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from good
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from goods
+    delete from good
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xidian.meiping.entity.Good" >
-    insert into goods (id, name, buying_price, 
-      selling_price, need_credits, number
+    insert into good (id, name, buying_price, 
+      selling_price, credit, left_number
       )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{buyingPrice,jdbcType=DOUBLE}, 
-      #{sellingPrice,jdbcType=DOUBLE}, #{needCredits,jdbcType=INTEGER}, #{number,jdbcType=INTEGER}
+      #{sellingPrice,jdbcType=DOUBLE}, #{credit,jdbcType=INTEGER}, #{leftNumber,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.meiping.entity.Good" >
-    insert into goods
+    insert into good
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -45,11 +56,11 @@
       <if test="sellingPrice != null" >
         selling_price,
       </if>
-      <if test="needCredits != null" >
-        need_credits,
+      <if test="credit != null" >
+        credit,
       </if>
-      <if test="number != null" >
-        number,
+      <if test="leftNumber != null" >
+        left_number,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -65,16 +76,16 @@
       <if test="sellingPrice != null" >
         #{sellingPrice,jdbcType=DOUBLE},
       </if>
-      <if test="needCredits != null" >
-        #{needCredits,jdbcType=INTEGER},
+      <if test="credit != null" >
+        #{credit,jdbcType=INTEGER},
       </if>
-      <if test="number != null" >
-        #{number,jdbcType=INTEGER},
+      <if test="leftNumber != null" >
+        #{leftNumber,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.xidian.meiping.entity.Good" >
-    update goods
+    update good
     <set >
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
@@ -85,22 +96,22 @@
       <if test="sellingPrice != null" >
         selling_price = #{sellingPrice,jdbcType=DOUBLE},
       </if>
-      <if test="needCredits != null" >
-        need_credits = #{needCredits,jdbcType=INTEGER},
+      <if test="credit != null" >
+        credit = #{credit,jdbcType=INTEGER},
       </if>
-      <if test="number != null" >
-        number = #{number,jdbcType=INTEGER},
+      <if test="leftNumber != null" >
+        left_number = #{leftNumber,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xidian.meiping.entity.Good" >
-    update goods
+    update good
     set name = #{name,jdbcType=VARCHAR},
       buying_price = #{buyingPrice,jdbcType=DOUBLE},
       selling_price = #{sellingPrice,jdbcType=DOUBLE},
-      need_credits = #{needCredits,jdbcType=INTEGER},
-      number = #{number,jdbcType=INTEGER}
+      credit = #{credit,jdbcType=INTEGER},
+      left_number = #{leftNumber,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

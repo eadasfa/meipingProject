@@ -1,7 +1,9 @@
-
     $(document).ready(function () {
         var pages={};
         // prepare the data
+        operater = (LoadAjaxJson({},"",
+            "/getCurrentOperater").data)[0];
+        initHome();
         var source =
             {
                 datatype: "json",
@@ -41,7 +43,7 @@
             var value = item.value;
             if(value !== '') {
                 var ii = layer.load();
-                if(pages[value]!=undefined)
+                if(!RELOAD&&pages[value]!=undefined)
                     $(".content-wrapper").html(pages[value]);
                 else
                     LoadAjaxContent(value);
@@ -79,5 +81,12 @@
                     confirmButtonText: "关闭"
                 })
             });
+        }
+        function initHome() {
+            console.log(JSON.stringify(operater))
+            $("span.employee-name").text(operater.name);
+            $("span.employee-permission").text(operater.permission+" 级");
+            $("span.employee-id").text(operater.operaterId);
+            $("span.employee-position").text(operater.position);
         }
     });

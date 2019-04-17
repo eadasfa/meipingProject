@@ -1,4 +1,4 @@
-package com.xidian.meiping.service;
+package com.xidian.meiping.service.service;
 
 import com.xidian.meiping.entity.Card;
 

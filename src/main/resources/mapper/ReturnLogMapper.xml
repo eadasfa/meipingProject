@@ -4,14 +4,13 @@
   <resultMap id="BaseResultMap" type="com.xidian.meiping.entity.ReturnLog" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="good_id" property="goodId" jdbcType="INTEGER" />
-    <result column="good_name" property="goodName" jdbcType="VARCHAR" />
     <result column="return_price" property="returnPrice" jdbcType="DOUBLE" />
     <result column="return_number" property="returnNumber" jdbcType="INTEGER" />
-    <result column="return_date" property="returnDate" jdbcType="TIMESTAMP" />
+    <result column="return_time" property="returnTime" jdbcType="TIMESTAMP" />
     <result column="operater_id" property="operaterId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, good_id, good_name, return_price, return_number, return_date, operater_id
+    id, good_id, return_price, return_number, return_time, operater_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -24,12 +23,12 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xidian.meiping.entity.ReturnLog" >
-    insert into return_log (id, good_id, good_name, 
-      return_price, return_number, return_date, 
-      operater_id)
-    values (#{id,jdbcType=INTEGER}, #{goodId,jdbcType=INTEGER}, #{goodName,jdbcType=VARCHAR}, 
-      #{returnPrice,jdbcType=DOUBLE}, #{returnNumber,jdbcType=INTEGER}, #{returnDate,jdbcType=TIMESTAMP}, 
-      #{operaterId,jdbcType=INTEGER})
+    insert into return_log (id, good_id, return_price, 
+      return_number, return_time, operater_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{goodId,jdbcType=INTEGER}, #{returnPrice,jdbcType=DOUBLE}, 
+      #{returnNumber,jdbcType=INTEGER}, #{returnTime,jdbcType=TIMESTAMP}, #{operaterId,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.meiping.entity.ReturnLog" >
     insert into return_log
@@ -40,17 +39,14 @@
       <if test="goodId != null" >
         good_id,
       </if>
-      <if test="goodName != null" >
-        good_name,
-      </if>
       <if test="returnPrice != null" >
         return_price,
       </if>
       <if test="returnNumber != null" >
         return_number,
       </if>
-      <if test="returnDate != null" >
-        return_date,
+      <if test="returnTime != null" >
+        return_time,
       </if>
       <if test="operaterId != null" >
         operater_id,
@@ -63,17 +59,14 @@
       <if test="goodId != null" >
         #{goodId,jdbcType=INTEGER},
       </if>
-      <if test="goodName != null" >
-        #{goodName,jdbcType=VARCHAR},
-      </if>
       <if test="returnPrice != null" >
         #{returnPrice,jdbcType=DOUBLE},
       </if>
       <if test="returnNumber != null" >
         #{returnNumber,jdbcType=INTEGER},
       </if>
-      <if test="returnDate != null" >
-        #{returnDate,jdbcType=TIMESTAMP},
+      <if test="returnTime != null" >
+        #{returnTime,jdbcType=TIMESTAMP},
       </if>
       <if test="operaterId != null" >
         #{operaterId,jdbcType=INTEGER},
@@ -86,17 +79,14 @@
       <if test="goodId != null" >
         good_id = #{goodId,jdbcType=INTEGER},
       </if>
-      <if test="goodName != null" >
-        good_name = #{goodName,jdbcType=VARCHAR},
-      </if>
       <if test="returnPrice != null" >
         return_price = #{returnPrice,jdbcType=DOUBLE},
       </if>
       <if test="returnNumber != null" >
         return_number = #{returnNumber,jdbcType=INTEGER},
       </if>
-      <if test="returnDate != null" >
-        return_date = #{returnDate,jdbcType=TIMESTAMP},
+      <if test="returnTime != null" >
+        return_time = #{returnTime,jdbcType=TIMESTAMP},
       </if>
       <if test="operaterId != null" >
         operater_id = #{operaterId,jdbcType=INTEGER},
@@ -107,10 +97,9 @@
   <update id="updateByPrimaryKey" parameterType="com.xidian.meiping.entity.ReturnLog" >
     update return_log
     set good_id = #{goodId,jdbcType=INTEGER},
-      good_name = #{goodName,jdbcType=VARCHAR},
       return_price = #{returnPrice,jdbcType=DOUBLE},
       return_number = #{returnNumber,jdbcType=INTEGER},
-      return_date = #{returnDate,jdbcType=TIMESTAMP},
+      return_time = #{returnTime,jdbcType=TIMESTAMP},
       operater_id = #{operaterId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>

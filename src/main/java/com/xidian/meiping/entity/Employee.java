@@ -11,6 +11,8 @@ public class Employee {
 
     private String position;
 
+    private Integer status;
+
     public Integer getId() {
         return id;
     }
@@ -43,6 +45,13 @@ public class Employee {
         this.position = position == null ? null : position.trim();
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
     public static Employee newInstance(HttpServletRequest request){
         Employee e = new Employee();
         String temp = request.getParameter("id");
@@ -53,6 +62,7 @@ public class Employee {
         if (temp!=null) e.setTeleNumber(temp);
         temp = request.getParameter("position");
         if (temp!=null) e.setPosition(temp);
+        e.setStatus(0);
         return e;
     }
 }

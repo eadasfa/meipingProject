@@ -2,10 +2,7 @@ $(document).ready(function () {
     var url = '/systemSetting/backupandrestore/operate';
     var isAutoBackupBefore = false;
     var gapHoursBefore = 1;
-    var BACKUP = 'backup';
-    var AUTO_BACKUP = 'autoBackup' ;
-    var STOP_AUTO_BACKUP = 'stopAutoBackup'
-    var RESTORE_DB = "restoreDB";
+
     init();
     function init() {
         var ii = layer.open({

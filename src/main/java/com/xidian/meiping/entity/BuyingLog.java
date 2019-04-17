@@ -3,6 +3,7 @@ package com.xidian.meiping.entity;
 import java.util.Date;
 
 public class BuyingLog {
+
     private Integer id;
 
     private Integer goodId;
@@ -13,9 +14,37 @@ public class BuyingLog {
 
     private Integer number;
 
-    private Date buyingDate;
+    private String buyingTime;
 
     private Integer operaterId;
+
+    private String operaterName;
+
+    private Double totalAmount;
+
+    public String getOperaterName() {
+        return operaterName;
+    }
+
+    public void setOperaterName(String operaterName) {
+        this.operaterName = operaterName;
+    }
+
+    public String getGoodName() {
+        return goodName;
+    }
+
+    public void setGoodName(String goodName) {
+        this.goodName = goodName;
+    }
+
+    public Double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(Double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
 
     public Integer getId() {
         return id;
@@ -31,14 +60,6 @@ public class BuyingLog {
 
     public void setGoodId(Integer goodId) {
         this.goodId = goodId;
-    }
-
-    public String getGoodName() {
-        return goodName;
-    }
-
-    public void setGoodName(String goodName) {
-        this.goodName = goodName == null ? null : goodName.trim();
     }
 
     public Double getBuyingPrice() {
@@ -57,12 +78,12 @@ public class BuyingLog {
         this.number = number;
     }
 
-    public Date getBuyingDate() {
-        return buyingDate;
+    public String getBuyingTime() {
+        return buyingTime.split("\\s+")[0];
     }
 
-    public void setBuyingDate(Date buyingDate) {
-        this.buyingDate = buyingDate;
+    public void setBuyingTime(String buyingTime) {
+        this.buyingTime = buyingTime;
     }
 
     public Integer getOperaterId() {
@@ -71,5 +92,17 @@ public class BuyingLog {
 
     public void setOperaterId(Integer operaterId) {
         this.operaterId = operaterId;
+    }
+    public static void main(String[] args){
+
+        Date date = new Date();
+        System.out.println(date.toString());
+    }
+
+    @Override
+    public String toString() {
+        return "BuyingLog{" +
+                "buyingTime='" + buyingTime + '\'' +
+                '}';
     }
 }

@@ -2,7 +2,7 @@ package com.xidian.meiping.service.implement;
 
 import com.xidian.meiping.dao.MenuMapper;
 import com.xidian.meiping.entity.Menu;
-import com.xidian.meiping.service.MenuService;
+import com.xidian.meiping.service.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

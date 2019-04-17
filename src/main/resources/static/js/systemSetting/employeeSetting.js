@@ -1,10 +1,7 @@
 $(document).ready(function () {
     var url = "/systemSetting/employee/operate";
     var sourceUrl = "/systemSetting/getEmployees";
-    var ADD = 'add';
-    var UPDATE = 'update';
-    var DELETE = 'delete';
-    var SEARCH = 'search';
+
     var columns=[
         { text: '员工编号', datafield: 'id', width: 200 },
         { text: '员工姓名', datafield: 'name', width: 200 },
@@ -89,15 +86,15 @@ $(document).ready(function () {
             }
             // update row.
             $("#updaterowbutton").on('click', function () {
-                cardOperate(UPDATE);
+                Operate(UPDATE);
             });
             // create new row.
             $("#addrowbutton").on('click', function () {
-                cardOperate(ADD);
+                Operate(ADD);
             });
             // delete row.
             $("#deleterowbutton").on('click', function () {
-                cardOperate(DELETE);
+                Operate(DELETE);
             });
             $("#search").on('click', function () {
                 var key = $("#searchkey").val();
@@ -112,9 +109,16 @@ $(document).ready(function () {
         },
         columns: columns
     });
-
+    $('#jqxGrid').on('rowdoubleclick', function (event) {
+        var args = event.args;
+        // row's bound index.
+        var boundIndex = args.rowindex;
+        var data = $('#jqxGrid').jqxGrid('getrowdata', boundIndex);
+        var id = $('#jqxGrid').jqxGrid('getrowid', boundIndex);
+        Operate(UPDATE);
+    });
     //根据不同operateId弹出不同的窗口
-    function cardOperate(operateId) {
+    function Operate(operateId) {
         var title="添加员工";
         if(operateId==DELETE){
             if(isSelectedAItem()) deleteItem(url);
@@ -165,7 +169,7 @@ $(document).ready(function () {
         }
         if(operateId==UPDATE){
             var row = getSelectRow().rowdata;
-            console.log(row)
+            // console.log(row)
             //初始化弹出表单
             $("#id").val(row['id']);
             $("#name").val(row['name']);

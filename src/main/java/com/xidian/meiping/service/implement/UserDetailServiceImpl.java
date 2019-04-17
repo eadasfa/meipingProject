@@ -1,7 +1,7 @@
 package com.xidian.meiping.service.implement;
 
 import com.xidian.meiping.entity.Operater;
-import com.xidian.meiping.service.OperaterService;
+import com.xidian.meiping.service.service.OperaterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -35,7 +35,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
         authorities.add(new MyAuthority(user.getPermission()+""));
         System.out.println("UserDetails："+"已经查询到了结果");
 //        System.out.println("id:"+user.getOperaterId()+"\npw:"+user.getPassword());
-        return new User(user.getOperaterId()+"", user.getPassword(), authorities);
+        return new User(user.getId()+"", user.getPassword(), authorities);
     }
 
     class MyAuthority implements GrantedAuthority {

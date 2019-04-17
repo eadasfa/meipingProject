@@ -1,11 +1,6 @@
 $(document).ready(function () {
     var url = "/systemSetting/wardrobe/operate";
     var sourceUrl = "/systemSetting/getWardrobes";
-    var ADD = 'add';
-    var UPDATE = 'update';
-    var DELETE = 'delete';
-    var ADDMANY = 'addMany';
-    var SEARCH = 'search';
     var columns=[
         { text: '衣柜编号', datafield: 'id', width: 200 },
         { text: '衣柜名称', datafield: 'name', width: 200 },
@@ -97,18 +92,18 @@ $(document).ready(function () {
                 }
                 // update row.
                 $("#updaterowbutton").on('click', function () {
-                    cardOperate(UPDATE);
+                    Operate(UPDATE);
                 });
                 // create new row.
                 $("#addrowbutton").on('click', function () {
-                    cardOperate(ADD);
+                    Operate(ADD);
                 });
                 $("#addrowmanybutton").on('click', function () {
-                    cardOperate(ADDMANY);
+                    Operate(ADDMANY);
                 });
                 // delete row.
                 $("#deleterowbutton").on('click', function () {
-                    cardOperate(DELETE);
+                    Operate(DELETE);
                 });
                 $("#search").on('click', function () {
                     var key = $("#searchkey").val();
@@ -123,9 +118,16 @@ $(document).ready(function () {
             },
             columns: columns
         });
-
+    $('#jqxGrid').on('rowdoubleclick', function (event) {
+        var args = event.args;
+        // row's bound index.
+        var boundIndex = args.rowindex;
+        var data = $('#jqxGrid').jqxGrid('getrowdata', boundIndex);
+        var id = $('#jqxGrid').jqxGrid('getrowid', boundIndex);
+        Operate(UPDATE);
+    });
     //根据不同operateId弹出不同的窗口
-    function cardOperate(operateId) {
+    function Operate(operateId) {
         var title = "添加衣柜";
         if(operateId==DELETE){
             if(isSelectedAItem()) deleteItem(url);

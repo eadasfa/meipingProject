@@ -7,13 +7,11 @@ public class ReturnLog {
 
     private Integer goodId;
 
-    private String goodName;
-
     private Double returnPrice;
 
     private Integer returnNumber;
 
-    private Date returnDate;
+    private String returnTime;
 
     private Integer operaterId;
 
@@ -33,14 +31,6 @@ public class ReturnLog {
         this.goodId = goodId;
     }
 
-    public String getGoodName() {
-        return goodName;
-    }
-
-    public void setGoodName(String goodName) {
-        this.goodName = goodName == null ? null : goodName.trim();
-    }
-
     public Double getReturnPrice() {
         return returnPrice;
     }
@@ -57,12 +47,12 @@ public class ReturnLog {
         this.returnNumber = returnNumber;
     }
 
-    public Date getReturnDate() {
-        return returnDate;
+    public String getReturnTime() {
+        return returnTime;
     }
 
-    public void setReturnDate(Date returnDate) {
-        this.returnDate = returnDate;
+    public void setReturnTime(String returnTime) {
+        this.returnTime = returnTime;
     }
 
     public Integer getOperaterId() {

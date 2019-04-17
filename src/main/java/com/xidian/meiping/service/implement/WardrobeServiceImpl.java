@@ -2,7 +2,7 @@ package com.xidian.meiping.service.implement;
 
 import com.xidian.meiping.dao.WardrobeMapper;
 import com.xidian.meiping.entity.Wardrobe;
-import com.xidian.meiping.service.WardrobeService;
+import com.xidian.meiping.service.service.WardrobeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

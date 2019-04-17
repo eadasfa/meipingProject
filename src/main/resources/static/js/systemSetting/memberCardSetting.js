@@ -1,9 +1,7 @@
 $(document).ready(function () {
     var url = "/systemSetting/card/operate";
     var sourceUrl = "/systemSetting/getCards";
-    var ADD = 'add';
-    var UPDATE = 'update';
-    var DELETE = 'delete';
+
     var columns = [
         { text: '编号', datafield: 'id', width: 200 },
         { text: '卡名', datafield: 'name', width: 200 },
@@ -68,6 +66,9 @@ $(document).ready(function () {
 
             source: dataAdapter,
             showtoolbar: true,
+            ready:function(){
+              members = dataAdapter.recordids;
+            },
             //这里的返回值需要根绝实际情况作调整。
             // 如果params.data获取不到。可以用dataadapter来获取
             // 如dataadapter.recordids[0].*等
@@ -87,22 +88,29 @@ $(document).ready(function () {
                 $("#updaterowbutton").jqxButton();
                 // update row.
                 $("#updaterowbutton").on('click', function () {
-                    cardOperate(UPDATE);
+                    Operate(UPDATE);
                 });
                 // create new row.
                 $("#addrowbutton").on('click', function () {
-                    cardOperate(ADD);
+                    Operate(ADD);
                 });
                 // delete row.
                 $("#deleterowbutton").on('click', function () {
-                    cardOperate(DELETE);
+                    Operate(DELETE);
                 });
             },
             columns:columns
         });
-
+    $('#jqxGrid').on('rowdoubleclick', function (event) {
+        var args = event.args;
+        // row's bound index.
+        var boundIndex = args.rowindex;
+        var data = $('#jqxGrid').jqxGrid('getrowdata', boundIndex);
+        var id = $('#jqxGrid').jqxGrid('getrowid', boundIndex);
+        Operate(UPDATE);
+    });
     //根据不同operateId弹出不同的窗口
-    function cardOperate(operateId) {
+    function Operate(operateId) {
         var title = "添加会员卡";
         if(operateId==DELETE){
             if(isSelectedAItem()) deleteItem(url);

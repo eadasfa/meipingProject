@@ -19,6 +19,7 @@ public class DbOperate {
     private static String serverUrl="localhost";
     private static String path = "";
     private static String backName = "";
+    private final static String DB_NAME = "gms";
     private final static String user = "root";
     private final static String password = "123456";
     private static boolean isWindows;
@@ -67,7 +68,7 @@ public class DbOperate {
     public static synchronized boolean dbBackUp() throws Exception{
         String backName = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss")
                 .format(new Date())+".sql";
-        return dbBackUp("root","123456","meiping",path,backName);
+        return dbBackUp("root","123456",DB_NAME,path,backName);
     }
     /**
      * 恢复数据库
@@ -92,7 +93,7 @@ public class DbOperate {
         boolean temp = isAutoBackup();
         if(temp) stopAutoBackup();//如果当前是自动备份，则停止
         Thread.sleep(2000);
-        boolean flag = dbRestore(user,password,"meiping",path+backName);
+        boolean flag = dbRestore(user,password,DB_NAME,path+backName);
         if(temp) startAutoBackup();//如果在恢复数据前是自动备份，恢复自动备份
         return flag;
     }

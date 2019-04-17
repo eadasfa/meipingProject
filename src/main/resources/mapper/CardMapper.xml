@@ -11,29 +11,29 @@
   <sql id="Base_Column_List" >
     id, name, youxiao_cishu, youxiao_tianshu, price
   </sql>
-  <select id="selectAllCards" resultMap="BaseResultMap">
+  <select id="selectAllCards" resultMap="BaseResultMap" >
     select
     <include refid="Base_Column_List" />
-    from card_types
+    from card_type
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from card_types
+    from card_type
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from card_types
+    delete from card_type
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xidian.meiping.entity.Card" >
-    insert into card_types (id, name, youxiao_cishu, 
+    insert into card_type (id, name, youxiao_cishu, 
       youxiao_tianshu, price)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{youxiaoCishu,jdbcType=INTEGER}, 
       #{youxiaoTianshu,jdbcType=INTEGER}, #{price,jdbcType=DOUBLE})
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.meiping.entity.Card" >
-    insert into card_types
+    insert into card_type
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -70,7 +70,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.xidian.meiping.entity.Card" >
-    update card_types
+    update card_type
     <set >
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
@@ -88,7 +88,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xidian.meiping.entity.Card" >
-    update card_types
+    update card_type
     set name = #{name,jdbcType=VARCHAR},
       youxiao_cishu = #{youxiaoCishu,jdbcType=INTEGER},
       youxiao_tianshu = #{youxiaoTianshu,jdbcType=INTEGER},

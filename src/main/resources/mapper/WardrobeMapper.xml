@@ -5,29 +5,28 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
-    <result column="member_id" property="memberId" jdbcType="INTEGER" />
+    <result column="rend_wardrobe_log_id" property="rendWardrobeLogId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, status, member_id
+    id, name, status, rend_wardrobe_log_id
   </sql>
-  <select id="selectAll" resultMap="BaseResultMap" >
+  <select id="selectAll"  resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from wardrobe
   </select>
-  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from wardrobe
     where name = #{name,jdbcType=VARCHAR}
   </select>
-  <select id="selectByStatus" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  <select id="selectByStatus" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from wardrobe
     where status = #{status,jdbcType=INTEGER}
   </select>
-
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -40,9 +39,9 @@
   </delete>
   <insert id="insert" parameterType="com.xidian.meiping.entity.Wardrobe" >
     insert into wardrobe (id, name, status, 
-      member_id)
+      rend_wardrobe_log_id)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
-      #{memberId,jdbcType=INTEGER})
+      #{rendWardrobeLogId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.meiping.entity.Wardrobe" >
     insert into wardrobe
@@ -56,8 +55,8 @@
       <if test="status != null" >
         status,
       </if>
-      <if test="memberId != null" >
-        member_id,
+      <if test="rendWardrobeLogId != null" >
+        rend_wardrobe_log_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -70,8 +69,8 @@
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
       </if>
-      <if test="memberId != null" >
-        #{memberId,jdbcType=INTEGER},
+      <if test="rendWardrobeLogId != null" >
+        #{rendWardrobeLogId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -84,8 +83,8 @@
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
       </if>
-      <if test="memberId != null" >
-        member_id = #{memberId,jdbcType=INTEGER},
+      <if test="rendWardrobeLogId != null" >
+        rend_wardrobe_log_id = #{rendWardrobeLogId,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -94,7 +93,7 @@
     update wardrobe
     set name = #{name,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
-      member_id = #{memberId,jdbcType=INTEGER}
+      rend_wardrobe_log_id = #{rendWardrobeLogId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

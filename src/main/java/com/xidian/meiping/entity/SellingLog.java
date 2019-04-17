@@ -6,20 +6,46 @@ public class SellingLog {
     private Integer id;
 
     private Integer goodId;
-
+    private String goodName;
     private Integer memberId;
 
-    private String goodName;
+    private Integer number;
 
     private Integer sellingType;
 
-    private Double price;
+    private Double sellingPrice;
 
-    private Date sellingDate;
-
-    private Integer operaterId;
+    private String sellingTime;
 
     private Double account;
+
+    private Integer operaterId;
+    private String operaterName;
+    private Double totalAmount;
+
+    public String getGoodName() {
+        return goodName;
+    }
+
+    public void setGoodName(String goodName) {
+        this.goodName = goodName;
+    }
+
+    public String getOperaterName() {
+        return operaterName;
+    }
+
+    public void setOperaterName(String operaterName) {
+        this.operaterName = operaterName;
+    }
+
+    public Double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(Double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
 
     public Integer getId() {
         return id;
@@ -45,12 +71,12 @@ public class SellingLog {
         this.memberId = memberId;
     }
 
-    public String getGoodName() {
-        return goodName;
+    public Integer getNumber() {
+        return number;
     }
 
-    public void setGoodName(String goodName) {
-        this.goodName = goodName == null ? null : goodName.trim();
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
     public Integer getSellingType() {
@@ -61,28 +87,20 @@ public class SellingLog {
         this.sellingType = sellingType;
     }
 
-    public Double getPrice() {
-        return price;
+    public Double getSellingPrice() {
+        return sellingPrice;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setSellingPrice(Double sellingPrice) {
+        this.sellingPrice = sellingPrice;
     }
 
-    public Date getSellingDate() {
-        return sellingDate;
+    public String getSellingTime() {
+        return sellingTime;
     }
 
-    public void setSellingDate(Date sellingDate) {
-        this.sellingDate = sellingDate;
-    }
-
-    public Integer getOperaterId() {
-        return operaterId;
-    }
-
-    public void setOperaterId(Integer operaterId) {
-        this.operaterId = operaterId;
+    public void setSellingTime(String sellingTime) {
+        this.sellingTime = sellingTime;
     }
 
     public Double getAccount() {
@@ -91,5 +109,13 @@ public class SellingLog {
 
     public void setAccount(Double account) {
         this.account = account;
+    }
+
+    public Integer getOperaterId() {
+        return operaterId;
+    }
+
+    public void setOperaterId(Integer operaterId) {
+        this.operaterId = operaterId;
     }
 }

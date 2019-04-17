@@ -17,9 +17,9 @@ public interface WardrobeMapper {
 
     int updateByPrimaryKey(Wardrobe record);
 
-    List<Wardrobe> selectAll();
-
     List<Wardrobe> selectByName(String name);
 
-    List<Wardrobe> selectByStatus(Integer status);
+    List<Wardrobe> selectByStatus(int status);
+
+    List<Wardrobe> selectAll();
 }

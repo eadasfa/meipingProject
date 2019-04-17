@@ -1,13 +1,25 @@
 package com.xidian.meiping.entity;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class Operater {
-    private Integer operaterId;
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    private Integer id;
+
+    private String name;
 
     private String password;
 
     private Integer permission;
 
-    private String name;
+    private String position;
 
     public String getPosition() {
         return position;
@@ -17,14 +29,12 @@ public class Operater {
         this.position = position;
     }
 
-    private String position;
-
-    public Integer getOperaterId() {
-        return operaterId;
+    public String getName() {
+        return name;
     }
 
-    public void setOperaterId(Integer operaterId) {
-        this.operaterId = operaterId;
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
     public String getPassword() {
@@ -42,12 +52,16 @@ public class Operater {
     public void setPermission(Integer permission) {
         this.permission = permission;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public static Operater newInstance(HttpServletRequest request){
+        Operater e = new Operater();
+        String temp = request.getParameter("id");
+        if (temp!=null) e.setId(Integer.parseInt(temp));
+        temp = request.getParameter("name");
+        if (temp!=null) e.setName(temp);
+        temp = request.getParameter("password");
+        if (temp!=null) e.setPassword(temp);
+        temp = request.getParameter("permission");
+        if (temp!=null) e.setPermission(Integer.parseInt(temp));
+        return e;
     }
 }

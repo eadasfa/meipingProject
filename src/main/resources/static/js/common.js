@@ -145,7 +145,9 @@
         for(var i=0;i<numCells.length;i++){
             var name = numCells[i]['name'];
             var type = numCells[i]['type']
-            if(data[name]==null){
+            var beNull
+            if(data[name]==null||data[name]==""){
+                if(numCells[i]['beNull']==true) return true;
                 alert("'"+numCells[i]['label']+"'不能为空");
                 return false;
             }
@@ -163,17 +165,21 @@
         }
         // console.log(attributes[0])
         if(!isValidCommon(row,numCells)) return false;
-        if(row['status']!=undefined)
-            row['status'] = row['status']=="空闲"?0:(row['status']=="已租"?1:2);
+        row = changeData(row,2)
         // console.log("getInputRow:"+row)
         return row;
     }
     //主要是将0，1，2转换为文字
-    function changeData(data){
-
+    function changeData(data,type){
+        if(type==undefined) type=1;
         var row = data;
-        if(row.status!=undefined&&(row.status==0||row.status==1||row.status==2))
+        if(type==1&&row.status!=undefined&&(row.status==0||row.status==1||row.status==2))
             row['status'] = row.status==0?"空闲":(row.status==1?"已租":"损坏");
+        if(type==2){
+            if(row.status=="空闲") row.status=0;
+            else if(row.status=="已租") row.status=1;
+            else if(row.status=="损坏") row.status=2;
+        }
         return row;
     }
     function show(data) {

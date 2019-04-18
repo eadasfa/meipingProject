@@ -173,6 +173,8 @@ $(document).ready(function () {
                     flag = addItem();
                 else if(operateId == UPDATE)
                     flag = updateItem();
+                else if(operateId==MEMBER_PAY)
+                    flag = memberPay();
                 //最后关闭弹出层
                 if(flag)
                     layer.close(index);
@@ -201,7 +203,7 @@ $(document).ready(function () {
 
     function addItem(){
         var row= getInputRow();
-        console.log("getInputRow:"+JSON.stringify(row))
+        // console.log("getInputRow:"+JSON.stringify(row))
         if(row == false) return false;
         row["operaterId"] = operater.id;
         return addItemCommon(row,url);
@@ -209,10 +211,30 @@ $(document).ready(function () {
     function updateItem(){
         var row2= getInputRow();
         if(row2 == false) return false;
-        var row = getSelectRow();
-        for(var key in row2){
-            row[key] = row2[key];
-        }
+        var row = getSelectRow().rowdata;
+        console.log(JSON.stringify(row2))
+        row['name'] = row2['name'];
+        row['teleNumber'] = row2['teleNumber'];
+        row['agenda'] = row2['agenda'];
+        row['birthday'] = row2['birthday'];
+        row['startDate'] = row2['startDate'];
+        row['endDate'] = row2['endDate'];
+        return updateItemCommon(row,url);
+    }
+    function memberPay() {
+        var r = confirm("当前操作为续费操作，是否继续?");
+        if(!r) return false;
+        var data= getSelectRow();
+        var row = data.rowdata;
+        if(row == false) return false;
+        row["operaterId"] = operater.id;
+        row["cardTypeName"] = $("#cardTypeName3").val();
+        var card = getCardByCardName(row["cardTypeName"])
+        row['youxiaoCishu'] = card.youxiaoCishu;
+        row['youxiaoTianshu'] = card.youxiaoTianshu;
+        row['startDate'] = formatTime(new Date());
+        row['endDate'] = $("#endDate3").val();
+        console.log(JSON.stringify(row))
         return updateItemCommon(row,url);
     }
     function deleteItem(url) {
@@ -224,8 +246,8 @@ $(document).ready(function () {
         }
     }
     function getInputRow(){
-        var numCells=[{'name':'id','type':1,'label':'会员卡号'},
-            {'name':'teleNumber','type':1,'label':'会员电话'}];
+        var numCells=[{'name':'id','type':1,'beNull':false,'label':'会员卡号'},
+            {'name':'teleNumber','type':1,'beNull':true,'label':'会员电话'}];
         return getInputRowCommon(columns,numCells)
     }
     function search(key,value,status) {
@@ -303,11 +325,12 @@ $(document).ready(function () {
             $("#cardTypeName2").val(row.cardTypeName);
             $("#balance2").val(row.balance);
             $("#leftCishu2").val(row.youxiaoCishu);
-            $("#endDate2").val();
+            $("#endDate2").val(formatTime(new Date(row.endDate)));
             for(var i=0;i<cardTypes.length;i++){
                 var temp = cardTypes[i];
                 $("#cardTypeName3").append('<option value='+temp.name+'>'+temp.name+'</option>')
             }
+            $("#cardTypeName3").val(row.cardTypeName);
             var card = getCardByCardName($("#cardTypeName3").val());
             $("#top-up-price3").val(card.price);
             $("#endDate3").val(addDate(formatTime(new Date()),card.youxiaoTianshu));

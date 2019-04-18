@@ -9,6 +9,12 @@ public class MemberCardBuyLog {
 
     private Integer cardId;
 
+    private String cardTypeName;
+
+    private String memberName;
+
+    private String operaterName;
+
     private Double price;
 
     private Double account;
@@ -81,5 +87,43 @@ public class MemberCardBuyLog {
 
     public void setOperaterId(Integer operaterId) {
         this.operaterId = operaterId;
+    }
+
+    public String getCardTypeName() {
+        return cardTypeName;
+    }
+
+    public void setCardTypeName(String cardTypeName) {
+        this.cardTypeName = cardTypeName;
+    }
+
+    public String getMemberName() {
+        return memberName;
+    }
+
+    public void setMemberName(String memberName) {
+        this.memberName = memberName;
+    }
+
+    public String getOperaterName() {
+        return operaterName;
+    }
+
+    public void setOperaterName(String operaterName) {
+        this.operaterName = operaterName;
+    }
+
+    @Override
+    public String toString() {
+        return "MemberCardBuyLog{" +
+                "id=" + id +
+                ", memberId=" + memberId +
+                ", cardId=" + cardId +
+                ", price=" + price +
+                ", account=" + account +
+                ", startTime='" + startTime + '\'' +
+                ", endTime='" + endTime + '\'' +
+                ", operaterId=" + operaterId +
+                '}';
     }
 }

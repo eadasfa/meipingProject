@@ -48,7 +48,15 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public int update(Member example) {
-        return memberMapper.updateByPrimaryKeySelective(example);
+        System.out.println("update"+example);
+        Integer operaterId = example.getOperaterId();
+        if(operaterId==null||operaterId==0)
+            return memberMapper.updateByPrimaryKeySelective(example);
+
+        MemberCardBuyLog log = genMCBL(example);
+        memberCardBuyLogMapper.insert(log);
+        example.setMemberCardBuyId(log.getId());
+        return memberMapper.updateByPrimaryKey(example);
     }
     public int updateTopUp(Member example) {
 //        System.out.println(example);
@@ -71,17 +79,27 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public int add(Member example) {
         example.setStatus("可用");
+        MemberCardBuyLog log = genMCBL(example);
+//        System.out.println(log);
+        memberMapper.insert(example);
+        memberCardBuyLogMapper.insert(log);
+        log = memberCardBuyLogMapper.selectByMemberIdAndStartTime(example.getId(),example.getStartDate());
+        example.setMemberCardBuyId(log.getId());
+        return memberMapper.updateByPrimaryKey(example);
+    }
+    public MemberCardBuyLog genMCBL(Member member){
         MemberCardBuyLog log = new MemberCardBuyLog();
-        Card card = cardMapper.selectByCardName(example.getCardTypeName());
+        Card card = cardMapper.selectByCardName(member.getCardTypeName());
         Integer cardId = card.getId();
         log.setCardId(cardId);
-        log.setMemberId(example.getId());
-        log.setOperaterId(example.getOperaterId());
+        log.setMemberId(member.getId());
+        log.setOperaterId(member.getOperaterId());
         log.setPrice(card.getPrice());
         log.setAccount(1.0);
-        log.setStartTime(example.getStartDate());
-        log.setEndTime(example.getEndDate());
-        return memberMapper.insert(example);
+        log.setStartTime(member.getStartDate());
+        log.setEndTime(member.getEndDate());
+//        System.out.println(log);
+        return log;
     }
 
     @Override

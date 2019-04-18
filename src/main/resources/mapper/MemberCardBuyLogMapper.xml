@@ -2,24 +2,65 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xidian.meiping.dao.MemberCardBuyLogMapper" >
   <resultMap id="BaseResultMap" type="com.xidian.meiping.entity.MemberCardBuyLog" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="member_id" property="memberId" jdbcType="INTEGER" />
-    <result column="card_id" property="cardId" jdbcType="INTEGER" />
-    <result column="price" property="price" jdbcType="DOUBLE" />
-    <result column="account" property="account" jdbcType="DOUBLE" />
-    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
-    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
-    <result column="operater_id" property="operaterId" jdbcType="INTEGER" />
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="member_id" property="memberId" jdbcType="INTEGER" />
+        <result column="card_id" property="cardId" jdbcType="INTEGER" />
+        <result column="price" property="price" jdbcType="DOUBLE" />
+        <result column="account" property="account" jdbcType="DOUBLE" />
+        <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+        <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+        <result column="operater_id" property="operaterId" jdbcType="INTEGER" />
+      <result column="card_name" property="cardTypeName" jdbcType="VARCHAR" />
+      <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+      <result column="operater_name" property="operaterName" jdbcType="VARCHAR" />
   </resultMap>
-  <sql id="Base_Column_List" >
+    <sql id="Base_Column_List" >
     id, member_id, card_id, price, account, start_time, end_time, operater_id
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    <sql id="Base_Column_List_Sp" >
+    m.id, m.member_id, m.card_id, m.price, m.account, m.start_time, m.end_time,
+    m.operater_id, member.name as member_name,employee.name as operater_name,
+    ct.name as card_name
+  </sql>
+    <select id="selectAll" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List_Sp" />
+        from member_card_buy_log as m,card_type as ct,member,employee
+        where m.member_id = member.id
+        and m.operater_id = employee.id
+        and m.card_id = ct.id
+    </select>
+  <select id="searchByDate" resultMap="BaseResultMap"  >
+    select
+    <include refid="Base_Column_List_Sp" />
+    from member_card_buy_log as m,card_type as ct,member,employee
+    where DATE_FORMAT(m.start_time,'%Y-%m-%d')
+    BETWEEN #{date1,jdbcType=VARCHAR}
+    and #{date2,jdbcType=VARCHAR}
+    and m.member_id = member.id
+    and m.operater_id = employee.id
+    and m.card_id = ct.id
+    <if test="memberId != null" >
+      and m.member_id = #{memberId,jdbcType=INTEGER}
+    </if>
+    <if test="operaterId != null" >
+      and m.operater_id = #{operaterId,jdbcType=INTEGER}
+    </if>
+  </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from member_card_buy_log
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+  <select id="selectByMemberIdAndStartTime" resultMap="BaseResultMap" >
+    select
     <include refid="Base_Column_List" />
     from member_card_buy_log
-    where id = #{id,jdbcType=INTEGER}
+    where member_id = #{memberId,jdbcType=INTEGER}
+    and start_time = #{startTime,jdbcType=TIMESTAMP}
   </select>
+
   <delete id="deleteByMemberId" parameterType="java.lang.Integer" >
     delete from member_card_buy_log
     where member_id = #{memberId,jdbcType=INTEGER}

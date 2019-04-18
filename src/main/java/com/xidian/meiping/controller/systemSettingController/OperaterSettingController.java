@@ -38,7 +38,7 @@ public class OperaterSettingController {
         String operateId = request.getParameter("operateId");
         Operater operater = null;
         if(!operateId.equals(ConstValue.DELETE))
-            operater = (Operater) CommonUtil.newInstance(operater,request);
+            operater = Operater.newInstance(request);
         else if(operateId.equals(ConstValue.DELETE)){
             String id = ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
                         .getUsername();

@@ -196,7 +196,15 @@ public class Member {
         return "Member{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", balance=" + balance +
+                ", agenda='" + agenda + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", teleNumber='" + teleNumber + '\'' +
+                ", registerDate='" + registerDate + '\'' +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", cardTypeName='" + cardTypeName + '\'' +
+                ", youxiaoCishu=" + youxiaoCishu +
+                ", youxiaoTianshu=" + youxiaoTianshu +
                 '}';
     }
 }

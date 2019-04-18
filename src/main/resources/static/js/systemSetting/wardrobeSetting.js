@@ -193,6 +193,7 @@ $(document).ready(function () {
     function addItem(){
         var row= getInputRow();
         if(row == false) return false;
+
         return addItemCommon(row,url);
     }
 

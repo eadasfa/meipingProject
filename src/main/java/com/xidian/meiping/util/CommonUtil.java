@@ -10,7 +10,6 @@ public class CommonUtil {
         return toUpper.substring(0, 1).toUpperCase()+ toUpper.substring(1);
     }
     public static Object newInstance(Object o, HttpServletRequest request){
-
         Class clazz  = o.getClass();
         Method[]methods = clazz.getMethods();
         Field[] field = clazz .getDeclaredFields();

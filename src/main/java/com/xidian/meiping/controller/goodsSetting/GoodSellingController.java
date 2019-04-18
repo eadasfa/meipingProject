@@ -1,4 +1,4 @@
-package com.xidian.meiping.controller.GoodsSetting;
+package com.xidian.meiping.controller.goodsSetting;
 
 import com.xidian.meiping.entity.SellingLog;
 import com.xidian.meiping.service.service.SellingLogService;
@@ -26,7 +26,7 @@ public class GoodSellingController {
     }
     @ResponseBody
     @RequestMapping(value="/selling_log/operate",produces = "text/html;charset=UTF-8")
-    public String goodOperate(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+    public String Operate(HttpServletRequest request, HttpServletResponse response, HttpSession session){
         return GoodSetting.operate(request,sellingLogService);
     }
 }

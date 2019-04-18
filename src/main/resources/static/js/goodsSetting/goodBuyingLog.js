@@ -199,8 +199,17 @@ $(document).ready(function () {
         initTabContent: initWidgets });
     $('#jqxGrid').jqxGrid('sortby', "buyingTime", 'des');
     function search(from,to,goodId,operaterId) {
-        if((from==undefined||from=="")||(to==undefined||to=="")){
-            return;
+        if(from==undefined||from==""){
+            from ="1970-01-01";
+        }
+        if(to==undefined||to==""){
+            var myDate = new Date();//获取系统当前时间
+            var day = myDate.getDate();
+            day = day<10?("0"+day):day;
+            var month = myDate.getMonth()+1;
+            month = month<10?("0"+month):month;
+            row['to'] = myDate.getFullYear()+"-"+month+"-"+day;
+            // console.log(to)
         }
         var row={};
         row['from'] = from;

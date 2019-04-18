@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xidian.meiping.dao.TopUpLogMapper" >
+    <resultMap id="BaseResultMap" type="com.xidian.meiping.entity.TopUpLog" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="member_id" property="memberId" jdbcType="INTEGER" />
+        <result column="operater_id" property="operaterId" jdbcType="INTEGER" />
+        <result column="time" property="time" jdbcType="TIMESTAMP" />
+        <result column="money" property="money" jdbcType="DOUBLE" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+    id, member_id, operater_id, time,money
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from top_up_log
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByMemberId" parameterType="java.lang.Integer" >
+    delete from top_up_log
+    where member_id = #{memberId,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from top_up_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.xidian.meiping.entity.TopUpLog" >
+    insert into top_up_log (id, member_id, operater_id,
+      time,money)
+    values (#{id,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, #{operaterId,jdbcType=INTEGER},
+      #{time,jdbcType=TIMESTAMP},#{money,jdbcType=DOUBLE})
+  </insert>
+    <insert id="insertSelective" parameterType="com.xidian.meiping.entity.TopUpLog">
+        insert into top_up_log
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="memberId != null" >
+                member_id,
+            </if>
+            <if test="operaterId != null" >
+                operater_id,
+            </if>
+            <if test="time != null" >
+                time,
+            </if>
+            <if test="money != null" >
+                money,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="memberId != null" >
+                #{memberId,jdbcType=INTEGER},
+            </if>
+            <if test="operaterId != null" >
+                #{operaterId,jdbcType=INTEGER},
+            </if>
+            <if test="time != null" >
+                #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="money != null" >
+                #{money,jdbcType=DOUBLE},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xidian.meiping.entity.TopUpLog" >
+        update top_up_log
+        <set >
+            <if test="memberId != null" >
+                member_id = #{memberId,jdbcType=INTEGER},
+            </if>
+            <if test="operaterId != null" >
+                operater_id = #{operaterId,jdbcType=INTEGER},
+            </if>
+            <if test="time != null" >
+                time = #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="money != null" >
+                money = #{money,jdbcType=DOUBLE},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xidian.meiping.entity.TopUpLog" >
+    update top_up_log
+    set member_id = #{memberId,jdbcType=INTEGER},
+      operater_id = #{operaterId,jdbcType=INTEGER},
+      time = #{time,jdbcType=TIMESTAMP}
+      money = #{money,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -22,4 +22,6 @@ public interface WardrobeMapper {
     List<Wardrobe> selectByStatus(int status);
 
     List<Wardrobe> selectAll();
+
+    Wardrobe selectByMemberId(Integer memberId);
 }

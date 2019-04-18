@@ -17,7 +17,8 @@ public class CommonUtil {
         String temp = "";
         for(Field f:field){
             temp = request.getParameter(f.getName());
-            temp = (temp==null||temp=="")?"0":temp;
+            temp = temp==null?"0":temp.trim();
+            temp = temp.equals("")?"0":temp;
             String methodName = "set"+ CommonUtil.upperFirst(f.getName());
             Method method = null;
             for(Method m: methods){
@@ -38,7 +39,7 @@ public class CommonUtil {
                             method.invoke(o,Double.parseDouble(temp));
                             break;
                         case "class java.lang.String":
-                            method.invoke(o,temp);
+                            method.invoke(o,temp+"");
                             break;
                         default:
                     }

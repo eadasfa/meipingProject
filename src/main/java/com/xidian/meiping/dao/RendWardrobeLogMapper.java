@@ -3,6 +3,9 @@ package com.xidian.meiping.dao;
 import com.xidian.meiping.entity.RendWardrobeLog;
 
 public interface RendWardrobeLogMapper {
+
+    int deleteByMemberId(Integer memberId);
+    
     int deleteByPrimaryKey(Integer id);
 
     int insert(RendWardrobeLog record);

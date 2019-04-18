@@ -1,0 +1,90 @@
+<html lang="en">
+<section class="content-header">
+    <h1> 员工设置</h1>
+    <ol class="breadcrumb">
+        <li><a href="../"><i class="fa fa-object-group"></i> 首页</a></li>
+        <li> 系统设置</li>
+        <li class="active"> 员工设置</li>
+    </ol>
+</section><!-- ./content-header -->
+<head>
+    <!--<script type="text/javascript" src="js/common.js"></script>-->
+    <script type="text/javascript" src="js/memberManage/memberManage.js"></script>
+    <script type="text/javascript" src="js/demos.js"></script>
+
+    <script type="text/javascript">
+
+    </script>
+    <script class="payFeeWindow" type="text/html">
+        <div class="payFeeWindow" >
+            <table>
+                <tr>
+                    <td>会员编号:</td><td><input  id = "id2" disabled/></td>
+                    <td>会员姓名:</td><td><input  id = "name2" disabled/></td>
+                    <td>会员类型:</td><td><input  id = "cardTypeName2" disabled/></td>
+                </tr>
+                <tr>
+                    <td>卡内余额:</td><td><input id = "balance2" disabled/></td>
+                    <td>剩余次数:</td><td><input id = "leftCishu2" disabled/></td>
+                    <td>到期日期:</td><td><input id="endDate2" disabled/></td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <td>充值金额:</td>
+                    <td><input type="text" id="top-up-price" placeholder="充值金额"/></td>
+                    <td><input type="button" id="top-up" value="确认充值"
+                               class="layui-btn layui-btn-radius layui-btn-normal"/></td>
+                </tr>
+            </table>
+            <table>
+                <th>会员续费</th>
+                <tr>
+                    <td>会员类型:</td><td><select id = "cardTypeName3" style="width: 100%;"></select></td>
+                    <td>交费金额</td><td><input type="text" id="top-up-price3" placeholder="交费金额"/></td>
+                </tr>
+                <tr>
+                    <td>到期时间:</td><td><input id="endDate3" disabled/></td>
+                    <td>有效次数:</td><td><input id="youxiaoCishu3" disabled/></td>
+                </tr>
+            </table>
+        </div>
+    </script>
+    <script class="popUpWindow" type="text/html">
+        <form action="">
+            <div class="popUpWindow" >
+                <table>
+                    <tr>
+                        <td>会员编号:</td><td><input type="text" id = "id"/></td>
+                        <td>会员姓名:</td><td><input type="text" id = "name"/></td>
+                        <td>会员类型:</td><td><select id = "cardTypeName" style="width: 100%;"></select></td>
+                    </tr>
+                    <tr>
+                        <td>会员电话:</td><td><input type="text" id = "teleNumber"/></td>
+                        <td>会员性别:</td><td><select id="agenda" style="width: 100%;"><option selected value="男">男</option><option value="女">女</option></select></td>
+                        <td>会员生日:</td><td><input type="text" id="birthday" placeholder="yyyy-MM-dd"/></td>
+                    </tr>
+                </table>
+                <hr>
+                <table>
+                    <tr>
+                        <td>注册时间:</td><td><input type="text" id = "registerDate" placeholder="yyyy-MM-dd"/></td>
+                        <td>开卡时间:</td><td><input type="text" id = "startDate" placeholder="yyyy-MM-dd"/></td>
+                        <td>到期时间:</td><td><input type="text" id = "endDate" disabled/></td>
+                    </tr>
+                    <tr>
+                        <td>有效次数:</td><td><input type="text" id = "youxiaoCishu" disabled/></td>
+                        <td>有效天数:</td><td><input type="text" id = "youxiaoTianshu" disabled/></td>
+                        <td id="selling-price"></td><td><input type="text" id = "price"/></td>
+                    </tr>
+                </table>
+            </div>
+
+        </form>
+    </script>
+</head>
+<section class="container-fluid">
+    <div id="jqxGrid">
+    </div>
+</section>
+</html>

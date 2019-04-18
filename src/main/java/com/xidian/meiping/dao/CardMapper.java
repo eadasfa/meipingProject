@@ -18,4 +18,5 @@ public interface CardMapper {
     int updateByPrimaryKey(Card record);
 
     List<Card> selectAllCards();
+    Card selectByCardName(String name);
 }

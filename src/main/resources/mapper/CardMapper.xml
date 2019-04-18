@@ -11,6 +11,12 @@
   <sql id="Base_Column_List" >
     id, name, youxiao_cishu, youxiao_tianshu, price
   </sql>
+  <select id="selectByCardName" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from card_type
+    where name = #{name,jdbcType=VARCHAR}
+  </select>
   <select id="selectAllCards" resultMap="BaseResultMap" >
     select
     <include refid="Base_Column_List" />

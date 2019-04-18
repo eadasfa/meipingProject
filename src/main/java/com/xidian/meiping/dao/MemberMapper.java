@@ -18,4 +18,6 @@ public interface MemberMapper {
     int updateByPrimaryKey(Member record);
 
     List<Member> selectAll();
+
+    List<Member> selectByName(String name);
 }

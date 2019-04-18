@@ -3,7 +3,10 @@ package com.xidian.meiping.dao;
 import com.xidian.meiping.entity.MemberCardBuyLog;
 
 public interface MemberCardBuyLogMapper {
+
     int deleteByPrimaryKey(Integer id);
+
+    int deleteByMemberId(Integer memberId);
 
     int insert(MemberCardBuyLog record);
 

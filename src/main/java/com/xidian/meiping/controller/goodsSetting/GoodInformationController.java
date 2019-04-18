@@ -1,4 +1,4 @@
-package com.xidian.meiping.controller.GoodsSetting;
+package com.xidian.meiping.controller.goodsSetting;
 
 import com.xidian.meiping.controller.CommonController;
 import com.xidian.meiping.entity.Good;
@@ -35,7 +35,7 @@ public class GoodInformationController {
     }
     @ResponseBody
     @RequestMapping(value="/good/operate",produces = "text/html;charset=UTF-8")
-    public String goodOperate(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+    public String Operate(HttpServletRequest request, HttpServletResponse response, HttpSession session){
         String operateId = request.getParameter("operateId");
         if(operateId.equals(ConstValue.SEARCH)){
             return CommonController.searchByKeyAndValue(request,goodService);

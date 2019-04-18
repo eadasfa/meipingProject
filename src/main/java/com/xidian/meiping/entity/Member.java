@@ -1,6 +1,5 @@
 package com.xidian.meiping.entity;
 
-import java.util.Date;
 
 public class Member {
     private Integer id;
@@ -9,19 +8,60 @@ public class Member {
 
     private String agenda;
 
-    private Date birthday;
+    private String birthday;
 
     private String teleNumber;
 
-    private Date registerDate;
+    private String registerDate;
 
-    private Integer status;
+    private String status;
 
     private Integer memberCardBuyId;
 
     private Double balance;
 
     private Integer credit;
+
+    private Double totalConsumption;
+
+    private String startDate;
+
+    private String endDate;
+
+    private String cardTypeName;
+
+    private Integer youxiaoCishu;
+
+    private Integer youxiaoTianshu;
+
+    public Integer getOperaterId() {
+        return operaterId;
+    }
+
+    public void setOperaterId(Integer operaterId) {
+        this.operaterId = operaterId;
+    }
+
+    private Integer operaterId;
+    private String trainerName;
+
+    private Integer wardrobeId;
+
+    public String getTrainerName() {
+        return trainerName;
+    }
+
+    public void setTrainerName(String trainerName) {
+        this.trainerName = trainerName;
+    }
+
+    public Integer getWardrobeId() {
+        return wardrobeId;
+    }
+
+    public void setWardrobeId(Integer wardrobeId) {
+        this.wardrobeId = wardrobeId;
+    }
 
     public Integer getId() {
         return id;
@@ -47,11 +87,11 @@ public class Member {
         this.agenda = agenda == null ? null : agenda.trim();
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
@@ -63,19 +103,19 @@ public class Member {
         this.teleNumber = teleNumber == null ? null : teleNumber.trim();
     }
 
-    public Date getRegisterDate() {
+    public String getRegisterDate() {
         return registerDate;
     }
 
-    public void setRegisterDate(Date registerDate) {
+    public void setRegisterDate(String registerDate) {
         this.registerDate = registerDate;
     }
 
-    public Integer getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -101,5 +141,62 @@ public class Member {
 
     public void setCredit(Integer credit) {
         this.credit = credit;
+    }
+
+    public Double getTotalConsumption() {
+        return totalConsumption;
+    }
+
+    public void setTotalConsumption(Double totalConsumption) {
+        this.totalConsumption = totalConsumption;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getCardTypeName() {
+        return cardTypeName;
+    }
+
+    public void setCardTypeName(String cardTypeName) {
+        this.cardTypeName = cardTypeName == null ? null : cardTypeName.trim();
+    }
+
+    public Integer getYouxiaoCishu() {
+        return youxiaoCishu;
+    }
+
+    public void setYouxiaoCishu(Integer youxiaoCishu) {
+        this.youxiaoCishu = youxiaoCishu;
+    }
+
+    public Integer getYouxiaoTianshu() {
+        return youxiaoTianshu;
+    }
+
+    public void setYouxiaoTianshu(Integer youxiaoTianshu) {
+        this.youxiaoTianshu = youxiaoTianshu;
+    }
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", balance=" + balance +
+                '}';
     }
 }

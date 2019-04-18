@@ -1,6 +1,5 @@
-package com.xidian.meiping.controller.GoodsSetting;
+package com.xidian.meiping.controller.goodsSetting;
 
-import com.xidian.meiping.dao.GoodMapper;
 import com.xidian.meiping.entity.BuyingLog;
 import com.xidian.meiping.entity.ReturnLog;
 import com.xidian.meiping.service.service.BuyingLogService;
@@ -34,7 +33,7 @@ public class GoodBuyingController {
     }
     @ResponseBody
     @RequestMapping(value="/buying_log/operate",produces = "text/html;charset=UTF-8")
-    public String goodOperate(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+    public String Operate(HttpServletRequest request, HttpServletResponse response, HttpSession session){
         String operateId = request.getParameter("operateId");
         if(operateId.equals(ConstValue.CHECK_IN)){
             BuyingLog buyingLog = (BuyingLog)CommonUtil.newInstance(new BuyingLog(),request);

@@ -2,6 +2,8 @@ package com.xidian.meiping.dao;
 
 import com.xidian.meiping.entity.Trainer;
 
+import java.util.List;
+
 public interface TrainerMapper {
     int deleteByPrimaryKey(Integer trainerId);
 
@@ -14,4 +16,8 @@ public interface TrainerMapper {
     int updateByPrimaryKeySelective(Trainer record);
 
     int updateByPrimaryKey(Trainer record);
+
+    Trainer selectByMemberId(Integer memberId);
+
+    List<Trainer> selectAll();
 }

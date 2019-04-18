@@ -1,4 +1,4 @@
-package com.xidian.meiping.controller.SystemSettingController;
+package com.xidian.meiping.controller.systemSettingController;
 
 import com.xidian.meiping.controller.CommonController;
 import com.xidian.meiping.entity.Employee;
@@ -34,7 +34,7 @@ public class EmployeeSettingController {
     }
     @ResponseBody
     @RequestMapping(value="/employee/operate",produces = "text/html;charset=UTF-8")
-    public String employeeOperate(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+    public String Operate(HttpServletRequest request, HttpServletResponse response, HttpSession session){
         String operateId = request.getParameter("operateId");
         if(operateId.equals(ConstValue.SEARCH)){
             return CommonController.searchByKeyAndValue(request,employeeService);

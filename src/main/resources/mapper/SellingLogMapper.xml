@@ -63,6 +63,10 @@
     delete from selling_log
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteByMemberId" parameterType="java.lang.Integer" >
+    delete from selling_log
+    where member_id = #{memberId,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" parameterType="com.xidian.meiping.entity.SellingLog" >
     insert into selling_log (id, good_id, member_id, 
       number, selling_type, selling_price, 

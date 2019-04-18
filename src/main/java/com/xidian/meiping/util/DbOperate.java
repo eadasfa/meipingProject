@@ -229,8 +229,8 @@ class AutoBackupThread extends Thread{
         while (DbOperate.isAutoBackup()){
             try {
                 synchronized (this){
-                    wait((int)(DbOperate.gapHours*3600*1000));
                     DbOperate.dbBackUp();
+                    wait((int)(DbOperate.gapHours*3600*1000));
                 }
             }catch (Exception e) {
                 e.printStackTrace();

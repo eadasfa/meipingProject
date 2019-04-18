@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface SellingLogMapper {
     int deleteByPrimaryKey(Integer id);
+    int deleteByMemberId(Integer memberId);
 
     int insert(SellingLog record);
 

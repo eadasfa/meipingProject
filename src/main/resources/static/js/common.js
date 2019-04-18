@@ -73,8 +73,8 @@
             return false;
         }
         // var id = insertId(row['id'])
-        if(row.status!=undefined)
-            row = changeData(result['data'][0]);
+        // if(row.status!=undefined)
+        row = changeData(result['data'][0]);
         var commit = $("#jqxGrid").jqxGrid('addrow', id, row);
         // var rowboundindex = $('#jqxGrid').jqxGrid('getrowboundindexbyid', id);
         //滚动到这一行
@@ -109,8 +109,7 @@
         }
         var selectedrowindex = $("#jqxGrid").jqxGrid('getselectedrowindex');
         var id = $("#jqxGrid").jqxGrid('getrowid', selectedrowindex);
-        if(row.status!=undefined)
-            row = changeData(result['data'][0]);
+        row = changeData(result['data'][0]);
         var commit = $("#jqxGrid").jqxGrid('updaterow', id, row);
         // $("#jqxGrid").jqxGrid('ensurerowvisible', selectedrowindex);
         return true;
@@ -171,8 +170,9 @@
     }
     //主要是将0，1，2转换为文字
     function changeData(data){
+
         var row = data;
-        if(row.status!=undefined)
+        if(row.status!=undefined&&(row.status==0||row.status==1||row.status==2))
             row['status'] = row.status==0?"空闲":(row.status==1?"已租":"损坏");
         return row;
     }
@@ -192,4 +192,18 @@
     function setToolBar() {
         $('#jqxGrid').jqxGrid({ toolbarheight: 40});
     }
+    function formatTime(date) {
+        var year = date.getFullYear();
+        var month = date.getMonth()+1, month = month < 10 ? '0' + month : month;
+        var day = date.getDate(), day =day < 10 ? '0' + day : day;
+        return year + '-' + month + '-' + day;
+    }
+    function addDate(date, days) {
+        if(days == undefined || days == '') {
+            days = 1;
+        }
+        var date = new Date(date);
+        date.setDate(date.getDate() + days);
+        return formatTime(date);
 
+    }

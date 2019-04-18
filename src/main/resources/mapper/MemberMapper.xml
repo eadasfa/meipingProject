@@ -1,158 +1,235 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xidian.meiping.dao.MemberMapper" >
-  <resultMap id="BaseResultMap" type="com.xidian.meiping.entity.Member" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="agenda" property="agenda" jdbcType="VARCHAR" />
-    <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
-    <result column="tele_number" property="teleNumber" jdbcType="VARCHAR" />
-    <result column="register_date" property="registerDate" jdbcType="TIMESTAMP" />
-    <result column="status" property="status" jdbcType="INTEGER" />
-    <result column="member_card_buy_id" property="memberCardBuyId" jdbcType="INTEGER" />
-    <result column="balance" property="balance" jdbcType="DOUBLE" />
-    <result column="credit" property="credit" jdbcType="INTEGER" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, name, agenda, birthday, tele_number, register_date, status, member_card_buy_id, 
-    balance, credit
-  </sql>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from member
-  </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from member
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from member
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.xidian.meiping.entity.Member" >
-    insert into member (id, name, agenda, 
-      birthday, tele_number, register_date, 
-      status, member_card_buy_id, balance, 
-      credit)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{agenda,jdbcType=VARCHAR}, 
-      #{birthday,jdbcType=TIMESTAMP}, #{teleNumber,jdbcType=VARCHAR}, #{registerDate,jdbcType=TIMESTAMP}, 
-      #{status,jdbcType=INTEGER}, #{memberCardBuyId,jdbcType=INTEGER}, #{balance,jdbcType=DOUBLE}, 
-      #{credit,jdbcType=INTEGER})
-  </insert>
-  <insert id="insertSelective" parameterType="com.xidian.meiping.entity.Member" >
-    insert into member
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="name != null" >
-        name,
-      </if>
-      <if test="agenda != null" >
-        agenda,
-      </if>
-      <if test="birthday != null" >
-        birthday,
-      </if>
-      <if test="teleNumber != null" >
-        tele_number,
-      </if>
-      <if test="registerDate != null" >
-        register_date,
-      </if>
-      <if test="status != null" >
-        status,
-      </if>
-      <if test="memberCardBuyId != null" >
-        member_card_buy_id,
-      </if>
-      <if test="balance != null" >
-        balance,
-      </if>
-      <if test="credit != null" >
-        credit,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="agenda != null" >
-        #{agenda,jdbcType=VARCHAR},
-      </if>
-      <if test="birthday != null" >
-        #{birthday,jdbcType=TIMESTAMP},
-      </if>
-      <if test="teleNumber != null" >
-        #{teleNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="registerDate != null" >
-        #{registerDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="status != null" >
-        #{status,jdbcType=INTEGER},
-      </if>
-      <if test="memberCardBuyId != null" >
-        #{memberCardBuyId,jdbcType=INTEGER},
-      </if>
-      <if test="balance != null" >
-        #{balance,jdbcType=DOUBLE},
-      </if>
-      <if test="credit != null" >
-        #{credit,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xidian.meiping.entity.Member" >
-    update member
-    <set >
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="agenda != null" >
+    <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+  <mapper namespace="com.xidian.meiping.dao.MemberMapper" >
+    <resultMap id="BaseResultMap" type="com.xidian.meiping.entity.Member"  >
+      <id column="id" property="id" jdbcType="INTEGER" />
+      <result column="name" property="name" jdbcType="VARCHAR" />
+      <result column="agenda" property="agenda" jdbcType="VARCHAR" />
+      <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
+      <result column="tele_number" property="teleNumber" jdbcType="VARCHAR" />
+      <result column="register_date" property="registerDate" jdbcType="TIMESTAMP" />
+      <result column="status" property="status" jdbcType="VARCHAR" />
+      <result column="member_card_buy_id" property="memberCardBuyId" jdbcType="INTEGER" />
+      <result column="balance" property="balance" jdbcType="DOUBLE" />
+      <result column="credit" property="credit" jdbcType="INTEGER" />
+      <result column="total_consumption" property="totalConsumption" jdbcType="DOUBLE" />
+      <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+      <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+      <result column="card_type_name" property="cardTypeName" jdbcType="VARCHAR" />
+      <result column="youxiao_cishu" property="youxiaoCishu" jdbcType="INTEGER" />
+      <result column="youxiao_tianshu" property="youxiaoTianshu" jdbcType="INTEGER" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        id, name, agenda, birthday, tele_number, register_date, status, member_card_buy_id,
+        balance, credit, total_consumption, start_date, end_date, card_type_name, youxiao_cishu,
+        youxiao_tianshu
+    </sql>
+    <select id="selectAll" resultMap="BaseResultMap" >
+      select
+      <include refid="Base_Column_List" />
+      from member
+    </select>
+    <select id="selectByName" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from member
+      where name = #{name,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+      select
+      <include refid="Base_Column_List" />
+      from member
+      where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+      delete from member
+      where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.xidian.meiping.entity.Member" >
+      insert into member (id, name, agenda,
+        birthday, tele_number, register_date,
+        status, member_card_buy_id, balance,
+        credit, total_consumption, start_date,
+        end_date, card_type_name, youxiao_cishu,
+        youxiao_tianshu)
+      values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{agenda,jdbcType=VARCHAR},
+        #{birthday,jdbcType=TIMESTAMP}, #{teleNumber,jdbcType=VARCHAR}, #{registerDate,jdbcType=TIMESTAMP},
+        #{status,jdbcType=VARCHAR}, #{memberCardBuyId,jdbcType=INTEGER}, #{balance,jdbcType=DOUBLE},
+        #{credit,jdbcType=INTEGER}, #{totalConsumption,jdbcType=DOUBLE}, #{startDate,jdbcType=TIMESTAMP},
+        #{endDate,jdbcType=TIMESTAMP}, #{cardTypeName,jdbcType=VARCHAR}, #{youxiaoCishu,jdbcType=INTEGER},
+        #{youxiaoTianshu,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.xidian.meiping.entity.Member"  >
+      insert into member
+      <trim prefix="(" suffix=")" suffixOverrides="," >
+        <if test="id != null" >
+          id,
+        </if>
+        <if test="name != null" >
+          name,
+        </if>
+        <if test="agenda != null" >
+          agenda,
+        </if>
+        <if test="birthday != null" >
+          birthday,
+        </if>
+        <if test="teleNumber != null" >
+          tele_number,
+        </if>
+        <if test="registerDate != null" >
+          register_date,
+        </if>
+        <if test="status != null" >
+          status,
+        </if>
+        <if test="memberCardBuyId != null" >
+          member_card_buy_id,
+        </if>
+        <if test="balance != null" >
+          balance,
+        </if>
+        <if test="credit != null" >
+          credit,
+        </if>
+        <if test="totalConsumption != null" >
+          total_consumption,
+        </if>
+        <if test="startDate != null" >
+          start_date,
+        </if>
+        <if test="endDate != null" >
+          end_date,
+        </if>
+        <if test="cardTypeName != null" >
+          card_type_name,
+        </if>
+        <if test="youxiaoCishu != null" >
+          youxiao_cishu,
+        </if>
+        <if test="youxiaoTianshu != null" >
+          youxiao_tianshu,
+        </if>
+      </trim>
+      <trim prefix="values (" suffix=")" suffixOverrides="," >
+        <if test="id != null" >
+          #{id,jdbcType=INTEGER},
+        </if>
+        <if test="name != null" >
+          #{name,jdbcType=VARCHAR},
+        </if>
+        <if test="agenda != null" >
+          #{agenda,jdbcType=VARCHAR},
+        </if>
+        <if test="birthday != null" >
+          #{birthday,jdbcType=TIMESTAMP},
+        </if>
+        <if test="teleNumber != null" >
+          #{teleNumber,jdbcType=VARCHAR},
+        </if>
+        <if test="registerDate != null" >
+          #{registerDate,jdbcType=TIMESTAMP},
+        </if>
+        <if test="status != null" >
+          #{status,jdbcType=VARCHAR},
+        </if>
+        <if test="memberCardBuyId != null" >
+          #{memberCardBuyId,jdbcType=INTEGER},
+        </if>
+        <if test="balance != null" >
+          #{balance,jdbcType=DOUBLE},
+        </if>
+        <if test="credit != null" >
+          #{credit,jdbcType=INTEGER},
+        </if>
+        <if test="totalConsumption != null" >
+          #{totalConsumption,jdbcType=DOUBLE},
+        </if>
+        <if test="startDate != null" >
+          #{startDate,jdbcType=TIMESTAMP},
+        </if>
+        <if test="endDate != null" >
+          #{endDate,jdbcType=TIMESTAMP},
+        </if>
+        <if test="cardTypeName != null" >
+          #{cardTypeName,jdbcType=VARCHAR},
+        </if>
+        <if test="youxiaoCishu != null" >
+          #{youxiaoCishu,jdbcType=INTEGER},
+        </if>
+        <if test="youxiaoTianshu != null" >
+          #{youxiaoTianshu,jdbcType=INTEGER},
+        </if>
+      </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xidian.meiping.entity.Member" >
+      update member
+      <set >
+        <if test="name != null" >
+          name = #{name,jdbcType=VARCHAR},
+        </if>
+        <if test="agenda != null" >
+          agenda = #{agenda,jdbcType=VARCHAR},
+        </if>
+        <if test="birthday != null" >
+          birthday = #{birthday,jdbcType=TIMESTAMP},
+        </if>
+        <if test="teleNumber != null" >
+          tele_number = #{teleNumber,jdbcType=VARCHAR},
+        </if>
+        <if test="registerDate != null" >
+          register_date = #{registerDate,jdbcType=TIMESTAMP},
+        </if>
+        <if test="status != null" >
+          status = #{status,jdbcType=VARCHAR},
+        </if>
+        <if test="memberCardBuyId != null" >
+          member_card_buy_id = #{memberCardBuyId,jdbcType=INTEGER},
+        </if>
+        <if test="balance != null" >
+          balance = #{balance,jdbcType=DOUBLE},
+        </if>
+        <if test="credit != null" >
+          credit = #{credit,jdbcType=INTEGER},
+        </if>
+        <if test="totalConsumption != null" >
+          total_consumption = #{totalConsumption,jdbcType=DOUBLE},
+        </if>
+        <if test="startDate != null" >
+          start_date = #{startDate,jdbcType=TIMESTAMP},
+        </if>
+        <if test="endDate != null" >
+          end_date = #{endDate,jdbcType=TIMESTAMP},
+        </if>
+        <if test="cardTypeName != null" >
+          card_type_name = #{cardTypeName,jdbcType=VARCHAR},
+        </if>
+        <if test="youxiaoCishu != null" >
+          youxiao_cishu = #{youxiaoCishu,jdbcType=INTEGER},
+        </if>
+        <if test="youxiaoTianshu != null" >
+          youxiao_tianshu = #{youxiaoTianshu,jdbcType=INTEGER},
+        </if>
+      </set>
+      where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xidian.meiping.entity.Member" >
+      update member
+      set name = #{name,jdbcType=VARCHAR},
         agenda = #{agenda,jdbcType=VARCHAR},
-      </if>
-      <if test="birthday != null" >
         birthday = #{birthday,jdbcType=TIMESTAMP},
-      </if>
-      <if test="teleNumber != null" >
         tele_number = #{teleNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="registerDate != null" >
         register_date = #{registerDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="memberCardBuyId != null" >
+        status = #{status,jdbcType=VARCHAR},
         member_card_buy_id = #{memberCardBuyId,jdbcType=INTEGER},
-      </if>
-      <if test="balance != null" >
         balance = #{balance,jdbcType=DOUBLE},
-      </if>
-      <if test="credit != null" >
         credit = #{credit,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.xidian.meiping.entity.Member" >
-    update member
-    set name = #{name,jdbcType=VARCHAR},
-      agenda = #{agenda,jdbcType=VARCHAR},
-      birthday = #{birthday,jdbcType=TIMESTAMP},
-      tele_number = #{teleNumber,jdbcType=VARCHAR},
-      register_date = #{registerDate,jdbcType=TIMESTAMP},
-      status = #{status,jdbcType=INTEGER},
-      member_card_buy_id = #{memberCardBuyId,jdbcType=INTEGER},
-      balance = #{balance,jdbcType=DOUBLE},
-      credit = #{credit,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+        total_consumption = #{totalConsumption,jdbcType=DOUBLE},
+        start_date = #{startDate,jdbcType=TIMESTAMP},
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+        card_type_name = #{cardTypeName,jdbcType=VARCHAR},
+        youxiao_cishu = #{youxiaoCishu,jdbcType=INTEGER},
+        youxiao_tianshu = #{youxiaoTianshu,jdbcType=INTEGER}
+      where id = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>

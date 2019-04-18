@@ -1,4 +1,4 @@
-package com.xidian.meiping.controller.SystemSettingController;
+package com.xidian.meiping.controller.systemSettingController;
 
 import com.xidian.meiping.controller.CommonController;
 import com.xidian.meiping.entity.Operater;
@@ -34,7 +34,7 @@ public class OperaterSettingController {
     }
     @ResponseBody
     @RequestMapping(value="/operater/operate",produces = "text/html;charset=UTF-8")
-    public String operaterOperate(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+    public String Operate(HttpServletRequest request, HttpServletResponse response, HttpSession session){
         String operateId = request.getParameter("operateId");
         Operater operater = null;
         if(!operateId.equals(ConstValue.DELETE))

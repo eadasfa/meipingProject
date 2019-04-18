@@ -1,4 +1,4 @@
-package com.xidian.meiping.controller.SystemSettingController;
+package com.xidian.meiping.controller.systemSettingController;
 import com.xidian.meiping.entity.Position;
 import com.xidian.meiping.service.service.PositionService;
 import com.xidian.meiping.util.JSONUtil;

@@ -11,6 +11,16 @@ public class Wardrobe {
 
     private Integer rendWardrobeLogId;
 
+    private Integer memberId;
+
+    public Integer getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(Integer memberId) {
+        this.memberId = memberId;
+    }
+
     public Integer getId() {
         return id;
     }

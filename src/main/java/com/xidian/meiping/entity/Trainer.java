@@ -9,6 +9,15 @@ public class Trainer {
 
     private Integer rendTrainerLogId;
 
+    private Integer memberId;
+
+    public Integer getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(Integer memberId) {
+        this.memberId = memberId;
+    }
     public Integer getTrainerId() {
         return trainerId;
     }

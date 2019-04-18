@@ -1,4 +1,4 @@
-package com.xidian.meiping.controller.GoodsSetting;
+package com.xidian.meiping.controller.goodsSetting;
 
 import com.xidian.meiping.entity.BuyingLog;
 import com.xidian.meiping.service.service.SearchByDateService;

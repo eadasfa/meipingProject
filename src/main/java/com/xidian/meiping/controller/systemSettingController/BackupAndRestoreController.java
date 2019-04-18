@@ -1,4 +1,4 @@
-package com.xidian.meiping.controller.SystemSettingController;
+package com.xidian.meiping.controller.systemSettingController;
 import com.xidian.meiping.util.DbOperate;
 import com.xidian.meiping.util.JSONUtil;
 import org.springframework.stereotype.Controller;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 public class BackupAndRestoreController {
     @ResponseBody
     @RequestMapping(value="/backupandrestore/operate",produces = "text/html;charset=UTF-8")
-    public String wardrobeOperate(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+    public String Operate(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
         String operateId = request.getParameter("operateId");
         boolean flag = true;
         String context = "";

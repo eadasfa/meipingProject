@@ -18,6 +18,10 @@
     from rend_trainer_log
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <delete id="deleteByMemberId" parameterType="java.lang.Integer" >
+    delete from rend_trainer_log
+    where member_id = #{memberId,jdbcType=INTEGER}
+  </delete>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from rend_trainer_log
     where id = #{id,jdbcType=INTEGER}

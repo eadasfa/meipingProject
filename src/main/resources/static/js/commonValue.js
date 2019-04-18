@@ -1,6 +1,7 @@
-var operaters=[]
-var goods=[]
-var members=[]
+var operaters=[];
+var goods=[];
+var members=[];
+var cardTypes=[];
 var BACKUP = 'backup';
 var AUTO_BACKUP = 'autoBackup' ;
 var STOP_AUTO_BACKUP = 'stopAutoBackup'
@@ -12,5 +13,7 @@ var SEARCH = 'search';
 var ADDMANY = 'addMany';
 var RELOAD = true;
 var CHECK_IN = "check in";
+var MEMBER_PAY = "member pay fee";
 var RETURN_GOODS = "Return of the goods";
+var TOP_UP = "top up";
 var operater;

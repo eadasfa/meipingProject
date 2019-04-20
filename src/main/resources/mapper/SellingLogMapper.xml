@@ -15,6 +15,8 @@
     <result column="total_amount" property="totalAmount" jdbcType="INTEGER" />
     <result column="good_name" property="goodName" jdbcType="VARCHAR" />
     <result column="operater_name" property="operaterName" jdbcType="VARCHAR" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="credit" property="credit" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, good_id, member_id, number, selling_type, selling_price, selling_time, account,
@@ -23,26 +25,29 @@
   <sql id="Base_Column_List_Sp" >
     selling_time,good_id,good.name as good_name,selling_log.selling_price,
     selling_log.number,operater_id,employee.name as operater_name,
-    selling_log.selling_price*selling_log.number as total_amount
+    selling_log.selling_price*selling_log.number as total_amount,
+    member.name as member_name,selling_log.member_id,good.credit as credit
   </sql>
   <select id="selectAll" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List_Sp" />
-    from selling_log,good,employee
+    from selling_log,good,employee,member
     where employee.id = selling_log.operater_id and
           good.id = selling_log.good_id and
-          selling_log.selling_type = 0
+          member.id = selling_log.member_id and
+          selling_log.selling_type = #{type,jdbcType=INTEGER}
   </select>
   <select id="searchByDate" resultMap="BaseResultMap"  >
     select
     <include refid="Base_Column_List_Sp" />
-    from selling_log,employee,good
+    from selling_log,employee,good,member
     where DATE_FORMAT(selling_log.selling_time,'%Y-%m-%d')
     BETWEEN #{date1,jdbcType=VARCHAR}
     and #{date2,jdbcType=VARCHAR}
     and good.id = selling_log.good_id
     and employee.id = selling_log.operater_id
-    and selling_log.selling_type = 0
+    and selling_log.selling_type = #{type,jdbcType=INTEGER}
+    and member.id = selling_log.member_id
     <if test="goodId != null" >
       and selling_log.good_id = #{goodId,jdbcType=INTEGER}
     </if>

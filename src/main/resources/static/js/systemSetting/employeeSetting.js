@@ -60,6 +60,9 @@ $(document).ready(function () {
         enablebrowserselection: true,//允许使用浏览器选择内容功能
         source: dataAdapter,
         showtoolbar: true,
+        ready:function(){
+            employees = dataAdapter.recordids;
+        },
         rendertoolbar: function (toolbar) {
             setToolBar();
             var container = $("<div style='margin: 5px;'></div>");
@@ -167,6 +170,12 @@ $(document).ready(function () {
             var temp = positions[i];
             $("#position").append('<option value='+temp.name+'>'+temp.name+'</option>')
         }
+        $("#position").change(function () {
+            var position = $(this).val();
+            if(position=="私教")
+                $("#price").attr("disabled",false);
+            else $("#price").attr("disabled","disabled");
+        });
         if(operateId==UPDATE){
             var row = getSelectRow().rowdata;
             // console.log(row)
@@ -176,6 +185,9 @@ $(document).ready(function () {
             $("#teleNumber").val(row['teleNumber']);
             $("#position").val(row['position']);
             $("#id").attr("disabled","disabled");
+            if($("#position").val()=="私教"){
+                $("#price").attr("disabled",false);
+            }
         }
     }
     function addItem(){
@@ -194,8 +206,10 @@ $(document).ready(function () {
     }
     function getInputRow(){
         var numCells=[{'name':'id','type':1,'label':'员工编号'},
-    {'name':'teleNumber','type':1,'label':'员工电话'}];
-        return getInputRowCommon(columns,numCells)
+        {'name':'teleNumber','type':1,'label':'员工电话'}];
+        var row = getInputRowCommon(columns,numCells);
+        row['price'] = $("#price").val();
+        return row;
     }
     function search(key,value) {
 

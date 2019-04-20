@@ -13,6 +13,16 @@ public class Wardrobe {
 
     private Integer memberId;
 
+    private Double price;
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
     public Integer getMemberId() {
         return memberId;
     }
@@ -65,6 +75,13 @@ public class Wardrobe {
 
     @Override
     public String toString() {
-        return "{ id:"+id+",name:"+name+",status:"+status+"}";
+        return "Wardrobe{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", status=" + status +
+                ", rendWardrobeLogId=" + rendWardrobeLogId +
+                ", memberId=" + memberId +
+                ", price=" + price +
+                '}';
     }
 }

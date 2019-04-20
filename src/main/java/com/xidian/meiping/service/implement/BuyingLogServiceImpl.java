@@ -7,6 +7,7 @@ import com.xidian.meiping.entity.Good;
 import com.xidian.meiping.service.service.BuyingLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,6 +31,7 @@ public class BuyingLogServiceImpl implements BuyingLogService {
     }
 
     @Override
+    @Transactional
     public int add(BuyingLog example) {
         String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                 .format(new Date());
@@ -65,6 +67,7 @@ public class BuyingLogServiceImpl implements BuyingLogService {
             opId = Integer.parseInt(operaterId);
         return mapper.searchByDate(date1,date2,null,id,opId);
     }
+
 //    public static void main(String[] args){
 //        String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 //                .format(new Date());

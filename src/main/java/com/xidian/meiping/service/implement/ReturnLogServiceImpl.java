@@ -7,6 +7,7 @@ import com.xidian.meiping.entity.ReturnLog;
 import com.xidian.meiping.service.service.ReturnLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,6 +30,7 @@ public class ReturnLogServiceImpl implements ReturnLogService {
     }
 
     @Override
+    @Transactional
     public int add(ReturnLog example) {
         String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                 .format(new Date());

@@ -47,6 +47,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional
     public int update(Member example) {
         System.out.println("update"+example);
         Integer operaterId = example.getOperaterId();
@@ -58,6 +59,7 @@ public class MemberServiceImpl implements MemberService {
         example.setMemberCardBuyId(log.getId());
         return memberMapper.updateByPrimaryKey(example);
     }
+    @Transactional
     public int updateTopUp(Member example) {
 //        System.out.println(example);
         Member m = memberMapper.selectByPrimaryKey(example.getId());

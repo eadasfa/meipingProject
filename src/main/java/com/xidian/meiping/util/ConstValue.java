@@ -9,4 +9,7 @@ public final class ConstValue {
     public static final String CHECK_IN = "check in";
     public static final String RETURN_GOODS = "Return of the goods";
     public static final String TOP_UP = "top up";
+    public static final String SEARCH_TRAINER_LOG = "SEARCH_TRAINER_LOG";
+    public static final String REND_TRAINER = "REND_TRAINER";
+    public static final String SEARCH_SELLING_LOG="SEARCH_SELLING_LOG";
 }

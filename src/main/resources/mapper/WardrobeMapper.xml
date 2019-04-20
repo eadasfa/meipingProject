@@ -7,9 +7,10 @@
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="member_id" property="memberId" jdbcType="INTEGER" />
     <result column="rend_wardrobe_log_id" property="rendWardrobeLogId" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, status, rend_wardrobe_log_id,member_id
+    id, name, status, rend_wardrobe_log_id,member_id, price
   </sql>
   <select id="selectAll"  resultMap="BaseResultMap">
     select
@@ -48,7 +49,7 @@
     insert into wardrobe (id, name, status, 
       rend_wardrobe_log_id,member_id)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
-      #{rendWardrobeLogId,jdbcType=INTEGER},#{memberId,jdbcType=INTEGER})
+      #{rendWardrobeLogId,jdbcType=INTEGER},#{memberId,jdbcType=INTEGER},#{price,jdbcType=DOUBLE})
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.meiping.entity.Wardrobe" >
     insert into wardrobe
@@ -68,6 +69,9 @@
       <if test="memberId != null" >
         member_id,
       </if>
+      <if test="price != null" >
+        price,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -79,8 +83,14 @@
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
       </if>
+      <if test="rendWardrobeLogId != null" >
+        #{rendWardrobeLogId,jdbcType=INTEGER},
+      </if>
       <if test="memberId != null" >
         #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
       </if>
     </trim>
   </insert>
@@ -99,6 +109,9 @@
       <if test="memberId != null" >
         member_id = #{memberId,jdbcType=INTEGER},
       </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -107,7 +120,8 @@
     set name = #{name,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       rend_wardrobe_log_id = #{rendWardrobeLogId,jdbcType=INTEGER},
-      member_id = #{memberId,jdbcType=INTEGER}
+      member_id = #{memberId,jdbcType=INTEGER},
+      price = #{price,jdbcType=DOUBLE}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

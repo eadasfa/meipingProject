@@ -19,5 +19,9 @@ public interface TrainerMapper {
 
     Trainer selectByMemberId(Integer memberId);
 
+    List<Trainer> selectAllWithMemberId();
+
+    List<Trainer> searchByMemberIdAndTrainerId(Integer memberId, Integer trainerId);
+
     List<Trainer> selectAll();
 }

@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface SellingLogService extends SearchByDateService<SellingLog>,OperateBaseService<SellingLog>{
     List<SellingLog> findAll();
+    List<SellingLog> findAll(String type);
 }

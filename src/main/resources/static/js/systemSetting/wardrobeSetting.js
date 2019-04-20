@@ -4,7 +4,8 @@ $(document).ready(function () {
     var columns=[
         { text: '衣柜编号', datafield: 'id', width: 200 },
         { text: '衣柜名称', datafield: 'name', width: 200 },
-        { text: '衣柜状态', datafield: 'status', width: 180 }
+        { text: '衣柜状态', datafield: 'status', width: 180 },
+        { text: '衣柜租金', datafield: 'price', width: 180 }
     ];
     var source =
         {
@@ -14,26 +15,17 @@ $(document).ready(function () {
                     { name: 'id' },
                     { name: 'name' },
                     { name: 'status' },
+                    { name: 'price' }
                 ],
             url: sourceUrl,
             async: false,
             addrow: function (rowid, rowdata, position, commit) {
-                // synchronize with the server - send insert command
-                // call commit with parameter true if the synchronization with the server is successful
-                //and with parameter false if the synchronization failed.
-                // you can pass additional argument to the commit callback which represents the new ID if it is generated from a DB.
-                commit(true);
+                 commit(true);
             },
             deleterow: function (rowid, commit) {
-                // synchronize with the server - send delete command
-                // call commit with parameter true if the synchronization with the server is successful
-                //and with parameter false if the synchronization failed.
-                commit(true);
+                 commit(true);
             },
             updaterow: function (rowid, newdata, commit) {
-                // synchronize with the server - send update command
-                // call commit with parameter true if the synchronization with the server is successful
-                // and with parameter false if the synchronization failed.
                 commit(true);
             }
         };
@@ -179,6 +171,7 @@ $(document).ready(function () {
             $("#id").val(row['id']);
             $("#name").val(row['name']);
             $("#status").val(row['status']);
+            $("#price").val(row['price']);
             $("#id").attr("disabled","disabled");
         }else if(operateId == ADD){
             $("#status").val("空闲");
@@ -221,7 +214,8 @@ $(document).ready(function () {
        return deleteItemCommon(url);
     }
     function getInputRow(){
-        var numCells=[{'name':'id','type':1,'label':'衣柜编号'}];
+        var numCells=[{'name':'id','type':1,'label':'衣柜编号'},
+            {'name':'price','type':2,'label':'衣柜租金'}];
         return getInputRowCommon(columns,numCells)
     }
     function search(key,value) {

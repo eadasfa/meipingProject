@@ -182,7 +182,7 @@ $(document).ready(function () {
             LoadAjaxJson(row,RETURN_GOODS,goodBuyingLogurl);
         }
         $('#jqxGrid2').jqxGrid('clear');
-        alert("确认退货！");
+        alert("退货成功！");
         search();
     }
 //根据不同operateId弹出不同的窗口
@@ -237,7 +237,9 @@ $(document).ready(function () {
         $("#leftNumber").val(row.leftNumber);
         $("#refrencePrice").val(row.buyingPrice);
         $("#buyingPrice").val(row.buyingPrice);
-        $("#number").val(1);
+        // $("#number").val(1);
+        var left = parseInt(getSelectRow().rowdata.leftNumber)-getReturnNumber(row.id);
+        $("#number").attr("placeholder","最大为"+left);
         $("#totalAmount").val(1*row.buyingPrice);
 
     }
@@ -246,6 +248,17 @@ $(document).ready(function () {
         if(row==false) return false;
         var commit = $("#jqxGrid2").jqxGrid('addrow', null, row);
         return true;
+    }
+    function getReturnNumber(id) {
+        var rows = $("#jqxGrid2").jqxGrid('getrows');
+        var left =0;
+        for(var i=0;i<rows.length;i++){
+            if(rows[i].id==id){
+                left = parseInt(rows[i].number)+left;
+            }
+        }
+        // console.log("left:"+left)
+        return left;
     }
     function updateItem() {
         var row = generateRow();
@@ -266,12 +279,18 @@ $(document).ready(function () {
         row.buyingPrice = $("#buyingPrice").val();
         row.number = $("#number").val();
         row.totalAmount = $("#totalAmount").val();
+        //剩余数量
+        var left = parseInt(getSelectRow().rowdata.leftNumber)-getReturnNumber(row.id);
+        console.log("left:"+left)
         if(!isInteger(row.number)){
             alert("退货数量应为整数");return false;
         }else if(row.number==0){
             alert("退货数量不能为 0");return false;
-        }else if(row.number>$("#leftNumber").val()){
-            alert("退货数量超过库存，请重新输入");return false;
+        }else if(parseInt(row.number)>left){
+            console.log("退货数量"+row.number)
+            console.log("库存数量"+$("#leftNumber").val())
+            alert("你最多还可退货"+left+"件");
+            return false;
         }
         if(!isDecimal(row.buyingPrice)){
             alert("单价应为数字");return false;

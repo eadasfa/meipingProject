@@ -7,8 +7,9 @@ public class SellingLog {
 
     private Integer goodId;
     private String goodName;
+    private Integer credit;
     private Integer memberId;
-
+    private String memberName;
     private Integer number;
 
     private Integer sellingType;
@@ -22,6 +23,22 @@ public class SellingLog {
     private Integer operaterId;
     private String operaterName;
     private Double totalAmount;
+
+    public Integer getCredit() {
+        return credit;
+    }
+
+    public void setCredit(Integer credit) {
+        this.credit = credit;
+    }
+
+    public String getMemberName() {
+        return memberName;
+    }
+
+    public void setMemberName(String memberName) {
+        this.memberName = memberName;
+    }
 
     public String getGoodName() {
         return goodName;

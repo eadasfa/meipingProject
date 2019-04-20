@@ -7,14 +7,54 @@
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="rend_trainer_log_id" property="rendTrainerLogId" jdbcType="INTEGER" />
     <result column="member_id" property="memberId" jdbcType="INTEGER" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="day_number" property="dayNumber" jdbcType="INTEGER" />
+    <result column="trainer_name" property="trainerName" jdbcType="VARCHAR" />
+
   </resultMap>
   <sql id="Base_Column_List" >
     trainer_id, price, status, rend_trainer_log_id,member_id
   </sql>
+  <sql id="Base_Column_List_2" >
+    trainer.trainer_id, trainer.price, trainer.status, trainer.rend_trainer_log_id,
+    trainer.member_id,employee.name as trainer_name
+  </sql>
+  <sql id="Base_Column_List_Sp" >
+    trainer.trainer_id, trainer.price, trainer.status, trainer.rend_trainer_log_id,trainer.member_id,
+    member.name as member_name, rtl.start_time as start_time,rtl.end_time as end_time,
+    datediff(rtl.end_time,rtl.start_time) as day_number,employee.name as trainer_name
+  </sql>
   <select id="selectAll"  resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
-    from trainer
+    <include refid="Base_Column_List_2" />
+    from trainer,employee
+    where trainer.trainer_id = employee.id
+  </select>
+  <select id="selectAllWithMemberId"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List_Sp" />
+    from trainer,member,rend_trainer_log as rtl,employee
+    where trainer.rend_trainer_log_id = rtl.id
+    and trainer.trainer_id = employee.id
+    and trainer.member_id = member.id
+    and trainer.status = 1
+  </select>
+  <select id="searchByMemberIdAndTrainerId"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List_Sp" />
+    from trainer,member,rend_trainer_log as rtl,employee
+    where trainer.rend_trainer_log_id = rtl.id
+    and trainer.trainer_id = employee.id
+    and trainer.member_id = member.id
+    and trainer.status = 1
+    <if test="memberId != null" >
+      and trainer.member_id = #{memberId,jdbcType=INTEGER}
+    </if>
+    <if test="trainerId != null" >
+     and  trainer.trainer_id = #{trainerId,jdbcType=INTEGER}
+    </if>
   </select>
   <select id="selectByMemberId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select

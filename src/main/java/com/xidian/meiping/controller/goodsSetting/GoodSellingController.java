@@ -25,6 +25,12 @@ public class GoodSellingController {
         return JSONArray.fromObject(list).toString();
     }
     @ResponseBody
+    @RequestMapping(value="/getSellingLogsByCredit",produces = "text/html;charset=UTF-8")
+    public String getSellingLogsByCredit(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+        List<SellingLog> list = sellingLogService.findAll(1+"");
+        return JSONArray.fromObject(list).toString();
+    }
+    @ResponseBody
     @RequestMapping(value="/selling_log/operate",produces = "text/html;charset=UTF-8")
     public String Operate(HttpServletRequest request, HttpServletResponse response, HttpSession session){
         return GoodSetting.operate(request,sellingLogService);

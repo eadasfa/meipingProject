@@ -8,12 +8,38 @@
     <result column="operater_id" property="operaterId" jdbcType="INTEGER" />
     <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
     <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="operater_name" property="operaterName" jdbcType="VARCHAR" />
+    <result column="total_amount" property="totalAmount" jdbcType="DOUBLE" />
+    <result column="trainer_name" property="trainerName" jdbcType="DOUBLE" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, trainer_id, member_id, operater_id, start_time, end_time
   </sql>
+  <sql id="Base_Column_List_Sp" >
+    rtl.id, rtl.trainer_id, rtl.member_id, rtl.operater_id, rtl.start_time, rtl.end_time,
+    operater.name as operater_name,
+--     datediff(rtl.end_time,rtl.start_time)*trainer.price as total_amount,
+    rtl.total_amount,
+    employee.name as trainer_name
+  </sql>
+  <select id="selectByMemberId" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List_Sp" />
+    from rend_trainer_log as rtl,operater,trainer,employee
+    where rtl.member_id = #{memberId,jdbcType=INTEGER}
+    and operater.operater_id = rtl.operater_id
+    and trainer.trainer_id = rtl.trainer_id
+    and employee.id = trainer.trainer_id
+  </select>
+  <select id="selectByStartTimeAndMemberId" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from rend_trainer_log as r
+    where r.start_time = #{startTime,jdbcType=TIMESTAMP}
+    and r.member_id = #{memberId,jdbcType=INTEGER}
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from rend_trainer_log
     where id = #{id,jdbcType=INTEGER}

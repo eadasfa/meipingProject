@@ -1,0 +1,70 @@
+<html lang="en">
+<section class="content-header">
+    <h1> 私教管理</h1>
+    <ol class="breadcrumb">
+        <li><a href="../"><i class="fa fa-object-group"></i> 首页</a></li>
+        <li> 会员管理</li>
+        <li class="active"> 私教管理</li>
+    </ol>
+</section><!-- ./content-header -->
+<head>
+    <!--<script type="text/javascript" src="js/common.js"></script>-->
+    <script type="text/javascript" src="js/memberManage/trainerManage.js"></script>
+    <script type="text/javascript" src="js/demos.js"></script>
+
+    <script class="popUpWindow" type="text/html">
+        <form action="">
+            <div class="popUpWindow" >
+                <table>
+                  <tr>
+                      <td>会员编号:</td>
+                      <td><input type="text" id="member-id-html" list="member-id-list-html"/>
+                          <datalist id="member-id-list-html"></datalist>
+                      </td>
+                  </tr>
+                    <tr>
+                        <td>私教编号:</td>
+                        <td><select id="trainer-id-html" style="width: 100%"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>租用单价(每天):</td>
+                        <td><input type="text" id="price-html" disabled/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>租用天数:</td>
+                        <td><input type="text" id="rend-time-html"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>结束时间:</td>
+                        <td><input type="text" id="end-time-html" disabled/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>总价:</td>
+                        <td><input type="text" id="total-amount-html" disabled/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    </script>
+</head>
+<section class="container-fluid">
+    <!--<div id="jqxGrid">-->
+    <!--</div>-->
+    <table style="border-width:10px">
+        <tr>
+            <td>
+                <div id="jqxGrid">
+                </div></td>
+            <td>
+                <div id="jqxGrid2">
+                </div>
+            </td>
+        </tr>
+    </table>
+</section>
+</html>

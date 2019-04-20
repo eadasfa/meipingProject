@@ -21,6 +21,7 @@ public class WardrobeServiceImpl implements WardrobeService {
 
     @Override
     public int update(Wardrobe wardrobe) {
+        System.out.println(wardrobe);
         return wardrobeMapper.updateByPrimaryKeySelective(wardrobe);
     }
 

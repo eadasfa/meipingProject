@@ -32,7 +32,8 @@
     delete from card_type
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.xidian.meiping.entity.Card" >
+  <insert id="insert" parameterType="com.xidian.meiping.entity.Card"
+          useGeneratedKeys="true" keyProperty="id">
     insert into card_type (id, name, youxiao_cishu, 
       youxiao_tianshu, price)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{youxiaoCishu,jdbcType=INTEGER}, 

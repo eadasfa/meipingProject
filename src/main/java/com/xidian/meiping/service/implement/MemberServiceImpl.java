@@ -70,7 +70,8 @@ public class MemberServiceImpl implements MemberService {
         topUpLog.setOperaterId(example.getOperaterId());
         topUpLog.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                 .format(new Date()));
-        topUpLog.setMoney(example.getBalance()-m.getBalance());
+
+        topUpLog.setMoney(example.getBalance()-(m.getBalance()==null?0:m.getBalance()));
         System.out.println(topUpLog);
         topUpLogMapper.insert(topUpLog);
         m.setBalance(example.getBalance());
@@ -81,11 +82,10 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public int add(Member example) {
         example.setStatus("可用");
-        MemberCardBuyLog log = genMCBL(example);
-//        System.out.println(log);
         memberMapper.insert(example);
+        MemberCardBuyLog log = genMCBL(example);
         memberCardBuyLogMapper.insert(log);
-        log = memberCardBuyLogMapper.selectByMemberIdAndStartTime(example.getId(),example.getStartDate());
+//        log = memberCardBuyLogMapper.selectByMemberIdAndStartTime(example.getId(),example.getStartDate());
         example.setMemberCardBuyId(log.getId());
         return memberMapper.updateByPrimaryKey(example);
     }
@@ -97,7 +97,7 @@ public class MemberServiceImpl implements MemberService {
         log.setMemberId(member.getId());
         log.setOperaterId(member.getOperaterId());
         log.setPrice(card.getPrice());
-        log.setAccount(1.0);
+        log.setAccount(member.getAccount());
         log.setStartTime(member.getStartDate());
         log.setEndTime(member.getEndDate());
 //        System.out.println(log);

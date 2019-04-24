@@ -29,8 +29,7 @@ public class RendTrainerLogServiceImpl implements RendTrainerLogService {
         Trainer trainer = trainerMapper.selectByPrimaryKey(example.getTrainerId());
         trainer.setStatus(1);
         trainer.setMemberId(example.getMemberId());
-        trainer.setRendTrainerLogId(mapper.selectByStartTimeAndMemberId(
-                example.getStartTime(),example.getMemberId()).getId());
+        trainer.setRendTrainerLogId(example.getId());
         System.out.println(trainer);
         return trainerMapper.updateByPrimaryKeySelective(trainer);
     }

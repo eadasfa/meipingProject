@@ -37,6 +37,8 @@ public class MemberCardSettingController {
         if(!operateId.equals(ConstValue.DELETE))
             card = (Card) CommonUtil.newInstance(card,request);
         CommonController.operate(operateId,cardService,request,card);
+        System.out.println(JSONUtil.ObjecttoJson(cardService.findById(card.getId()),
+                true,"I'm houtai"));
         return JSONUtil.ObjecttoJson(cardService.findById(card.getId()),
                 true,"I'm houtai");
     }

@@ -178,16 +178,28 @@ $(document).ready(function () {
             alert("您输入的员工编号不存在");
             return false;
         }
-
+        operaters.push(row);
         return addItemCommon(row,url);
     }
     function updateItem(){
         var row= getInputRow();
         if(row == false) return false;
+        for(var i=0;i<operaters.length;i++){
+            if(row.id==operaters[i].id){
+                operaters[i] = row;
+            }
+        }
         return updateItemCommon(row,url);
     }
     function deleteItem() {
-        return deleteItemCommon(url);
+        var row = getSelectRow();
+
+        for(var i=0;i<operaters.length;i++){
+            if(operaters[i].id==row.id)
+                operaters.splice(i,1);
+                break;
+        }
+        return deleteItemCommon(url,row);
     }
     function getInputRow(){
         var numCells=[{'name':'id','type':1,'label':'员工编号'},

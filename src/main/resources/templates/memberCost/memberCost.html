@@ -1,0 +1,324 @@
+<html lang="zh-CN" >
+<head>
+    <!--<script type="text/javascript" src="js/common.js"></script>-->
+    <script type="text/javascript" src="js/memberCost/initGrid.js"></script>
+    <script type="text/javascript" src="js/memberCost/memberCostButtonInit.js"></script>
+    <script type="text/javascript" src="js/memberCost/memberCost.js"></script>
+</head>
+<section class="content-header">
+    <h1> 会员消费</h1>
+    <ol class="breadcrumb" >
+        <li><a href="../"><i class="fa fa-object-group"></i> 首页</a></li>
+        <li> 会员消费</li>
+    </ol>
+    <br>
+</section><!-- ./content-header -->
+
+<section class="container-fluid">
+
+    <form class="form-inline" role="form">
+
+        <text style="font-size:18px;font-weight:bold;">请输入会员卡号:</text>
+        <div class="input-group">
+            <input type="text" id="input-member-id" class="form-control" list="member-id-list" placeholder="请输入会员卡号">
+            <datalist id="member-id-list"></datalist>
+            <span class="input-group-btn">
+				<button class="btn btn-default" id="query" type="button">确定</button>
+			</span>
+        </div><!-- /input-group -->
+
+        <div class="btn-group">
+            <button id="add-member" type="button" class="btn btn-default" style="border-radius: 10px;">添加会员</button>
+        </div>
+        <div class="btn-group">
+            <button id="update-member" type="button" class="btn btn-default" style="border-radius: 10px;">修改会员</button>
+        </div>
+        <div class="btn-group">
+            <button id="clear-member" type="button" class="btn btn-default" style="border-radius: 10px;">清除会员</button>
+        </div>
+        <div class="btn-group">
+            <button id="renewal-member" type="button" class="btn btn-default" style="border-radius: 10px;">会员续费</button>
+        </div>
+        <div class="btn-group">
+            <button id="rend-wardrobe" type="button" class="btn btn-default" style="border-radius: 10px;">租用衣柜</button>
+        </div>
+        <div class="btn-group">
+            <button id="rend-trainer" type="button" class="btn btn-default" style="border-radius: 10px;">租用私教</button>
+        </div>
+        <div class="btn-group">
+            <button id="member-cost" type="button" class="btn btn-default" style="border-radius: 10px;">商品购买</button>
+        </div>
+    </form>
+    <table class="table">
+        <tbody>
+        <tr>
+            <td>会员卡号:&nbsp;&nbsp;<text id="id"></text></td>
+            <td>会员姓名:&nbsp;&nbsp;<text id="name"></text></td>
+            <td>会员类型:&nbsp;&nbsp;<text id="cardTypeName"></text></td>
+            <td>会员状态:&nbsp;&nbsp;<text id="status"></text></td>
+        </tr>
+        <tr>
+            <td>卡内余额:&nbsp;&nbsp;<text id="balance"></text></td>
+            <td>会员积分:&nbsp;&nbsp;<text id="credit"></text></td>
+            <td>剩余次数:&nbsp;&nbsp;<text id="youxiaoCishu"></text></td>
+            <td>会员电话:&nbsp;&nbsp;<text id="teleNumber"></text></td>
+        </tr>
+        <tr>
+            <td>开卡日期:&nbsp;&nbsp;<text id="startDate"></text></td>
+            <td>到期日期:&nbsp;&nbsp;<text id="endDate"></text></td>
+            <td>健身教练:&nbsp;&nbsp;<text id="trainerName"></text></td>
+            <td>衣柜编号:&nbsp;&nbsp;<text id="wardrobeId"></text></td>
+        </tr>
+        </tbody>
+    </table>
+    <hr style="color:#000;height: 5px">
+</section><!-- ./content container-fluid -->
+<section>
+    <!--style="background-color: blue"-->
+    <div id='tabs' >
+        <ul>
+            <li style="margin-left: 30px;">
+                会员消费记录
+            </li>
+            <li>
+                会员兑换记录
+            </li>
+            <li>
+                私教购买记录
+            </li>
+            <li>
+                会员交费记录
+            </li>
+            <li>
+                衣柜租用记录
+            </li>
+        </ul>
+        <div style="overflow: hidden;">
+            <div style="border:none;" id="jqxGrid1">
+            </div>
+        </div>
+        <div style="overflow: hidden;">
+            <div style="border:none;" id="jqxGrid2"></div>
+        </div>
+        <div style="overflow: hidden;">
+            <div style="border:none;" id="jqxGrid3"></div>
+        </div>
+        <div style="overflow: hidden;">
+            <div style="border:none;" id="jqxGrid4"></div>
+        </div>
+        <div style="overflow: hidden;">
+            <div style="border:none;" id="jqxGrid5"></div>
+        </div>
+    </div>
+</section>
+<script class="addMember" type="text/html">
+    <form action="">
+        <div class="addMember" >
+            <table>
+                <tr>
+                    <td>会员编号:</td><td><input type="text" id = "addMember-id"/></td>
+                    <td>会员姓名:</td><td><input type="text" id = "addMember-name"/></td>
+                    <td>会员类型:</td><td><select id = "addMember-cardTypeName" style="width: 100%;"></select></td>
+                </tr>
+                <tr>
+                    <td>会员电话:</td><td><input type="text" id = "addMember-teleNumber"/></td>
+                    <td>会员性别:</td><td><select id="addMember-agenda" style="width: 100%;"><option selected value="男">男</option><option value="女">女</option></select></td>
+                    <td>会员生日:</td><td><input type="text" id="addMember-birthday" placeholder="yyyy-MM-dd"/></td>
+                </tr>
+            </table>
+            <hr>
+            <table>
+                <tr>
+                    <td>注册时间:</td><td><input type="text" id = "addMember-registerDate" placeholder="yyyy-MM-dd"/></td>
+                    <td>开卡时间:</td><td><input type="text" id = "addMember-startDate" placeholder="yyyy-MM-dd"/></td>
+                    <td>到期时间:</td><td><input type="text" id = "addMember-endDate" disabled/></td>
+                </tr>
+                <tr>
+                    <td>有效次数:</td><td><input type="text" id = "addMember-youxiaoCishu" disabled/></td>
+                    <td>有效天数:</td><td><input type="text" id = "addMember-youxiaoTianshu" disabled/></td>
+                    <td id="addMember-selling-price"></td><td><input type="text" id = "addMember-price"/></td>
+                </tr>
+            </table>
+        </div>
+
+    </form>
+</script>
+<script class="renewalMember" type="text/html">
+    <div class="renewalMember" >
+        <table>
+            <tr>
+                <td>会员编号:</td><td><input  id = "renewal-id" disabled/></td>
+                <td>会员姓名:</td><td><input  id = "renewal-name" disabled/></td>
+                <td>会员类型:</td><td><input  id = "renewal-cardTypeName" disabled/></td>
+            </tr>
+            <tr>
+                <td>卡内余额:</td><td><input id = "renewal-balance" disabled/></td>
+                <td>剩余次数:</td><td><input id = "renewal-leftCishu" disabled/></td>
+                <td>到期日期:</td><td><input id="renewal-endDate" disabled/></td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td>充值金额:</td>
+                <td><input type="text" id="renewal-top-up-price" placeholder="充值金额"/></td>
+                <td><input type="button" id="renewal-top-up" value="确认充值"
+                           class="layui-btn layui-btn-radius layui-btn-normal"/></td>
+            </tr>
+        </table>
+        <table>
+            <th>会员续费</th>
+            <tr>
+                <td>会员类型:</td><td><select id = "renewal-cardTypeName3" style="width: 100%;"></select></td>
+                <td>交费金额</td><td><input type="text" id="renewal-top-up-price3" placeholder="交费金额"/></td>
+            </tr>
+            <tr>
+                <td>到期时间:</td><td><input id="renewal-endDate3" disabled/></td>
+                <td>有效次数:</td><td><input id="renewal-youxiaoCishu3" disabled/></td>
+            </tr>
+        </table>
+    </div>
+</script>
+<script class="rendWardrobe" type="text/html">
+    <form action="">
+        <div class="rendWardrobe" >
+            <table>
+                <thead>会员信息</thead>
+                <tr>
+                    <td>会员卡号:</td>
+                    <td><input type="text" id="rendWardrobe-member-id" placeholder="会员卡号"/>
+
+                    <td>会员姓名:</td>
+                    <td><input id="rendWardrobe-member-name" disabled/></td>
+                    <td>会员类型:</td>
+                    <td><input id="rendWardrobe-card-type" disabled/></td>
+                </tr>
+            </table>
+            <hr style="border: medium  #00acd6 solid">
+            <table>
+                <thead>长期租用</thead>
+                <tr>
+                    <td>衣柜编号:</td>
+                    <td><input id="rendWardrobe-wardrobe-id" list="rendWardrobe-id-list"/>
+                        <datalist id="rendWardrobe-id-list"></datalist></td></td>
+                    <td>衣柜名称:</td>
+                    <td><input id="rendWardrobe-wardrobe-name" disabled/></td>
+                    <td>衣柜租金:</td>
+                    <td><input id="rendWardrobe-wardrobe-price" type="text"/></td>
+                </tr>
+                <tr>
+                    <td>起始日期:</td>
+                    <td><input type="text" id="rendWardrobe-from"></td>
+                    <td>结束日期:</td>
+                    <td><input type="text" id="rendWardrobe-to"></td>
+                    <td>总金额:</td>
+                    <td><input id="rendWardrobe-total-amount" disabled /></td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</script>
+<script class="rendWardrobe2" type="text/html">
+    <form action="">
+        <div class="rendWardrobe2" >
+            <table>
+                <thead>会员信息</thead>
+                <tr>
+                    <td>衣柜编号:</td>
+                    <td><input type="text" id="rendWardrobe2-wardrobe-id2" disabled/>
+                    <td>衣柜名称:</td>
+                    <td><input id="rendWardrobe2-wardrobe-name2" disabled/></td>
+                </tr>
+                <tr>
+                    <td>会员卡号:</td>
+                    <td><input type="text" id="rendWardrobe2-member-id2" disabled/>
+                    <td>会员姓名:</td>
+                    <td><input id="rendWardrobe2-member-name2" disabled/></td>
+                </tr>
+                <tr>
+                    <td>会员类型:</td>
+                    <td><input id="rendWardrobe2-card-type2" disabled/></td>
+                    <td>到期时间:</td>
+                    <td><input type="text" id="rendWardrobe2-end-time2" disabled/></td>
+                </tr>
+            </table>
+            <hr style="border: solid medium #00acd6">
+            <table>
+                <tr>
+                    <td>截止日期:</td>
+                    <td><input type="text" id="rendWardrobe2-to2"/></td>
+                    <td>金额</td>
+                    <td><input type="text" id="rendWardrobe2-total-amount2" disabled/></td>
+                </tr>
+            </table>
+            <hr style="color:#000;height: 5px">
+            <input id="returnWardrobe" type="button" class="layui-btn layui-btn-radius layui-btn-normal"
+                value="退柜">
+        </div>
+    </form>
+</script>
+<script class="rendTrainer" type="text/html">
+    <form action="">
+        <div class="rendTrainer" >
+            <table>
+                <tr>
+                    <td>会员编号:</td>
+                    <td><input type="text" id="rendTrainer-member-id" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>私教编号:</td>
+                    <td><select id="rendTrainer-trainer-id" style="width: 100%"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>租用单价(每天):</td>
+                    <td><input type="text" id="rendTrainer-price" disabled/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>租用天数:</td>
+                    <td><input type="text" id="rendTrainer-rend-time"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>结束时间:</td>
+                    <td><input type="text" id="rendTrainer-end-time" disabled/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>总价:</td>
+                    <td><input type="text" id="rendTrainer-total-amount" disabled/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</script>
+<script class="buyGoods" type="text/html">
+    <form action="">
+        <div class="buyGoods" >
+           <table>
+               <thead>会员信息</thead>
+               <tbody>
+               <tr>
+                   <td><text id="buyGoods-member-id"></text></td>
+                   <td><text id="buyGoods-member-name"></text></td>
+                   <td><text id="buyGoods-card-type"></text></td>
+               </tr>
+               <tr>
+                   <td><text id="buyGoods-credit"></text></td>
+                   <td><text id="buyGoods-balance"></text></td>
+                   <td><text id="buyGoods-total-consumption"></text></td>
+               </tr>
+               </tbody>
+           </table>
+            <hr style="color:#000;height: 5px">
+            <table>
+                <thead>添加商品信息</thead>
+
+            </table>
+            <hr>
+        </div>
+    </form>
+</script>
+</html>

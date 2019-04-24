@@ -42,7 +42,7 @@
         return /^[0-9]+$/.test(s)
     }
     function isDecimal(s) {//小数
-        return /^[0-9]+(\.[0-9]+)?$/ .test(s)
+        return /^[0-9]+(\.[0-9]+)?$/.test(s)
     }
     function isSelectedAItem() {
         return isSelectedAItemByGrid("jqxGrid");
@@ -67,19 +67,12 @@
             }
         }
         var result = LoadAjaxJson(row,ADD,url);
-        // console.log(JSON.stringify(result));
-        if(result['success']==false){
+        if(result==null||result['success']==false){
             alert("添加失败:"+result['context']);
             return false;
         }
-        // var id = insertId(row['id'])
-        // if(row.status!=undefined)
         row = changeData(result['data'][0]);
-        var commit = $("#jqxGrid").jqxGrid('addrow', id, row);
-        // var rowboundindex = $('#jqxGrid').jqxGrid('getrowboundindexbyid', id);
-        //滚动到这一行
-        // $("#jqxGrid").jqxGrid('ensurerowvisible', rowboundindex);
-        // $('#jqxGrid').jqxGrid('refresh');
+        var commit = $("#jqxGrid").jqxGrid('addrow', null, row);
         sordLikeFormer();
         return true;
     }
@@ -92,7 +85,7 @@
         if(r!=true)
             return false;
         var result=LoadAjaxJson({'id':rowdata['id']},DELETE,url);
-        if(result['success']==false){
+        if(result==null||result['success']==false){
             alert("删除失败:"+result['context']);
             return false;
         }
@@ -103,13 +96,13 @@
         if(row == false) return false;
         var result = LoadAjaxJson(row,UPDATE,url);
         // console.log(JSON.stringify(result));
-        if(result['success']==false+""){
+        if(result==null||result['success']==false){
             alert("修改失败:"+result['context']);
             return false;
         }
         var selectedrowindex = $("#jqxGrid").jqxGrid('getselectedrowindex');
         var id = $("#jqxGrid").jqxGrid('getrowid', selectedrowindex);
-        row = changeData(result['data'][0]);
+        row = changeData(result['data'][0],2);
         var commit = $("#jqxGrid").jqxGrid('updaterow', id, row);
         // $("#jqxGrid").jqxGrid('ensurerowvisible', selectedrowindex);
         return true;
@@ -141,13 +134,13 @@
         return result;
     }
     function isValidCommon(data,numCells) {
-        // console.log("valid")
+        // console.log(JSON.stringify(numCells))
         for(var i=0;i<numCells.length;i++){
             var name = numCells[i]['name'];
             var type = numCells[i]['type']
-            var beNull
+
             if(data[name]==null||data[name]==""){
-                if(numCells[i]['beNull']==true) return true;
+                if(numCells[i]['beNull']==true) continue;
                 alert("'"+numCells[i]['label']+"'不能为空");
                 return false;
             }
@@ -171,6 +164,7 @@
     }
     //主要是将0，1，2转换为文字
     function changeData(data,type){
+        if(!isWardrobe) return data;
         if(type==undefined) type=1;
         var row = data;
         if(type==1&&row.status!=undefined&&(row.status==0||row.status==1||row.status==2))
@@ -195,6 +189,11 @@
             var commit = $("#"+grid).jqxGrid('addrow', id, row);
         }
     }
+    function showOneRow(row,grid,id) {
+        if(id==undefined) id=null;
+        if(grid==undefined) grid="jqxGrid";
+        var commit = $("#"+grid).jqxGrid('addrow', id, row);
+    }
     function setToolBar() {
         $('#jqxGrid').jqxGrid({ toolbarheight: 40});
     }
@@ -211,5 +210,56 @@
         var date = new Date(date);
         date.setDate(date.getDate() + days);
         return formatTime(date);
-
+    }
+    function DateMinus(start,end){
+        var startDay = new Date(start);
+        var endDay = new Date(end);
+        var days = endDay.getTime() - startDay.getTime();
+        var day = parseInt(days / (1000 * 60 * 60 * 24));
+        return day;
+    }
+    function getCardByCardName(name) {
+        for(i=0;i<cardTypes.length;i++){
+            if(cardTypes[i].name==name)
+                return cardTypes[i];
+        }
+        return {};
+    }
+    function getMember(id) {
+        for(var i=0;i<members.length;i++){
+            if(members[i].id==id)
+                return members[i];
+        }
+        return null;
+    }
+    function getWardrobe(id) {
+        for(var i=0;i<wardrobes.length;i++){
+            if(wardrobes[i].id==id)
+                return wardrobes[i];
+        }
+        return null;
+    }
+    function getTrainer(trainerId) {
+        for(var i=0;i<trainers.length;i++){
+            if(trainerId==trainers[i].trainerId){
+                return trainers[i];
+            }
+        }
+        return null;
+    }
+    function getOperater(id) {
+        for(var i=0;i<operaters.length;i++){
+            if(id==operaters[i].id){
+                return operaters[i];
+            }
+        }
+        return null;
+    }
+    function getEmployee(id) {
+        for(var i=0;i<employees.length;i++){
+            if(id==employees[i].id){
+                return employees[i];
+            }
+        }
+        return null;
     }

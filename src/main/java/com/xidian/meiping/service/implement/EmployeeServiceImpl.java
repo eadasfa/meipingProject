@@ -50,6 +50,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public int add(Employee example) {
         Employee temp = employeeMapper.selectByPrimaryKey(example.getId());
         if(temp==null) {
+            example.setStatus(0);
             int i=employeeMapper.insert(example);
             String position = example.getPosition();
             if (position.equals("私教")) {
@@ -73,7 +74,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public int deleteById(Integer Id) {
-        return employeeMapper.deleteByPrimaryKey(Id);
+        try {
+            return employeeMapper.deleteByPrimaryKey(Id);
+        }catch (Exception e){
+            return 0;
+        }
     }
 
     @Override

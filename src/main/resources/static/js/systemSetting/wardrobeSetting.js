@@ -51,11 +51,14 @@ $(document).ready(function () {
             // 如果params.data获取不到。可以用dataadapter来获取
             // 如dataadapter.recordids[0].*等
             ready:function(){//将0，1，2 映射
+                isWardrobe = true;
                 var map = {'0':"空闲",'1':"已租",'2':"损坏"}
                 var data = dataAdapter.recordids;
                 for(var i=0;i<data.length;i++){
                      var commit = $("#jqxGrid").jqxGrid('updaterow', i, changeData(data[i]));
                 }
+                isWardrobe = false;
+                wardrobes = dataAdapter.recordids;
             },
             rendertoolbar: function (toolbar) {
                 //console.log(dataAdapter.recordids[0].name)
@@ -184,37 +187,64 @@ $(document).ready(function () {
         }
     }
     function addItem(){
+        isWardrobe = true;
         var row= getInputRow();
         if(row == false) return false;
-
-        return addItemCommon(row,url);
+        wardrobes.push(row)
+        var flag = addItemCommon(row,url);
+        isWardrobe = false;
+        return flag;
     }
 
     function addManyItem() {
+        isWardrobe = true;
         var row={};
         row['from'] = $("#id").val();//起始编号
         row['to'] = $("#name").val();//结束编号
         row['status'] = $("#status").val();
+        row['price'] = $("#price").val();
         row['status'] = row['status']=="空闲"?0:(row['status']=="已租"?1:2);
         var result = LoadAjaxJson(row,"addMany",url);
         if(result['success']==false+""){
+            isWardrobe = false;
             alert("添加失败:"+result['context']);
             return false;
         }
         alert(result['context']);
-        show(result.data);
+        var rows = result.data;
+        show(rows);
+        for(var i=0;i<rows.length;i++){
+            wardrobes.push(rows[i]);
+        }
+        isWardrobe = false;
         return true;
     }
     function updateItem(){
+        isWardrobe = true;
         var row= getInputRow();
         if(row == false) return false;
+        var i=0;
+        for(;i<wardrobes.length;i++){
+            if(row.id==wardrobes[i].id){
+                wardrobes[i] = row;
+            }
+        }
+        isWardrobe = false;
         return updateItemCommon(row,url);
     }
     function deleteItem() {
-       return deleteItemCommon(url);
+
+        var row = getSelectRow();
+        for(var i=0;i<wardrobes.length;i++){
+            if(row.id==wardrobes[i].id)
+                wardrobes.splice(i,1)
+                break;
+        }
+
+       return deleteItemCommon(url,row);
     }
     function getInputRow(){
-        var numCells=[{'name':'id','type':1,'label':'衣柜编号'},
+        var numCells=[{'name':'id','type':1,'beNull':true,'label':'衣柜编号'},
             {'name':'price','type':2,'label':'衣柜租金'}];
         return getInputRowCommon(columns,numCells)
     }

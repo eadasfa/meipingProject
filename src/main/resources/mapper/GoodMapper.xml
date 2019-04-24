@@ -33,7 +33,8 @@
     delete from good
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.xidian.meiping.entity.Good" >
+  <insert id="insert" parameterType="com.xidian.meiping.entity.Good"
+          useGeneratedKeys="true" keyProperty="id">
     insert into good (id, name, buying_price, 
       selling_price, credit, left_number
       )

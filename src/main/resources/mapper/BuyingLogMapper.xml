@@ -35,8 +35,8 @@
     <include refid="Base_Column_List_Sp" />
     from buying_log,employee,good
     where DATE_FORMAT(buying_log.buying_time,'%Y-%m-%d')
-          BETWEEN #{date1,jdbcType=VARCHAR}
-          and #{date2,jdbcType=VARCHAR}
+          BETWEEN #{date1,jdbcType=TIMESTAMP}
+          and #{date2,jdbcType=TIMESTAMP}
           and good.id = buying_log.good_id
           and employee.id = buying_log.operater_id
           <if test="goodId != null" >

@@ -47,6 +47,6 @@ public class MemberController {
                     flag,"删除失败");
         }
         return JSONUtil.ObjecttoJson(memberService.findById(member.getId()),
-                flag,"I'm houtai");
+                flag,"添加失败，当前编号已经存在");
     }
 }

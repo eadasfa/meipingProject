@@ -1,6 +1,9 @@
 package com.xidian.meiping.dao;
 
+import com.xidian.meiping.entity.RendTrainerLog;
 import com.xidian.meiping.entity.RendWardrobeLog;
+
+import java.util.List;
 
 public interface RendWardrobeLogMapper {
 
@@ -17,4 +20,10 @@ public interface RendWardrobeLogMapper {
     int updateByPrimaryKeySelective(RendWardrobeLog record);
 
     int updateByPrimaryKey(RendWardrobeLog record);
+
+    RendWardrobeLog selectByMemberIdAndWardrobeIdAndEndTime(Integer memberId,Integer wardrobeId,String endTime);
+
+    List<RendWardrobeLog> selectAll();
+    List<RendWardrobeLog> searchByTheseKey(String from,String to,Integer memberId,Integer operaterId);
+    int deleteByWardrobeId(Integer wardrobeId);
 }

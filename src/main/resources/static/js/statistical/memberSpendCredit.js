@@ -267,7 +267,7 @@ $(document).ready(function () {
                 isExist[rows[i].memberId] = row;
             }
         }
-        console.log(isExist)
+        // console.log(isExist)
         for(var key in isExist){
             // console.log(key)
             data.push(isExist[key]);

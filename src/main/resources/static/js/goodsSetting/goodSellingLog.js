@@ -254,7 +254,7 @@ $(document).ready(function () {
         var sortcolumn = $('#jqxGrid').jqxGrid('getsortcolumn');
         // console.log(sortcolumn)
         if(sortcolumn==null)
-            sortcolumn = 'buyingTime';
+            sortcolumn = 'sellingTime';
         $('#jqxGrid').jqxGrid('sortby', sortcolumn, 'des');
     }
     function initGrid2Rows(rows) {

@@ -8,31 +8,79 @@
     <result column="operater_id" property="operaterId" jdbcType="INTEGER" />
     <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
     <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="context" property="context" jdbcType="VARCHAR" />
+    <result column="total_amount" property="totalAmount" jdbcType="DOUBLE" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="operater_name" property="operaterName" jdbcType="VARCHAR" />
+    <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, wardrobe_id, member_id, operater_id, start_time, end_time
+  <sql id="Base_Column_List_Sp" >
+    rwl.id, rwl.wardrobe_id, rwl.member_id, rwl.operater_id, rwl.start_time,
+    rwl.end_time,rwl.context,member.name as member_name,employee.name as operater_name,
+   rwl.total_amount,rwl.operate_time
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+  <sql id="Base_Column_List" >
+    id, wardrobe_id, member_id, operater_id, start_time,end_time,context
+  </sql>
+  <select id="selectByMemberIdAndWardrobeIdAndEndTime" resultMap="BaseResultMap" >
+    select
     <include refid="Base_Column_List" />
     from rend_wardrobe_log
+    where member_id = #{memberId,jdbcType=INTEGER}
+    and wardrobe_id = #{wardrobeId,jdbcType=INTEGER}
+    and end_time = #{endTime,jdbcType=TIMESTAMP}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List_Sp" />
+    from rend_wardrobe_log as rwl,member,employee
+    where rwl.member_id = member.id
+    and rwl.operater_id = employee.id
+  </select>
+  <select id="searchByTheseKey" resultMap="BaseResultMap"  >
+    select
+    <include refid="Base_Column_List_Sp" />
+    from rend_wardrobe_log as rwl,member,employee
+    where DATE_FORMAT(rwl.operate_time,'%Y-%m-%d')
+          BETWEEN #{from,jdbcType=TIMESTAMP}
+          and #{to,jdbcType=TIMESTAMP}
+          <if test="memberId != null" >
+            and rwl.member_id = #{memberId,jdbcType=INTEGER}
+          </if>
+          <if test="operaterId != null" >
+            and rwl.operater_id = #{operaterId,jdbcType=INTEGER}
+          </if>
+          and rwl.member_id = member.id
+          and rwl.operater_id = employee.id
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List_Sp" />
+    from rend_wardrobe_log as rwl,member,employee
     where id = #{id,jdbcType=INTEGER}
+    and rwl.member_id = member.id
+    and rwl.operater_id = employee.id
   </select>
   <delete id="deleteByMemberId" parameterType="java.lang.Integer" >
     delete from rend_wardrobe_log
     where member_id = #{memberId,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteByWardrobeId" parameterType="java.lang.Integer" >
+    delete from rend_wardrobe_log
+    where wardrobe_id = #{wardrobeId,jdbcType=INTEGER}
+  </delete>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from rend_wardrobe_log
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.xidian.meiping.entity.RendWardrobeLog" >
+  <insert id="insert" parameterType="com.xidian.meiping.entity.RendWardrobeLog"
+          useGeneratedKeys="true" keyProperty="id">
     insert into rend_wardrobe_log (id, wardrobe_id, member_id, 
-      operater_id, start_time, end_time
+      operater_id, start_time, end_time,context,total_amount,operate_time
       )
     values (#{id,jdbcType=INTEGER}, #{wardrobeId,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, 
-      #{operaterId,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}
-      )
+      #{operaterId,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP},
+      #{context,jdbcType=VARCHAR},#{totalAmount,jdbcType=DOUBLE},#{operateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.meiping.entity.RendWardrobeLog" >
     insert into rend_wardrobe_log
@@ -55,6 +103,15 @@
       <if test="endTime != null" >
         end_time,
       </if>
+      <if test="context != null" >
+        end_time,
+      </if>
+      <if test="totalAmount != null" >
+        total_amount,
+      </if>
+      <if test="operateTime != null" >
+        operate_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -74,6 +131,15 @@
       </if>
       <if test="endTime != null" >
         #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="context != null" >
+        #{context,jdbcType=VARCHAR},
+      </if>
+      <if test="totalAmount != null" >
+        #{totalAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="operateTime != null" >
+        #{operateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -95,6 +161,15 @@
       <if test="endTime != null" >
         end_time = #{endTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="context != null" >
+        context = #{context,jdbcType=VARCHAR},
+      </if>
+      <if test="totalAmount != null" >
+        total_amount=#{totalAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="operateTime != null" >
+        operate_time=#{operateTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -104,7 +179,10 @@
       member_id = #{memberId,jdbcType=INTEGER},
       operater_id = #{operaterId,jdbcType=INTEGER},
       start_time = #{startTime,jdbcType=TIMESTAMP},
-      end_time = #{endTime,jdbcType=TIMESTAMP}
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+       context = #{context,jdbcType=VARCHAR},
+      total_amount=#{totalAmount,jdbcType=VARCHAR},
+      operate_time=#{operateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

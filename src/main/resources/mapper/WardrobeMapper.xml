@@ -8,48 +8,64 @@
     <result column="member_id" property="memberId" jdbcType="INTEGER" />
     <result column="rend_wardrobe_log_id" property="rendWardrobeLogId" jdbcType="INTEGER" />
     <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, status, rend_wardrobe_log_id,member_id, price
+    wardrobe.id, wardrobe.name, wardrobe.status, wardrobe.rend_wardrobe_log_id,wardrobe.member_id, wardrobe.price,
+    rwl.end_time as end_time,member.name as member_name,wardrobe.start_time
   </sql>
   <select id="selectAll"  resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from wardrobe
+    left join rend_wardrobe_log as rwl on rwl.id=wardrobe.rend_wardrobe_log_id
+    left join member on member.id = wardrobe.member_id
   </select>
   <select id="selectByMemberId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
     <include refid="Base_Column_List" />
     from wardrobe
-    where member_id = #{memberId,jdbcType=INTEGER}
+    left join rend_wardrobe_log as rwl on rwl.id=wardrobe.rend_wardrobe_log_id
+    left join member on member.id = wardrobe.member_id
+    where wardrobe.member_id = #{memberId,jdbcType=INTEGER}
   </select>
   <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from wardrobe
-    where name = #{name,jdbcType=VARCHAR}
+    left join rend_wardrobe_log as rwl on rwl.id=wardrobe.rend_wardrobe_log_id
+    left join member on member.id = wardrobe.member_id
+    where wardrobe.name = #{name,jdbcType=VARCHAR}
   </select>
   <select id="selectByStatus" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from wardrobe
-    where status = #{status,jdbcType=INTEGER}
+    left join rend_wardrobe_log as rwl on rwl.id=wardrobe.rend_wardrobe_log_id
+    left join member on member.id = wardrobe.member_id
+    where wardrobe.status = #{status,jdbcType=INTEGER}
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from wardrobe
-    where id = #{id,jdbcType=INTEGER}
+    left join rend_wardrobe_log as rwl on rwl.id=wardrobe.rend_wardrobe_log_id
+    left join member on member.id = wardrobe.member_id
+    where wardrobe.id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from wardrobe
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.xidian.meiping.entity.Wardrobe" >
+  <insert id="insert" parameterType="com.xidian.meiping.entity.Wardrobe"
+          useGeneratedKeys="true" keyProperty="id">
     insert into wardrobe (id, name, status, 
-      rend_wardrobe_log_id,member_id)
+      rend_wardrobe_log_id,member_id,price,start_time)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
-      #{rendWardrobeLogId,jdbcType=INTEGER},#{memberId,jdbcType=INTEGER},#{price,jdbcType=DOUBLE})
+      #{rendWardrobeLogId,jdbcType=INTEGER},#{memberId,jdbcType=INTEGER},
+      #{price,jdbcType=DOUBLE},#{startTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.meiping.entity.Wardrobe" >
     insert into wardrobe
@@ -72,6 +88,9 @@
       <if test="price != null" >
         price,
       </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -91,6 +110,9 @@
       </if>
       <if test="price != null" >
         #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -112,6 +134,9 @@
       <if test="price != null" >
         price = #{price,jdbcType=DOUBLE},
       </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -121,7 +146,8 @@
       status = #{status,jdbcType=INTEGER},
       rend_wardrobe_log_id = #{rendWardrobeLogId,jdbcType=INTEGER},
       member_id = #{memberId,jdbcType=INTEGER},
-      price = #{price,jdbcType=DOUBLE}
+      price = #{price,jdbcType=DOUBLE},
+      start_time = #{startTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -38,7 +38,7 @@ public class TrainerServiceImpl implements TrainerService {
 
     @Override
     public Trainer findById(Integer Id) {
-        return null;
+        return trainerMapper.selectByPrimaryKey(Id);
     }
 
     @Override

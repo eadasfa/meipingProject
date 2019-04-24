@@ -6,7 +6,8 @@ $(document).ready(function () {
     var height = window.document.body.offsetHeight*0.805
     if(members.length==0)
         members = LoadAjax({},"/memberManage/getMembers",false)
-    var trainers = LoadAjax({},"/memberManage/getTrainers",false);
+    if(trainers.length==0)
+        trainers = LoadAjax({},"/memberManage/getTrainers",false);
     var columns1=[
         { text: '会员卡号', datafield: 'memberId', width: 100 },
         { text: '会员姓名', datafield: 'memberName', width: 180 },
@@ -212,7 +213,7 @@ $(document).ready(function () {
         //查询全部
         if(result.success != true)
         {alert("失败");return false}
-            search("","");
+        search("","");
         return true;
     }
     function getTrainer(trainerId) {
@@ -222,7 +223,6 @@ $(document).ready(function () {
                 t= trainers[i];break;
             }
         }
-        // console.log(JSON.stringify(t))
         return t;
     }
 

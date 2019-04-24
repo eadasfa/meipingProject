@@ -208,7 +208,7 @@ $(document).ready(function () {
             day = day<10?("0"+day):day;
             var month = myDate.getMonth()+1;
             month = month<10?("0"+month):month;
-            row['to'] = myDate.getFullYear()+"-"+month+"-"+day;
+            to = myDate.getFullYear()+"-"+month+"-"+day;
             // console.log(to)
         }
         var row={};

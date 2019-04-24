@@ -1,0 +1,116 @@
+<html lang="en">
+<section class="content-header">
+    <h1> 衣柜查询管理</h1>
+    <ol class="breadcrumb">
+        <li><a href="../"><i class="fa fa-object-group"></i> 首页</a></li>
+        <li> 统计报表</li>
+        <li class="active"> 衣柜查询管理</li>
+    </ol>
+</section><!-- ./content-header -->
+<head>
+    <!--<script type="text/javascript" src="js/common.js"></script>-->
+    <script type="text/javascript" src="js/statistical/wardrobeQuery.js"></script>
+
+
+    <script type="text/javascript">
+
+    </script>
+    <script class="popUpWindow" type="text/html">
+        <form action="">
+            <div class="popUpWindow" >
+                <table>
+                    <thead>会员信息</thead>
+                    <tr>
+                        <td>会员卡号:</td>
+                        <td><input type="text" id="member-id" list="member-id-list" placeholder="会员卡号"/>
+                            <datalist id="member-id-list"></datalist></td>
+
+                        <td>会员姓名:</td>
+                        <td><input id="member-name" disabled/></td>
+                        <td>会员类型:</td>
+                        <td><input id="card-type" disabled/></td>
+                    </tr>
+                </table>
+                <hr style="border: medium  #00acd6 solid">
+                <table>
+                    <thead>长期租用</thead>
+                    <tr>
+                        <td>衣柜编号:</td>
+                        <td><input id="wardrobe-id" disabled/></td>
+                        <td>衣柜名称:</td>
+                        <td><input id="wardrobe-name" disabled/></td>
+                        <td>衣柜租金:</td>
+                        <td><input id="wardrobe-price" type="text"/></td>
+                    </tr>
+                    <tr>
+                        <td>起始日期:</td>
+                        <td><input type="text" id="from"></td>
+                        <td>结束日期:</td>
+                        <td><input type="text" id="to"></td>
+                        <td>总金额:</td>
+                        <td><input id="total-amount" disabled /></td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    </script>
+    <script class="popUpWindow2" type="text/html">
+        <form action="">
+            <div class="popUpWindow2" >
+                <table>
+                    <thead>会员信息</thead>
+                    <tr>
+                        <td>衣柜编号:</td>
+                        <td><input type="text" id="wardrobe-id2" disabled/>
+                        <td>衣柜名称:</td>
+                        <td><input id="wardrobe-name2" disabled/></td>
+                    </tr>
+                    <tr>
+                        <td>会员卡号:</td>
+                        <td><input type="text" id="member-id2" disabled/>
+                        <td>会员姓名:</td>
+                        <td><input id="member-name2" disabled/></td>
+                    </tr>
+                    <tr>
+                        <td>会员类型:</td>
+                        <td><input id="card-type2" disabled/></td>
+                        <td>到期时间:</td>
+                        <td><input type="text" id="end-time2" disabled/></td>
+                    </tr>
+                </table>
+                <hr style="border: solid medium #00acd6">
+                <table>
+                    <tr>
+                        <td>截止日期:</td>
+                        <td><input type="text" id="to2"/></td>
+                        <td>金额</td>
+                        <td><input type="text" id="total-amount2" disabled/></td>
+                    </tr>
+
+                </table>
+            </div>
+        </form>
+    </script>
+</head>
+<section class="container-fluid">
+    <!--<div id="jqxGrid">-->
+    <!--</div>-->
+    <div id='tabs'>
+        <ul>
+            <li style="margin-left: 30px;">
+                衣柜状态
+            </li>
+            <li>
+                衣柜出租记录
+            </li>
+        </ul>
+        <div style="overflow: hidden;">
+            <div style="border:none;" id="jqxGrid">
+            </div>
+        </div>
+        <div style="overflow: hidden;">
+            <div style="border:none;" id="jqxGrid2"></div>
+        </div>
+    </div>
+</section>
+</html>

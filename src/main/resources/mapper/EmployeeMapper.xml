@@ -44,7 +44,8 @@
     delete from employee
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.xidian.meiping.entity.Employee" >
+  <insert id="insert" parameterType="com.xidian.meiping.entity.Employee"
+          useGeneratedKeys="true" keyProperty="id">
     insert into employee (id, name, tele_number, 
       position_name, status)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{teleNumber,jdbcType=VARCHAR}, 

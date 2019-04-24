@@ -45,7 +45,8 @@
       delete from member
       where id = #{id,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" parameterType="com.xidian.meiping.entity.Member" >
+    <insert id="insert"  parameterType="com.xidian.meiping.entity.Member"
+            useGeneratedKeys="true" keyProperty="id" >
       insert into member (id, name, agenda,
         birthday, tele_number, register_date,
         status, member_card_buy_id, balance,

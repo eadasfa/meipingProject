@@ -15,6 +15,35 @@ public class Wardrobe {
 
     private Double price;
 
+    private String memberName;
+
+    private String endTime;
+    private String startTime;
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getMemberName() {
+        return memberName;
+    }
+
+    public void setMemberName(String memberName) {
+        this.memberName = memberName;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime.split("\\s+")[0];
+    }
+
     public Double getPrice() {
         return price;
     }

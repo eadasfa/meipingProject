@@ -196,7 +196,7 @@ $(document).ready(function () {
         return deleteItemCommon(url);
     }
     function getInputRow(){
-        var numCells=[{'name':'id','type':1,'label':'商品编号'},
+        var numCells=[{'name':'id','type':1,'beNull':true,'label':'商品编号'},
             {'name':'leftNumber','type':1,'label':'商品库存'},
             {'name':'buyingPrice','type':2,'label':'进货价格'},
             {'name':'sellingPrice','type':2,'label':'销售价格'},

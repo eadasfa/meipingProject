@@ -187,25 +187,47 @@ $(document).ready(function () {
             $("#id").attr("disabled","disabled");
             if($("#position").val()=="私教"){
                 $("#price").attr("disabled",false);
+                var trainer = getTrainer(row['id']);
+                // console.log(JSON.stringify(trainer))
+                if(trainer!=false)
+                    $("#price").val(trainer.price);
             }
         }
+    }
+    function getTrainer(id) {
+        var result = LoadAjaxJson({"trainerId":id},SEARCH_TRAINER_BY_ID,url);
+        if(result.success==false)
+            return false;
+        return (result.data)[0];
     }
     function addItem(){
         var row= getInputRow();
         // console.log("getInputRow:"+JSON.stringify(row))
         if(row == false) return false;
+        employees.push(row)
         return addItemCommon(row,url);
     }
     function updateItem(){
         var row= getInputRow();
         if(row == false) return false;
+        for(var i=0;i<employees.length;i++){
+            if(row.id==employees[i].id){
+                employees[i] = row;
+            }
+        }
         return updateItemCommon(row,url);
     }
     function deleteItem(url) {
-        return deleteItemCommon(url);
+        var row = getSelectRow();
+        for(var i=0;i<employees.length;i++){
+            if(employees[i].id==row.id)
+                employees.splice(i,1);
+                break;
+        }
+        return deleteItemCommon(url,row);
     }
     function getInputRow(){
-        var numCells=[{'name':'id','type':1,'label':'员工编号'},
+        var numCells=[{'name':'id','type':1,'beNull':true,'label':'员工编号'},
         {'name':'teleNumber','type':1,'label':'员工电话'}];
         var row = getInputRowCommon(columns,numCells);
         row['price'] = $("#price").val();

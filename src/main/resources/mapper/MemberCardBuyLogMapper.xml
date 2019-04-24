@@ -69,7 +69,8 @@
     delete from member_card_buy_log
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.xidian.meiping.entity.MemberCardBuyLog" >
+  <insert id="insert" parameterType="com.xidian.meiping.entity.MemberCardBuyLog"
+          useGeneratedKeys="true" keyProperty="id">
     insert into member_card_buy_log (id, member_id, card_id, 
       price, account, start_time, 
       end_time, operater_id)

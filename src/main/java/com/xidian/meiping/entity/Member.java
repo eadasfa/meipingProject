@@ -46,6 +46,15 @@ public class Member {
     private String trainerName;
 
     private Integer wardrobeId;
+    private Double account;
+
+    public Double getAccount() {
+        return account;
+    }
+
+    public void setAccount(Double account) {
+        this.account = account;
+    }
 
     public String getTrainerName() {
         return trainerName;
@@ -88,10 +97,11 @@ public class Member {
     }
 
     public String getBirthday() {
-        return birthday;
+        return birthday==null?null:birthday.split("\\s+")[0];
     }
 
     public void setBirthday(String birthday) {
+        if(birthday!=null&&birthday.equals("null")) birthday=null;
         this.birthday = birthday;
     }
 
@@ -152,7 +162,7 @@ public class Member {
     }
 
     public String getStartDate() {
-        return startDate;
+        return startDate.split("\\s+")[0];
     }
 
     public void setStartDate(String startDate) {
@@ -160,7 +170,7 @@ public class Member {
     }
 
     public String getEndDate() {
-        return endDate;
+        return endDate.split("\\s+")[0];
     }
 
     public void setEndDate(String endDate) {

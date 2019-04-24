@@ -28,7 +28,7 @@
             // height: 886, //高度
             theme: "Bootstrap"//主题样式
         });
-
+        $("#jqxTree").jqxTree({allowDrag:false});
         $('#jqxTree').on('expand', function (event) {
             var args = event.args;
             console.log("expand");
@@ -86,7 +86,7 @@
             console.log(JSON.stringify(operater))
             $("span.employee-name").text(operater.name);
             $("span.employee-permission").text(operater.permission+" 级");
-            $("span.employee-id").text(operater.operaterId);
+            $("span.employee-id").text(operater.id);
             $("span.employee-position").text(operater.position);
         }
     });

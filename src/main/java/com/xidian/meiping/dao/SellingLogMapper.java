@@ -20,6 +20,7 @@ public interface SellingLogMapper {
     int updateByPrimaryKey(SellingLog record);
 
     List<SellingLog> selectAll(Integer type);
+    List<SellingLog> selectByMemberId(Integer memberId);
 
     List<SellingLog> searchByDate(String date1,String date2,
       Integer memberId,Integer goodId, Integer operaterId,Integer type);

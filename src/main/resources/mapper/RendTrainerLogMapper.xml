@@ -52,13 +52,14 @@
     delete from rend_trainer_log
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.xidian.meiping.entity.RendTrainerLog" >
+  <insert id="insert" parameterType="com.xidian.meiping.entity.RendTrainerLog"
+          useGeneratedKeys="true" keyProperty="id">
     insert into rend_trainer_log (id, trainer_id, member_id, 
-      operater_id, start_time, end_time
+      operater_id, start_time, end_time,total_amount
       )
     values (#{id,jdbcType=INTEGER}, #{trainerId,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, 
       #{operaterId,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}
-      )
+      ,#{totalAmount,jdbcType=DOUBLE})
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.meiping.entity.RendTrainerLog" >
     insert into rend_trainer_log

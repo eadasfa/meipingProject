@@ -189,23 +189,12 @@ $(document).ready(function () {
             }
         });
     }
-
-
-
-    function getCardByCardName(name) {
-        for(i=0;i<cardTypes.length;i++){
-            if(cardTypes[i].name==name)
-                return cardTypes[i];
-        }
-        return {};
-    }
-
-
     function addItem(){
         var row= getInputRow();
         // console.log("getInputRow:"+JSON.stringify(row))
         if(row == false) return false;
         row["operaterId"] = operater.id;
+        members.push(row)
         return addItemCommon(row,url);
     }
     function updateItem(){
@@ -219,6 +208,11 @@ $(document).ready(function () {
         row['birthday'] = row2['birthday'];
         row['startDate'] = row2['startDate'];
         row['endDate'] = row2['endDate'];
+        for(var i=0;i<members.length;i++){
+            if(row.id==members[i].id){
+                members[i] = row;
+            }
+        }
         return updateItemCommon(row,url);
     }
     function memberPay() {
@@ -234,14 +228,21 @@ $(document).ready(function () {
         row['youxiaoTianshu'] = card.youxiaoTianshu;
         row['startDate'] = formatTime(new Date());
         row['endDate'] = $("#endDate3").val();
-        console.log(JSON.stringify(row))
+        row['status'] = "可用";
+        // console.log(JSON.stringify(row))
         return updateItemCommon(row,url);
     }
     function deleteItem(url) {
         var r = confirm("此操作将删除该会员的所有信息，包括私教、衣柜等等，包括消费记录，是否删除？")
         if(r) {
             var row = getSelectRow();
-            // console.log(JSON.stringify(row))
+
+            for(var i=0;i<members.length;i++){
+                if(row.id==members[i].id){
+                    members.slice(i,1);
+                    break;
+                }
+            }
             return deleteItemCommon(url,row);
         }
     }

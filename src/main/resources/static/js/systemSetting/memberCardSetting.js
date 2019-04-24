@@ -167,18 +167,32 @@ $(document).ready(function () {
     function addItem(){
         var row= getInputRow();
         if(row == false) return false;
+        cardTypes.push(row)
         return addItemCommon(row,url);
     }
     function updateItem(){
         var row= getInputRow();
         if(row == false) return false;
+        for(var i=0;i<cardTypes.length;i++){
+            if(row.id==cardTypes[i].id){
+                cardTypes[i] = row;
+            }
+        }
         return updateItemCommon(row,url);
     }
     function deleteItem() {
-        return deleteItemCommon(url);
+        var row = getSelectRow();
+
+        for(var i=0;i<cardTypes.length;i++){
+            if(cardTypes[i].id==row.id)
+                cardTypes.splice(i,1);
+                break;
+        }
+
+        return deleteItemCommon(url,row);
     }
     function getInputRow(){
-        var numCells=[{'name':'id','type':1,'label':'会员编号'},{'name':'youxiaoCishu','type':1,'label':'有效次数'},
+        var numCells=[{'name':'id','type':1,'beNull':true,'label':'会员编号'},{'name':'youxiaoCishu','type':1,'label':'有效次数'},
             {'name':'youxiaoTianshu','type':1,'label':'有效天数'},{'name':'price','type':2,'label':'价格'}];
         return getInputRowCommon(columns,numCells)
     }

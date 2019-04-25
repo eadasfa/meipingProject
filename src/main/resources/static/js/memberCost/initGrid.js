@@ -409,3 +409,4 @@ function setAllJqxGridRow(id) {
     setJqx4Row(id);
     setJqx5Row(id);
 }
+var goodLeft={};

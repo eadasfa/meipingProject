@@ -162,7 +162,7 @@ public class Member {
     }
 
     public String getStartDate() {
-        return startDate.split("\\s+")[0];
+        return startDate==null?null:startDate.split("\\s+")[0];
     }
 
     public void setStartDate(String startDate) {
@@ -170,7 +170,7 @@ public class Member {
     }
 
     public String getEndDate() {
-        return endDate.split("\\s+")[0];
+        return endDate==null?null:endDate.split("\\s+")[0];
     }
 
     public void setEndDate(String endDate) {

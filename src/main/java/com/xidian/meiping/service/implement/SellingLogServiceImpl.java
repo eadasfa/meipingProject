@@ -1,12 +1,21 @@
 package com.xidian.meiping.service.implement;
 
+import com.xidian.meiping.dao.GoodMapper;
+import com.xidian.meiping.dao.MemberMapper;
 import com.xidian.meiping.dao.SellingLogMapper;
+import com.xidian.meiping.entity.Good;
+import com.xidian.meiping.entity.Member;
 import com.xidian.meiping.entity.SellingLog;
 import com.xidian.meiping.service.service.SellingLogService;
+import com.xidian.meiping.util.CommonUtil;
+import com.xidian.meiping.util.ConstValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -14,6 +23,10 @@ public class SellingLogServiceImpl implements SellingLogService {
 
     @Autowired
     private SellingLogMapper mapper;
+    @Autowired
+    private GoodMapper goodMapper;
+    @Autowired
+    private MemberMapper memberMapper;
     @Override
     public List<SellingLog> searchByDate(String date1, String date2,String memberId, String goodId, String operaterId) {
         Integer id = null;
@@ -56,8 +69,31 @@ public class SellingLogServiceImpl implements SellingLogService {
 
     @Override
     public List<SellingLog> findAll(String type) {
-        int ty = Integer.parseInt(type);
-        return mapper.selectAll(ty);
+        return mapper.selectAll(Integer.parseInt(type));
+    }
+
+    @Override
+    @Transactional
+    public SellingLog buyGood(HttpServletRequest request) {
+        SellingLog log = (SellingLog) CommonUtil.newInstance(new SellingLog(),request);
+        add(log);
+        //更新商品库存
+        Good good = new Good();
+        good.setId(log.getGoodId());
+        good.setLeftNumber(Integer.parseInt(request.getParameter("leftNumber")));
+//        System.out.println(good);
+        goodMapper.updateByPrimaryKeySelective(good);
+        //更新member
+        Member member = memberMapper.selectByPrimaryKey(log.getMemberId());
+        if(log.getSellingType()==0){
+            member.setBalance(member.getBalance()-log.getTotalAmount());
+            member.setCredit(member.getCredit()+
+                    (int)((log.getTotalAmount()+member.getTotalConsumption()% ConstValue.CREDIT_DIVISOR)/ConstValue.CREDIT_DIVISOR));
+            member.setTotalConsumption(member.getTotalConsumption()+log.getTotalAmount());
+        }
+        else member.setCredit(member.getCredit()-(int)(log.getTotalAmount()/1));
+        memberMapper.updateByPrimaryKey(member);
+        return findById(log.getId());
     }
 
     @Override
@@ -67,12 +103,15 @@ public class SellingLogServiceImpl implements SellingLogService {
 
     @Override
     public int add(SellingLog example) {
-        return 0;
+        example.setId(null);
+        example.setSellingTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                .format(new Date()));
+        return mapper.insert(example);
     }
 
     @Override
     public SellingLog findById(Integer Id) {
-        return null;
+        return mapper.selectByPrimaryKey(Id);
     }
 
     @Override

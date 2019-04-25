@@ -263,3 +263,11 @@
         }
         return null;
     }
+    function getGood(id) {
+        for(var i=0;i<goods.length;i++){
+            if(id==goods[i].id){
+                return goods[i];
+            }
+        }
+        return null;
+    }

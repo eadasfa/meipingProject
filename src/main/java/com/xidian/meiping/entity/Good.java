@@ -70,4 +70,15 @@ public class Good {
         this.leftNumber = leftNumber;
     }
 
+    @Override
+    public String toString() {
+        return "Good{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", buyingPrice=" + buyingPrice +
+                ", sellingPrice=" + sellingPrice +
+                ", credit=" + credit +
+                ", leftNumber=" + leftNumber +
+                '}';
+    }
 }

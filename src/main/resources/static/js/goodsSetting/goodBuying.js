@@ -73,7 +73,7 @@ $(document).ready(function () {
             showtoolbar: true,
             ready:function(){
                 //得到jqxGrid的数据,并进行处理
-                // grid2Rows = initGrid2Rows(dataAdapter.recordids);
+                goods = dataAdapter.recordids;
             },
             rendertoolbar: function (toolbar) {
                 $('#jqxGrid').jqxGrid({ toolbarheight: 40});
@@ -298,7 +298,8 @@ $(document).ready(function () {
         var result = LoadAjaxJson(row,SEARCH,goodUrl);
         // console.log(result.data)
         $('#jqxGrid').jqxGrid('clear');
-
+        if(row['value']==undefined)
+            goods = result.data;
         //  传入json数组[{},{}]
         show(result.data)
     }

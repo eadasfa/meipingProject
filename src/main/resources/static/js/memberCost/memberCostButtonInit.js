@@ -33,6 +33,12 @@ function init() {
             popWindows("rendTrainer","租用私教")
         }
     });
+    $("#buy-goods").click(function () {
+        if($("#id").text()==null||$("#id").text()==undefined||$("#id").text()=="")
+            return;
+        popWindows("buyGoods","商品购买")
+
+    });
     initGrid();
 }
 function initChildWindowBeforeOpen(popWindow) {
@@ -204,16 +210,22 @@ function initChildWindowBeforeOpen(popWindow) {
             $("#rendTrainer-end-time").val(addDate(formatTime(new Date(),parseInt($("#rendTrainer-rend-time").val()))))
         });
     }
+    else if(popWindow=="buyGoods"){
+        initBuyGoodsPanel();
+    }
     return {};
 }
 function popWindows(popWindow,title) {
     var tempPopWindow = popWindow=="updateMember"?"addMember":popWindow;
     var row={};
+    var area= ['400', '300px'];
+    if(popWindow=="buyGoods") area = ['400', '560px'];
     var ii = layer.open({
+        type:1,
         async:false,
         title:title,
         content: $('.'+tempPopWindow).html(),
-        area: ['400', '300px'],//自定义文本域宽高,
+        area: area,//自定义文本域宽高,
         btn: ['确定', '取消'],
         yes: function(index){
             var flag=true;
@@ -229,9 +241,12 @@ function popWindows(popWindow,title) {
                 flag = rendWardrobe2();
             else if(popWindow=="rendTrainer")
                 flag = rendTrainer();
+            else if(popWindow=="buyGoods")
+                flag = buyGoods();
             if(flag)
                 layer.close(index);
         },
+
         btn2: function() {
             //按钮【取消】的回调
             return 0;
@@ -506,3 +521,312 @@ function initConstValue() {
     if(trainers.length==0)
         trainers = LoadAjax({},"/memberManage/getTrainers",false);
 }
+function initBuyGoodsPanel() {
+
+    var member = getMember($("#id").text());
+    $("#buyGoods-member-id").text(member.id);
+    $("#buyGoods-member-name").text(member.name);
+    $("#buyGoods-card-type").text(member.cardTypeName);
+    $("#buyGoods-credit").text(member.credit);
+    $("#buyGoods-balance").text(member.balance);
+    $("#buyGoods-total-consumption").text(member.totalConsumption);
+    $("#plusAmount").text(0);
+    $("#plusCredit").text(0);
+    if(goods.length==0)
+        goods = LoadAjax({},"/goodsSetting/getGoods",false);
+    var height=200;
+    var width=550;
+    var initGoodTabs = function (tab) {
+        switch (tab) {
+            case 0:
+                initBuyGoodsGrid(height,width);
+                break;
+            case 1:
+                initGoodsGrid(height,width);
+                break;
+        }
+    }//width: getWidth('Tabs')
+    $('#goodTabs').jqxTabs({
+        width: width+20,
+        height: height+20,
+        initTabContent: initGoodTabs
+    });
+}
+function initGoodsGrid(height,width) {
+    var jqxGrid = "goodsGrid";
+    var columns=[
+        { text: '商品编号', datafield: 'id', width: 80 },
+        { text: '商品名称', datafield: 'name', width: 100 },
+        { text: '商品库存', datafield: 'leftNumber', width: 100 },
+        { text: '商品售价', datafield: 'sellingPrice', width: 80 },
+        { text: '积分兑换', datafield: 'credit', width: 80 }
+    ];
+    var source =
+        {
+            datatype: "json",
+            datafields:
+                [
+                    { name: 'id' },
+                    { name: 'name' },
+                    { name: 'leftNumber' },
+                    { name: 'sellingPrice' },
+                    { name: 'credit' }
+                ],
+            localdata:goods,
+            addrow: function (rowid, rowdata, position, commit) {commit(true);},
+            deleterow: function (rowid, commit) {commit(true);},
+            updaterow: function (rowid, newdata, commit) {commit(true);}
+        };
+    var dataAdapter = new $.jqx.dataAdapter(source);
+    // initialize jqxGrid
+    $("#"+jqxGrid).jqxGrid({
+        height: height,
+        width:width,
+        altrows: true,//行间底色区分
+        columnsresize: true,//列可适应调整
+        sortable: true,//设置可排序
+        showsortcolumnbackground: false,
+        clipboard: false,//屏蔽jqx的复制功能
+        enablebrowserselection: true,//允许使用浏览器选择内容功能
+        source: dataAdapter,
+        showtoolbar: true,
+        rendertoolbar: function (toolbar) {
+            $('#'+jqxGrid).jqxGrid({ toolbarheight: 30});
+            var container = $("<div style='margin: 5px;'></div>");
+            toolbar.append(container);
+            container.append('<select style="margin-left: 15px;" id="searchkey"></select>');
+            container.append('<input  id="searchvalue" />')
+            container.append('<span><img style="margin-left:5px;" id = "search" alt="search" width="16" height="16" src="img/search.png" /></span>');
+            //初始化搜索选择框
+            for(var i=0;i<columns.length;i++){
+                var temp = columns[i];
+                $("#searchkey").append('<option value='+temp.datafield+'>'+temp.text+'</option>')
+            }
+            $("#search").on('click', function () {
+                var key = $("#searchkey").val();
+                var value = $("#searchvalue").val();
+                search(key,value);
+                var row={};
+                row['key'] = key;
+                row['value'] = value
+                // console.log("row:"+row['key']+","+row['value'])
+                var result = LoadAjaxJson(row,SEARCH,"/goodsSetting/good/operate");
+                console.log(result.data)
+                $('#'+jqxGrid).jqxGrid('clear');
+                //  传入json数组[{},{}]
+                showNoSortByGrid(result.data,jqxGrid);
+            });
+        },
+        columns: columns
+    });
+    $('#'+jqxGrid).on('rowdoubleclick', function (event) {
+        var args = event.args;
+        // row's bound index.
+        var boundIndex = args.rowindex;
+        var data = $('#'+jqxGrid).jqxGrid('getrowdata', boundIndex);
+        var id = $('#'+jqxGrid).jqxGrid('getrowid', boundIndex);
+        data.number = 1;
+        if(goodLeft[data.id]==undefined)
+            goodLeft[data.id]={"leftNumber":data.leftNumber,"buyNumber":0};
+        initBuyGoodPopWindow(2,{"data":data,"id":id});
+    });
+}
+function initBuyGoodsGrid(height,width) {
+    var jqxGrid = "buyGoodsGrid";
+    var columns1=[
+        { text: '商品编号', datafield: 'id', width: 80 },
+        { text: '商品名称', datafield: 'name', width: 100 },
+        { text: '售价', datafield: 'sellingPrice', width: 80 },
+        { text: '积分', datafield: 'credit', width: 80 },
+        { text: '数量', datafield: 'number', width: 80 },
+        { text: '总金额', datafield: 'totalAmount', width: 80 },
+        { text: '总积分', datafield: 'totalCredit', width: 80 },
+    ];
+    var source =
+        {
+            datatype: "json",
+            datafields:
+                [
+                    { name: 'id'},
+                    { name: 'name' },
+                    { name: 'sellingPrice' },
+                    { name: 'credit' },
+                    { name: 'number' },
+                    { name: 'totalAmount' },
+                    { name: 'totalCredit' },
+                ],
+            localdata:[],
+            addrow: function (rowid, rowdata, position, commit) {
+                commit(true);
+            },
+            deleterow: function (rowid, commit) {
+                commit(true);
+            },
+            updaterow: function (rowid, newdata, commit) {
+                // and with parameter false if the synchronization failed.
+                commit(true);
+            }
+        };
+    var dataAdapter = new $.jqx.dataAdapter(source);
+    // initialize jqxGrid
+    $("#"+jqxGrid).jqxGrid({
+        height: height,
+        width:width,
+        altrows: true,//行间底色区分
+        columnsresize: true,//列可适应调整
+        sortable: true,//设置可排序
+        showsortcolumnbackground: false,
+        source: dataAdapter,
+        showtoolbar: true,
+        rendertoolbar: function (toolbar) {
+            $('#'+jqxGrid).jqxGrid({ toolbarheight: 30});
+            var container = $("<div style='margin: 5px;'></div>");
+            toolbar.append(container);
+            container.append('<input style="margin-left:10px;" type="button" id="delete" value="删除"/>')
+            $("#delete").jqxButton();
+            $("#delete").on('click',function () {
+                var row = getSelectRowByGrid(jqxGrid);
+                var data = row.rowdata;
+                var commit = $("#"+jqxGrid).jqxGrid('deleterow', row.id);
+                console.log(row)
+                $("#plusCredit").text(parseInt($("#plusCredit").text())-data.totalCredit);
+                $("#plusAmount").text(parseFloat($("#plusAmount").text())-data.totalAmount);
+                return true;
+            });
+        },
+        columns: columns1
+    });
+    $('#'+jqxGrid).on('rowdoubleclick', function (event) {
+        var args = event.args;
+        // row's bound index.
+        var boundIndex = args.rowindex;
+        var data = $('#'+jqxGrid).jqxGrid('getrowdata', boundIndex);
+        var id = $('#'+jqxGrid).jqxGrid('getrowid', boundIndex);
+        initBuyGoodPopWindow(1,{"data":data,"id":id});
+    });
+}
+function buyGoods() {
+    var rows = $('#buyGoodsGrid').jqxGrid('getrows');
+    var member = getMember($("#id").text());
+    var type = $("input[name='type']:checked").val()=="money"?0:1;
+    var balance = parseFloat($("#balance").text());
+    var credit = parseInt($("#credit").text());
+    if((type==0&&balance<parseFloat($("#plusAmount").text()))||
+        (type==1&&credit<parseInt($("#plusCredit").text()))){
+        alert("余额或者积分不足");return;
+    }
+    var jqxGrid = "jqxGrid"+(type+1);
+    for(var i=0;i<rows.length;i++){
+        var row = rows[i];
+        row.goodId=row.id;
+        row.memberId = $("#id").text();
+        row.sellingType = type;
+        row.sellingPrice= type==0?row.sellingPrice:row.credit;
+        row.totalAmount=type==0?row.totalAmount:row.totalCredit;
+        row.balance = type==0?(member.balance-row.totalAmount):(member.credit-row.totalCredit);
+        if(type==0) {
+            member.balance=member.balance-row.totalAmount;
+            member.credit = member.credit+
+                parseInt((parseFloat(row.totalAmount)+member.totalConsumption%CREDIT_DIVISOR)/CREDIT_DIVISOR);
+            member.totalConsumption = member.totalConsumption+parseFloat(row.totalAmount);
+        }
+        else member.credit = member.credit-row.totalCredit;
+        row.account=1;
+        row.operaterId = operater.id;
+        row.leftNumber = goodLeft[row.id].leftNumber-row.number;
+        goodLeft[row.id].leftNumber=row.leftNumber;
+        var result = LoadAjaxJson(row,BUY_GOODS,'/goodsSetting/selling_log/operate');
+        if(result.success==true){
+            showOneRow(result.data[0],jqxGrid);
+            var good = getGood(row.id);
+            good.leftNumber = row.leftNumber;
+        }else{
+            alert(row.goodId+"购买失败");
+        }
+    }
+    $("#balance").text(member.balance);
+    $("#credit").text(member.credit);
+    goods = LoadAjax({},"/goodsSetting/getGoods",false);
+    goodLeft={};
+    return true;
+}
+function initBuyGoodPopWindow(tabId,datarow) {
+    var data = datarow.data;
+    var id = datarow.id;
+    var maxNumber = 0;
+    if(tabId==2){
+        maxNumber = goodLeft[data.id].leftNumber-goodLeft[data.id].buyNumber;
+    }else{
+        maxNumber = goodLeft[data.id].leftNumber-goodLeft[data.id].buyNumber+data.number;
+    }
+    if(maxNumber<=0){
+        alert("当前商品库存为0,请选择其他商品");return;
+    }
+    var ii = layer.open({
+        async: false,
+        title: "商品信息",
+        content: $('.buyGoodPopWindow').html(),
+        area: ['400', '400apx'],//自定义文本域宽高,
+        btn: ['确定', '取消'],
+        yes: function (index) {
+            var row = {};
+            row.number = parseInt($("#sellingNumber").val())
+            if(row.number>maxNumber){
+                alert("数量过大，请重新输入");return;
+            }
+            row.id = data.id;
+            row.name = data.name;
+            row.sellingPrice = $("#sellingPrice").val();
+            row.credit = $("#sellingCredit").val()
+            row.totalAmount = $("#totalAmount").text();
+            row.totalCredit = $("#totalCredit").text();
+            if (tabId == 2) {
+                var commit = $("#" + "buyGoodsGrid").jqxGrid('addrow', null, row);
+                $("#plusAmount").text(parseFloat($("#plusAmount").text())+parseFloat(row.totalAmount));
+                $("#plusCredit").text(parseInt($("#plusCredit").text())+parseInt(row.totalCredit));
+                goodLeft[row.id].buyNumber=row.number+goodLeft[row.id].buyNumber;
+            }
+            else {
+                var commit = $("#" + "buyGoodsGrid").jqxGrid('updaterow', id, row);
+                $("#plusAmount").text(parseFloat($("#plusAmount").text())+parseFloat(row.totalAmount)-data.totalAmount);
+                $("#plusCredit").text(parseInt($("#plusCredit").text())+parseInt(row.totalCredit)-data.totalCredit);
+                goodLeft[row.id].buyNumber= row.number+goodLeft[row.id].buyNumber-data.number;
+            }
+            console.log(goodLeft[row.id])
+            layer.close(index);
+        },
+        btn2: function () {
+            //按钮【取消】的回调
+            return 0;
+        },
+        zIndex: layer.zIndex ,//重点1
+        success: function (layero, index) {
+            layer.setTop(layero); //重点2
+            $("#goodId").text(data.id);
+            $("#goodName").text(data.name);
+            $("#goodPrice").text(data.sellingPrice);
+            $("#goodCredit").text(data.credit);
+            $("#sellingPrice").val(data.sellingPrice);
+            $("#sellingCredit").val(data.credit);
+            $("#sellingNumber").val(data.number);
+            $("#maxNumber").text(maxNumber);
+            $("#totalAmount").text(parseFloat($("#sellingPrice").val()) * parseInt($("#sellingNumber").val()));
+            $("#totalCredit").text(parseInt($("#sellingCredit").val()) * parseInt($("#sellingNumber").val()));
+            $("#sellingPrice,#sellingCredit,#sellingNumber").on("input", function () {
+                $("#totalAmount").text(parseFloat($("#sellingPrice").val()) * parseInt($("#sellingNumber").val()));
+                $("#totalCredit").text(parseFloat($("#sellingCredit").val()) * parseInt($("#sellingNumber").val()));
+            });
+        }
+    });
+}
+// function search(key,value) {
+//     var row={};
+//     row['key'] = key;
+//     row['value'] = value
+//     // console.log("row:"+row['key']+","+row['value'])
+//     var result = LoadAjaxJson(row,SEARCH,url);
+//     console.log(result.data)
+//     $('#jqxGrid').jqxGrid('clear');
+//     //  传入json数组[{},{}]
+//     show(result.data)
+// }

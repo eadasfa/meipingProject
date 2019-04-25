@@ -2,6 +2,9 @@ package com.xidian.meiping.controller.goodsSetting;
 
 import com.xidian.meiping.entity.SellingLog;
 import com.xidian.meiping.service.service.SellingLogService;
+import com.xidian.meiping.util.CommonUtil;
+import com.xidian.meiping.util.ConstValue;
+import com.xidian.meiping.util.JSONUtil;
 import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +36,10 @@ public class GoodSellingController {
     @ResponseBody
     @RequestMapping(value="/selling_log/operate",produces = "text/html;charset=UTF-8")
     public String Operate(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+        if(request.getParameter("operateId").equals(ConstValue.BUY_GOODS)){
+            SellingLog t=sellingLogService.buyGood(request);
+            return JSONUtil.ObjecttoJson(t,t!=null,"添加失败");
+        }
         return GoodSetting.operate(request,sellingLogService);
     }
 }

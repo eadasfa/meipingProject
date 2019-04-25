@@ -69,9 +69,12 @@
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
-    <include refid="Base_Column_List" />
-    from selling_log
-    where id = #{id,jdbcType=INTEGER}
+    <include refid="Base_Column_List_Sp" />
+    from selling_log,good,employee,member
+    where employee.id = selling_log.operater_id and
+    good.id = selling_log.good_id and
+    member.id = selling_log.member_id and
+    selling_log.id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from selling_log
@@ -81,7 +84,8 @@
     delete from selling_log
     where member_id = #{memberId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.xidian.meiping.entity.SellingLog" >
+  <insert id="insert" parameterType="com.xidian.meiping.entity.SellingLog"
+          useGeneratedKeys="true" keyProperty="id">
     insert into selling_log (id, good_id, member_id, 
       number, selling_type, selling_price, 
       selling_time, account, operater_id

@@ -17,4 +17,6 @@ public final class ConstValue {
     public static final String REND_WARDROBE_MORE = "REND_WARDROBE_MORE";
     public static final String RETURN_WARDROBE = "RETURN_WARDROBE";
     public static final String SEARCH_WARDROBE_LOG = "SEARCH_WARDROBE_LOG";
+    public static final String BUY_GOODS = "BUY_GOODS";
+    public static final int CREDIT_DIVISOR=10;
 }

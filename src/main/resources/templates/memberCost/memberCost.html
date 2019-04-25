@@ -46,7 +46,7 @@
             <button id="rend-trainer" type="button" class="btn btn-default" style="border-radius: 10px;">租用私教</button>
         </div>
         <div class="btn-group">
-            <button id="member-cost" type="button" class="btn btn-default" style="border-radius: 10px;">商品购买</button>
+            <button id="buy-goods" type="button" class="btn btn-default" style="border-radius: 10px;">商品购买</button>
         </div>
     </form>
     <table class="table">
@@ -297,28 +297,82 @@
 <script class="buyGoods" type="text/html">
     <form action="">
         <div class="buyGoods" >
-           <table>
+           <table class="table">
                <thead>会员信息</thead>
                <tbody>
                <tr>
-                   <td><text id="buyGoods-member-id"></text></td>
-                   <td><text id="buyGoods-member-name"></text></td>
-                   <td><text id="buyGoods-card-type"></text></td>
+                   <td>会员卡号:</td><td><text id="buyGoods-member-id"></text></td>
+                   <td>会员姓名:</td><td><text id="buyGoods-member-name"></text></td>
+                   <td>会员类型:</td><td><text id="buyGoods-card-type"></text></td>
                </tr>
                <tr>
-                   <td><text id="buyGoods-credit"></text></td>
-                   <td><text id="buyGoods-balance"></text></td>
-                   <td><text id="buyGoods-total-consumption"></text></td>
+                   <td>会员积分:</td><td><text id="buyGoods-credit"></text></td>
+                   <td>会员余额:</td><td><text id="buyGoods-balance"></text></td>
+                   <td>会员总消费:</td><td><text id="buyGoods-total-consumption"></text></td>
                </tr>
                </tbody>
            </table>
-            <hr style="color:#000;height: 5px">
-            <table>
-                <thead>添加商品信息</thead>
-
+            <!--<hr style="color:#000;height: 5px">-->
+            <div id='goodTabs' >
+                <ul>
+                    <li style="margin-left: 30px;">
+                        购买列表
+                    </li>
+                    <li>
+                        商品列表
+                    </li>
+                </ul>
+                <div style="overflow: hidden;">
+                    <div style="border:none;" id="buyGoodsGrid">
+                    </div>
+                </div>
+                <div style="overflow: hidden;">
+                    <div style="border:none;" id="goodsGrid"></div>
+                </div>
+            </div>
+            <hr>
+            <table class="table">
+                <tr>
+                    <td>总金额:</td><td><text id="plusAmount"></text></td>
+                    <td>总积分:</td><td><text id="plusCredit"></text></td>
+                </tr>
+                <tr>
+                    <td><label><input type="radio" name="type" value="money" checked>余额付款</label></td>
+                    <td><label><input type="radio" name="type" value="credit">积分兑换</label></td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</script>
+<script class="buyGoodPopWindow" type="text/html">
+    <form action="">
+        <div class="buyGoodPopWindow" >
+            <table class="table">
+                <thead>商品信息</thead>
+                <tr>
+                    <td>商品编号:</td><td><text id="goodId"></text></td>
+                    <td>商品名称:</td><td><text id="goodName"></text></td>
+                </tr>
+                <tr>
+                    <td>商品单价:</td><td><text id="goodPrice"></text></td>
+                    <td>所需积分:</td><td><text id="goodCredit"></text></td>
+                </tr>
             </table>
             <hr>
-        </div>
+            <table>
+                <tr>
+                    <td>商品单价:</td><td><input id="sellingPrice"></td>
+                    <td>所需积分:</td><td><input id="sellingCredit"/></td>
+                </tr>
+                <tr>
+                    <td>购买数量:</td><td><input id="sellingNumber"/>最大为<text id="maxNumber"></td>
+                </tr>
+                <tr>
+                    <td>积分总量:</td><td><text id="totalCredit"></text></td>
+                    <td>总金额:</td><td><text id="totalAmount"></text></td>
+                </tr>
+            </table>
+         </div>
     </form>
 </script>
 </html>

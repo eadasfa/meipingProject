@@ -264,7 +264,8 @@ $(document).ready(function () {
         var result = LoadAjaxJson(row,SEARCH,url);
         // console.log(result.data)
         $('#jqxGrid').jqxGrid('clear');
-        //  传入json数组[{},{}]
+        isWardrobe = true;
         show(result.data)
+        isWardrobe = false;
     }
 });

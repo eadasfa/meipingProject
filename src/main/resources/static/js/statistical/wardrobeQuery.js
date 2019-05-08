@@ -486,7 +486,9 @@ $(document).ready(function () {
         // console.log(result.data)
         $('#jqxGrid').jqxGrid('clear');
         //  传入json数组[{},{}]
+        isWardrobe = true;
         show(result.data)
+        isWardrobe = false;
     }
     function generateGrid2Row(data) {
         var row={};

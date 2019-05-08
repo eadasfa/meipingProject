@@ -88,7 +88,8 @@ public class SellingLogServiceImpl implements SellingLogService {
         if(log.getSellingType()==0){
             member.setBalance(member.getBalance()-log.getTotalAmount());
             member.setCredit(member.getCredit()+
-                    (int)((log.getTotalAmount()+member.getTotalConsumption()% ConstValue.CREDIT_DIVISOR)/ConstValue.CREDIT_DIVISOR));
+                    (int)((log.getTotalAmount()+
+                            member.getTotalConsumption()% ConstValue.CREDIT_DIVISOR)/ConstValue.CREDIT_DIVISOR));
             member.setTotalConsumption(member.getTotalConsumption()+log.getTotalAmount());
         }
         else member.setCredit(member.getCredit()-(int)(log.getTotalAmount()/1));

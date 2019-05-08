@@ -24,4 +24,7 @@ public interface WardrobeMapper {
     List<Wardrobe> selectAll();
 
     Wardrobe selectByMemberId(Integer memberId);
+
+    int updateWardrobeStatus(Integer wardrobeId);
+    int updateByMemberId(Integer memberId);
 }

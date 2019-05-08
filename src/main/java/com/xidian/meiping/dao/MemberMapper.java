@@ -20,4 +20,6 @@ public interface MemberMapper {
     List<Member> selectAll();
 
     List<Member> selectByName(String name);
+
+    List<Member> selectByCardTypeId(Integer cardId);
 }

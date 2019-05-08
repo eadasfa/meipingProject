@@ -15,7 +15,7 @@ function init() {
     $("#renewal-member").click(function () {
         if($("#id").text()==null||$("#id").text()==undefined||$("#id").text()=="")
             return;
-        popWindows("renewalMember","续费会员")
+        popWindows("renewalMember","续费会员",['800px','430px'])
     });
     $("#rend-wardrobe").click(function () {
         if($("#id").text()==null||$("#id").text()==undefined||$("#id").text()=="")
@@ -215,10 +215,12 @@ function initChildWindowBeforeOpen(popWindow) {
     }
     return {};
 }
-function popWindows(popWindow,title) {
+function popWindows(popWindow,title,areaUp) {
     var tempPopWindow = popWindow=="updateMember"?"addMember":popWindow;
     var row={};
     var area= ['400', '300px'];
+    if(areaUp!=undefined)
+        area = areaUp;
     if(popWindow=="buyGoods") area = ['400', '560px'];
     var ii = layer.open({
         type:1,
@@ -243,12 +245,15 @@ function popWindows(popWindow,title) {
                 flag = rendTrainer();
             else if(popWindow=="buyGoods")
                 flag = buyGoods();
+
             if(flag)
                 layer.close(index);
         },
 
         btn2: function() {
-            //按钮【取消】的回调
+            if(popWindow == "buyGoods"){
+                goodLeft={};
+            }
             return 0;
         },
         success: function(layero, index){
@@ -276,13 +281,15 @@ function rendTrainer() {
     var result = LoadAjaxJson(row,REND_TRAINER,"/memberManage/trainer/operate");
     //查询全部
     if(result.success != true)
-    {alert("失败");return false}
+    {alert("租用失败:"+result.context);return false;}
+    var member = getMember(row.memberId)
 
     var trainer = getTrainer(row.trainerId);
     $("#trainerName").text(trainer.trainerName)
+    member.balance = member.balance-row.totalAmount;
+    $("#balance").text(member.balance);
     trainer.status=1;
     trainer.memberName=row.memberId;
-    var member = getMember(row.memberId)
     member.trainerName = trainer.trainerName;
     row.operaterName = operater.name;
     row.trainerName = trainer.trainerName;
@@ -314,11 +321,12 @@ function rendWardrobe2() {
     row.operaterId = operater.id;
     var result = LoadAjaxJson(row,REND_WARDROBE_MORE,"/systemSetting/wardrobe/operate");
     if(result.success==false){
-
-        alert("租用失败");return;
+        alert("租用失败:"+result.context);return;
     }
     row.status="已租"
     var member = getMember(row.memberId);
+    member.balance = member.balance-row.totalAmount;
+    $("#balance").text(member.balance);
     row.operateTime = row.startTime;
     row.memberName = member.name;
     row.wardrobeId = row.id;
@@ -349,11 +357,12 @@ function rendWardrobe() {
     row.totalAmount = $("#rendWardrobe-total-amount").val();
     var result = LoadAjaxJson(row,REND_WARDROBE,"/systemSetting/wardrobe/operate");
     if(result.success==false){
-
-        alert("租用失败");return;
+        alert("租用失败:"+result.context);return;
     }
     $("#wardrobeId").text(row.id);
     var member = getMember(row.memberId);
+    member.balance = member.balance-row.totalAmount;
+    $("#balance").text(member.balance);
     member.wardrobeId = row.id;
     ward.status="已租";
     ward.memberName=member.id;
@@ -429,6 +438,8 @@ function addMember(){
     }
     members.push(result.data[0]);
     $("#member-id-list").append('<option>'+result.data[0].id+'</option>')
+    $("#input-member-id").val(result.data[0].id);
+    $("#query").click();
     return true;
 }
 function genRowForAddAndUpdate() {
@@ -605,7 +616,7 @@ function initGoodsGrid(height,width) {
             $("#search").on('click', function () {
                 var key = $("#searchkey").val();
                 var value = $("#searchvalue").val();
-                search(key,value);
+                // search(key,value);
                 var row={};
                 row['key'] = key;
                 row['value'] = value

@@ -40,6 +40,7 @@ public class EmployeeSettingController {
     @RequestMapping(value="/employee/operate",produces = "text/html;charset=UTF-8")
     public String Operate(HttpServletRequest request, HttpServletResponse response, HttpSession session){
         String operateId = request.getParameter("operateId");
+        StringBuilder context = new StringBuilder("失败");
         if(operateId.equals(ConstValue.SEARCH)){
             return CommonController.searchByKeyAndValue(request,employeeService);
         }
@@ -52,9 +53,9 @@ public class EmployeeSettingController {
         if(!operateId.equals(ConstValue.DELETE))
             employee = (Employee) CommonUtil.newInstance(employee,request);
 
-        CommonController.operate(operateId,employeeService,request,employee);
+        boolean flag = CommonController.operate(operateId,employeeService,request,employee,context);
         return JSONUtil.ObjecttoJson(employeeService.findById(employee.getId()),
-                true,"I'm houtai");
+                flag ,context.toString());
     }
 
 }

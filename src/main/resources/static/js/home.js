@@ -1,4 +1,6 @@
     $(document).ready(function () {
+        // var menuData = LoadAjax({},"/menu/getMenuList",false);
+        // console.log(JSON.stringify(menuData))
         var pages={};
         // prepare the data
         operater = (LoadAjaxJson({},"",
@@ -12,11 +14,12 @@
                     { name: "parentMenuId" },
                     // { name: "icon" },
                     { name: "menuName" },
-                    { name: "value" }
+                    { name: "value" },
                 ],
                 id: "menuId",
                 url: "/menu/getMenuList",
                 async: false
+                // localdata:menuData
             };
         var dataAdapter = new $.jqx.dataAdapter(source);
         dataAdapter.dataBind();
@@ -31,6 +34,10 @@
         $("#jqxTree").jqxTree({allowDrag:false});
         $('#jqxTree').on('expand', function (event) {
             var args = event.args;
+            var item = $("#jqxTree").jqxTree('getItem', args.element);
+            if(item.value!==''&&operater.permission<getPermission(dataAdapter.recordids,value)){
+
+            }
             console.log("expand");
         });
         $('#jqxTree').on('collapse', function (event) {
@@ -42,6 +49,11 @@
             var item = $("#jqxTree").jqxTree('getItem', event.args.element);
             var value = item.value;
             if(value !== '') {
+                // console.log("当前权限:"+operater.permission+" 所需权限:"+getPermission(dataAdapter.recordids,value))
+                if(operater.permission<getPermission(dataAdapter.recordids,value)){
+                    alert("您没有操作当前模块的权限！");
+                    return;
+                }
                 var ii = layer.load();
                 if(!RELOAD&&pages[value]!=undefined)
                     $(".content-wrapper").html(pages[value]);
@@ -88,5 +100,14 @@
             $("span.employee-permission").text(operater.permission+" 级");
             $("span.employee-id").text(operater.id);
             $("span.employee-position").text(operater.position);
+        }
+        function getPermission(data,value) {
+            // console.log(data)
+            for(var i=1;i<data.length;i++){
+                if(data[i].value == value){
+                    return parseInt(data[i].permission);
+                }
+            }
+            return 1;
         }
     });

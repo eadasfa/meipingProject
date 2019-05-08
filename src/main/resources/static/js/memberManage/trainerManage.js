@@ -33,8 +33,7 @@ $(document).ready(function () {
                         { name: 'trainerName' },
                         { name: 'dayNumber' }
                     ],
-                url: sourceUrl,
-                async: false,
+                localdata:[],
                 addrow: function (rowid, rowdata, position, commit) {
                      commit(true);
                 },
@@ -91,6 +90,7 @@ $(document).ready(function () {
                     var trainerId = $("#trainer-id").val();
                     search(memberId,trainerId);
                 });
+                $("#search").click();
                 $("#buy-trainer").on('click', function () {
                     Operate();
                 });
@@ -212,7 +212,10 @@ $(document).ready(function () {
         var result = LoadAjaxJson(row,REND_TRAINER,url);
         //查询全部
         if(result.success != true)
-        {alert("失败");return false}
+        {
+            alert("失败:"+result.context);
+            return false
+        }
         search("","");
         return true;
     }
@@ -234,6 +237,10 @@ $(document).ready(function () {
         // console.log(result.data)
         $('#jqxGrid').jqxGrid('clear');
         //  传入json数组[{},{}]
-        show(result.data)
+        if(row.trainerId==""&&row.memberId==""){
+            show(result.data,"trainer")
+        }else{
+            show(result.data);
+        }
     }
 });

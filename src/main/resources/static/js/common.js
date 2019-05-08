@@ -55,7 +55,7 @@
         }
         return false;
     }
-    function addItemCommon(row,url){
+    function addItemWithResult(row,url) {
         if(row == false) return false;
         var rowscount = $("#jqxGrid").jqxGrid('getdatainformation').rowscount;
         var id = 'id';
@@ -74,7 +74,11 @@
         row = changeData(result['data'][0]);
         var commit = $("#jqxGrid").jqxGrid('addrow', null, row);
         sordLikeFormer();
-        return true;
+        return result['data'][0];
+    }
+    function addItemCommon(row,url){
+       var flag = addItemWithResult(row,url);
+       return !flag?flag:true;
     }
     function deleteItemCommon(url,row) {
         if(row==undefined)
@@ -102,7 +106,7 @@
         }
         var selectedrowindex = $("#jqxGrid").jqxGrid('getselectedrowindex');
         var id = $("#jqxGrid").jqxGrid('getrowid', selectedrowindex);
-        row = changeData(result['data'][0],2);
+        row = changeData(result['data'][0]);
         var commit = $("#jqxGrid").jqxGrid('updaterow', id, row);
         // $("#jqxGrid").jqxGrid('ensurerowvisible', selectedrowindex);
         return true;
@@ -176,17 +180,20 @@
         }
         return row;
     }
-    function show(data) {
-        showNoSort(data)
+    function show(data,table) {
+        showNoSort(data,table)
         sordLikeFormer();
     }
-    function showNoSort(data) {
-        showNoSortByGrid(data,"jqxGrid")
+    function showNoSort(data,table) {
+        showNoSortByGrid(data,"jqxGrid",table)
     }
-    function showNoSortByGrid(data,grid) {
+    function showNoSortByGrid(data,grid,table) {
+        var row={};
         for(var i=0;i<data.length;i++) {
-            var row = changeData(data[i]);
-            var commit = $("#"+grid).jqxGrid('addrow', id, row);
+            if(table == "trainer"&&data[i].status==0) continue;
+            else
+                row = changeData(data[i]);
+            var commit = $("#"+grid).jqxGrid('addrow', null, row);
         }
     }
     function showOneRow(row,grid,id) {
@@ -271,3 +278,7 @@
         }
         return null;
     }
+    layer.config({
+        // extend: 'orange/layer.css', //加载您的扩展样式,它自动从theme目录下加载这个文件
+        skin: 'layui-layer-molv'  //layui-layer-orange这个就是上面我们定义css 的class
+    });

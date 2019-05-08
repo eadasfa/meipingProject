@@ -114,7 +114,7 @@
 <script class="addMember" type="text/html">
     <form action="">
         <div class="addMember" >
-            <table>
+            <table class="table">
                 <tr>
                     <td>会员编号:</td><td><input type="text" id = "addMember-id"/></td>
                     <td>会员姓名:</td><td><input type="text" id = "addMember-name"/></td>
@@ -127,7 +127,7 @@
                 </tr>
             </table>
             <hr>
-            <table>
+            <table class="table">
                 <tr>
                     <td>注册时间:</td><td><input type="text" id = "addMember-registerDate" placeholder="yyyy-MM-dd"/></td>
                     <td>开卡时间:</td><td><input type="text" id = "addMember-startDate" placeholder="yyyy-MM-dd"/></td>
@@ -145,7 +145,7 @@
 </script>
 <script class="renewalMember" type="text/html">
     <div class="renewalMember" >
-        <table>
+        <table class="table">
             <tr>
                 <td>会员编号:</td><td><input  id = "renewal-id" disabled/></td>
                 <td>会员姓名:</td><td><input  id = "renewal-name" disabled/></td>
@@ -157,15 +157,14 @@
                 <td>到期日期:</td><td><input id="renewal-endDate" disabled/></td>
             </tr>
         </table>
-        <table>
+        <table class="table">
             <tr>
-                <td>充值金额:</td>
-                <td><input type="text" id="renewal-top-up-price" placeholder="充值金额"/></td>
-                <td><input type="button" id="renewal-top-up" value="确认充值"
+                <td>充值金额:<input type="text" id="renewal-top-up-price" placeholder="充值金额"/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<input type="button" id="renewal-top-up" value="确认充值"
                            class="layui-btn layui-btn-radius layui-btn-normal"/></td>
             </tr>
         </table>
-        <table>
+        <table class="table">
             <th>会员续费</th>
             <tr>
                 <td>会员类型:</td><td><select id = "renewal-cardTypeName3" style="width: 100%;"></select></td>
@@ -181,7 +180,7 @@
 <script class="rendWardrobe" type="text/html">
     <form action="">
         <div class="rendWardrobe" >
-            <table>
+            <table class="table">
                 <thead>会员信息</thead>
                 <tr>
                     <td>会员卡号:</td>
@@ -194,7 +193,7 @@
                 </tr>
             </table>
             <hr style="border: medium  #00acd6 solid">
-            <table>
+            <table class="table">
                 <thead>长期租用</thead>
                 <tr>
                     <td>衣柜编号:</td>
@@ -220,7 +219,7 @@
 <script class="rendWardrobe2" type="text/html">
     <form action="">
         <div class="rendWardrobe2" >
-            <table>
+            <table class="table">
                 <thead>会员信息</thead>
                 <tr>
                     <td>衣柜编号:</td>
@@ -242,7 +241,7 @@
                 </tr>
             </table>
             <hr style="border: solid medium #00acd6">
-            <table>
+            <table class="table">
                 <tr>
                     <td>截止日期:</td>
                     <td><input type="text" id="rendWardrobe2-to2"/></td>
@@ -259,7 +258,7 @@
 <script class="rendTrainer" type="text/html">
     <form action="">
         <div class="rendTrainer" >
-            <table>
+            <table class="table">
                 <tr>
                     <td>会员编号:</td>
                     <td><input type="text" id="rendTrainer-member-id" />

@@ -1,7 +1,14 @@
 package com.xidian.meiping.entity;
 
 
+import com.xidian.meiping.util.ConstValue;
+
+import java.text.ParsePosition;
+import java.util.Date;
+
 public class Member {
+    public boolean insertOrUpdate = false;
+    private boolean isModified = false;
     private Integer id;
 
     private String name;
@@ -44,12 +51,21 @@ public class Member {
 
     private Integer operaterId;
     private String trainerName;
-
+    private Date trainerEndTime;
     private Integer wardrobeId;
+    private Date wardrobeEndTime;
     private Double account;
 
+    public void setTrainerEndTime(Date trainerEndTime) {
+        this.trainerEndTime = trainerEndTime;
+    }
+
+    public void setWardrobeEndTime(Date wardrobeEndTime) {
+        this.wardrobeEndTime = wardrobeEndTime;
+    }
+
     public Double getAccount() {
-        return account;
+        return account==null?1:account;
     }
 
     public void setAccount(Double account) {
@@ -57,7 +73,7 @@ public class Member {
     }
 
     public String getTrainerName() {
-        return trainerName;
+        modifyStatus();return trainerName;
     }
 
     public void setTrainerName(String trainerName) {
@@ -65,7 +81,7 @@ public class Member {
     }
 
     public Integer getWardrobeId() {
-        return wardrobeId;
+        modifyStatus();return wardrobeId;
     }
 
     public void setWardrobeId(Integer wardrobeId) {
@@ -122,7 +138,7 @@ public class Member {
     }
 
     public String getStatus() {
-        return status;
+        modifyStatus();return status;
     }
 
     public void setStatus(String status) {
@@ -138,7 +154,7 @@ public class Member {
     }
 
     public Double getBalance() {
-        return balance;
+        return balance==null?0:balance;
     }
 
     public void setBalance(Double balance) {
@@ -146,7 +162,7 @@ public class Member {
     }
 
     public Integer getCredit() {
-        return credit;
+        return credit==null?0:credit;
     }
 
     public void setCredit(Integer credit) {
@@ -154,7 +170,7 @@ public class Member {
     }
 
     public Double getTotalConsumption() {
-        return totalConsumption;
+        return totalConsumption==null?0.0:totalConsumption;
     }
 
     public void setTotalConsumption(Double totalConsumption) {
@@ -162,6 +178,7 @@ public class Member {
     }
 
     public String getStartDate() {
+        modifyStatus();
         return startDate==null?null:startDate.split("\\s+")[0];
     }
 
@@ -170,6 +187,7 @@ public class Member {
     }
 
     public String getEndDate() {
+        modifyStatus();
         return endDate==null?null:endDate.split("\\s+")[0];
     }
 
@@ -216,5 +234,36 @@ public class Member {
                 ", youxiaoCishu=" + youxiaoCishu +
                 ", youxiaoTianshu=" + youxiaoTianshu +
                 '}';
+    }
+//    private void modifyStatus(){
+//        if(isModified||status==0||status==2) return;
+//        Date endTime = ConstValue.df.parse(this.endTime,ConstValue.pos);
+//        Date now = ConstValue.df.parse(ConstValue.df.format(new Date()),ConstValue.pos);
+//        if(now.before(endTime)) return;
+//        this.status = 0;
+//        this.memberId = null;
+//        this.memberName=null;
+//        this.endTime=null;
+//        this.dayNumber=null;
+//        this.rendTrainerLogId=null;
+//        isModified = true;
+//    }
+    private void modifyStatus(){
+        if(insertOrUpdate||isModified||status.equals("停用")) return;
+        Date now = ConstValue.df.parse(ConstValue.df.format(new Date()),new ParsePosition(0));
+        //会员卡
+        if(endDate!=null&&now.after(ConstValue.df.parse(endDate,new ParsePosition(0)))){
+            this.status="停用";
+            this.memberCardBuyId=null;
+        }
+        if(trainerEndTime!=null&&now.after(ConstValue.df.parse(
+                ConstValue.df.format(trainerEndTime),new ParsePosition(0)))){
+            this.trainerName=null;
+        }
+        if(wardrobeEndTime!=null&&now.after(ConstValue.df.parse(
+                ConstValue.df.format(wardrobeEndTime),new ParsePosition(0)))){
+            this.wardrobeId=null;
+        }
+        isModified = true;
     }
 }

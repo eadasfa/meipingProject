@@ -1,8 +1,10 @@
 package com.xidian.meiping.service.implement;
 
 import com.xidian.meiping.dao.EmployeeMapper;
+import com.xidian.meiping.dao.OperaterMapper;
 import com.xidian.meiping.dao.TrainerMapper;
 import com.xidian.meiping.entity.Employee;
+import com.xidian.meiping.entity.Operater;
 import com.xidian.meiping.entity.Trainer;
 import com.xidian.meiping.service.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeMapper employeeMapper;
     @Autowired
     private TrainerMapper trainerMapper;
+    @Autowired
+    private OperaterMapper operaterMapper;
     @Override
     public List<Employee> findAll() {
         return employeeMapper.selectAll();
@@ -27,8 +31,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional
     public int update(Employee example) {
         String position = example.getPosition();
+        Trainer t = trainerMapper.selectByPrimaryKey(example.getId());
         if(position.equals("私教")){
-            Trainer t = trainerMapper.selectByPrimaryKey(example.getId());
             if(t==null){
                 t = new Trainer();
                 t.setStatus(0);
@@ -40,6 +44,13 @@ public class EmployeeServiceImpl implements EmployeeService {
             }else{
                 t.setPrice(example.getPrice());
                 trainerMapper.updateByPrimaryKeySelective(t);
+            }
+        }else if(t!=null){//以前是私教,当前修改为不是私教
+            if(t.getStatus()==0){//没人雇佣该私教
+                trainerMapper.deleteByPrimaryKey(t.getTrainerId());
+                return employeeMapper.updateByPrimaryKeySelective(example);
+            }else{
+                return 0;//不能修改，当前有正在使用
             }
         }
         return employeeMapper.updateByPrimaryKeySelective(example);
@@ -73,10 +84,24 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    @Transactional
     public int deleteById(Integer Id) {
         try {
+            Trainer trainer=trainerMapper.selectByPrimaryKey(Id);
+
+            System.out.println(Id+","+trainer);
+            if(trainer!=null){
+                if(trainer.getStatus()== 0)//没有用户租用该Trainer
+                    trainerMapper.deleteByPrimaryKey(Id);
+                else return 0;
+            }
+            Operater operater = operaterMapper.selectByPrimaryKey(Id);
+            if(operater!=null){
+                return 0;
+            }
             return employeeMapper.deleteByPrimaryKey(Id);
         }catch (Exception e){
+            e.printStackTrace();
             return 0;
         }
     }

@@ -231,6 +231,10 @@ $(document).ready(function () {
         {'name':'teleNumber','type':1,'label':'员工电话'}];
         var row = getInputRowCommon(columns,numCells);
         row['price'] = $("#price").val();
+        if($("#price").attr("disabled")!='disabled'&&!isInteger(row.price)){
+            alert("价格必须是整数:"+row.price+" "+isInteger(row.price))
+            return false;
+        }
         return row;
     }
     function search(key,value) {

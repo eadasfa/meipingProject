@@ -1,4 +1,5 @@
 var operaters=[];
+var operater;
 var goods=[];
 var members=[];
 var cardTypes=[];
@@ -9,17 +10,17 @@ var BACKUP = 'backup';
 var AUTO_BACKUP = 'autoBackup' ;
 var STOP_AUTO_BACKUP = 'stopAutoBackup'
 var RESTORE_DB = "restoreDB";
+//每打开一个页面需不需要重新加载
+var RELOAD = true;
 var ADD = 'add';
 var UPDATE = 'update';
 var DELETE = 'delete';
 var SEARCH = 'search';
 var ADDMANY = 'addMany';
-var RELOAD = true;
 var CHECK_IN = "check in";
 var MEMBER_PAY = "member pay fee";
 var RETURN_GOODS = "Return of the goods";
 var TOP_UP = "top up";
-var operater;
 var SEARCH_TRAINER_LOG = "SEARCH_TRAINER_LOG"
 var REND_TRAINER = "REND_TRAINER"
 var REND_WARDROBE = "REND_WARDROBE";
@@ -31,3 +32,22 @@ var SEARCH_WARDROBE_LOG = "SEARCH_WARDROBE_LOG";
 var BUY_GOODS = "BUY_GOODS";
 var isWardrobe=false;
 var CREDIT_DIVISOR=10;
+
+ADD = "1";//添加
+UPDATE = "2";//修改
+DELETE = "3";//删除
+ADDMANY = "4";//添加多个衣柜
+SEARCH = "5";//查询
+CHECK_IN = "6";//进货
+RETURN_GOODS = "7";//退货
+TOP_UP = "8";//充值
+SEARCH_TRAINER_LOG = "9";//查询租用私教记
+REND_TRAINER = "10";//租用私教
+SEARCH_SELLING_LOG="11";//查询商品销售记录
+SEARCH_TRAINER_BY_ID = "12";//通过tr
+REND_WARDROBE = "13";//租用衣柜
+REND_WARDROBE_MORE = "14";//衣柜续费
+RETURN_WARDROBE = "15";//归还衣柜
+SEARCH_WARDROBE_LOG = "16";//查询衣柜租
+BUY_GOODS = "17";//购买商品
+FIND_BY_ID = "18";//购买商品

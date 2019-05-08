@@ -33,25 +33,9 @@ $(document).ready(function () {
                     ],
                 url: sourceUrl,
                 async: false,
-                addrow: function (rowid, rowdata, position, commit) {
-                    // synchronize with the server - send insert command
-                    // call commit with parameter true if the synchronization with the server is successful
-                    //and with parameter false if the synchronization failed.
-                    // you can pass additional argument to the commit callback which represents the new ID if it is generated from a DB.
-                    commit(true);
-                },
-                deleterow: function (rowid, commit) {
-                    // synchronize with the server - send delete command
-                    // call commit with parameter true if the synchronization with the server is successful
-                    //and with parameter false if the synchronization failed.
-                    commit(true);
-                },
-                updaterow: function (rowid, newdata, commit) {
-                    // synchronize with the server - send update command
-                    // call commit with parameter true if the synchronization with the server is successful
-                    // and with parameter false if the synchronization failed.
-                    commit(true);
-                }
+                addrow: function (rowid, rowdata, position, commit) {commit(true);},
+                deleterow: function (rowid, commit) {commit(true);},
+                updaterow: function (rowid, newdata, commit) {commit(true);}
             };
         var dataAdapter = new $.jqx.dataAdapter(source);
         // initialize jqxGrid
@@ -83,6 +67,7 @@ $(document).ready(function () {
                     '<datalist id="good-id-list"></datalist>');
                 container.append('<input id="search"  style="margin-left: 10px" type="button" value="加入所选商品" />');
                 $("#search").jqxButton();
+
                 //初始化搜索选择框
                 for(var i=0;i<goods.length;i++){
                     $("#good-id-list").append('<option>'+goods[i].id+'</option>')

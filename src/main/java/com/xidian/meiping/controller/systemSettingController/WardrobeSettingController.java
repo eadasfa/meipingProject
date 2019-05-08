@@ -9,6 +9,7 @@ import com.xidian.meiping.service.service.WardrobeService;
 import com.xidian.meiping.util.CommonUtil;
 import com.xidian.meiping.util.ConstValue;
 import com.xidian.meiping.util.JSONUtil;
+import com.xidian.meiping.util.StatusCode;
 import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,6 +48,7 @@ public class WardrobeSettingController {
     public String Operate(HttpServletRequest request, HttpServletResponse response,
                           HttpSession session){
         String operateId = request.getParameter("operateId");
+        StringBuilder context = new StringBuilder("");
         if(operateId.equals(ConstValue.SEARCH)){
             return CommonController.searchByKeyAndValue(request,wardrobeService);
         }
@@ -64,7 +66,7 @@ public class WardrobeSettingController {
         }
         if(operateId.equals(ConstValue.REND_WARDROBE)){
             int temp = wardrobeService.rendWardrobe(request);
-            if(temp==0) return JSONUtil.toJsonString(null,false,"失败");
+            if(temp!=1) return JSONUtil.toJsonString(null,false, StatusCode.setContext(temp,ConstValue.REND_WARDROBE,context).toString());
             return JSONUtil.ObjecttoJson(wardrobeService.findById(Integer.parseInt(request.getParameter("id"))),true,"");
         }
         if(operateId.equals(ConstValue.REND_WARDROBE_MORE)){
@@ -81,9 +83,9 @@ public class WardrobeSettingController {
         if(!operateId.equals(ConstValue.DELETE))
             wardrobe = (Wardrobe) CommonUtil.newInstance(wardrobe,request);
 //        else wardrobe=new Wardrobe();
-        CommonController.operate(operateId,wardrobeService,request,wardrobe);
+        boolean flag = CommonController.operate(operateId,wardrobeService,request,wardrobe,context);
         return JSONUtil.ObjecttoJson(wardrobeService.findById(wardrobe.getId()),
-                true,"I'm houtai");
+                flag,context.toString());
     }
     private String addManyWardrobes(HttpServletRequest request) {
         List<Wardrobe> list = new ArrayList<>();
@@ -93,6 +95,7 @@ public class WardrobeSettingController {
         double price = Double.parseDouble(request.getParameter("price"));
         for(;from<=to;from++){
             Wardrobe wardrobe = new Wardrobe();
+            wardrobe.insertOrUpdate = true;
             wardrobe.setId(from);
             wardrobe.setStatus(status);
             wardrobe.setPrice(price);

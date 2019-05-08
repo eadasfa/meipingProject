@@ -64,9 +64,14 @@
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List_Sp" />
     from trainer
-    where trainer_id = #{trainerId,jdbcType=INTEGER}
+    left join member on trainer.member_id = member.id
+    left join rend_trainer_log as rtl on trainer.rend_trainer_log_id = rtl.id,
+    employee
+    where trainer.trainer_id = employee.id
+    and trainer.trainer_id = #{trainerId,jdbcType=INTEGER}
+
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from trainer
@@ -132,6 +137,15 @@
       </if>
     </set>
     where trainer_id = #{trainerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByMemberId" parameterType="java.lang.Integer">
+    update trainer
+    <set >
+      rend_trainer_log_id=null,
+      status=0,
+      member_id=null
+    </set>
+    where member_id = #{memberId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xidian.meiping.entity.Trainer" >
     update trainer

@@ -34,12 +34,12 @@ public class MemberCardSettingController {
     public String Operate(HttpServletRequest request, HttpServletResponse response, HttpSession session){
         String operateId = request.getParameter("operateId");
         Card card=new Card();
+        StringBuilder context = new StringBuilder("失败");
         if(!operateId.equals(ConstValue.DELETE))
             card = (Card) CommonUtil.newInstance(card,request);
-        CommonController.operate(operateId,cardService,request,card);
-        System.out.println(JSONUtil.ObjecttoJson(cardService.findById(card.getId()),
-                true,"I'm houtai"));
+        boolean flag = CommonController.operate(operateId,cardService,request,card,context);
+
         return JSONUtil.ObjecttoJson(cardService.findById(card.getId()),
-                true,"I'm houtai");
+                flag,context.toString());
     }
 }

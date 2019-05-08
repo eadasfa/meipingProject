@@ -1,8 +1,17 @@
 package com.xidian.meiping.entity;
 
+import com.xidian.meiping.util.ConstValue;
+
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Wardrobe {
+
+    private boolean isModified = false;
+
+    public boolean insertOrUpdate = false;
     private Integer id;
 
     private String name;
@@ -20,7 +29,22 @@ public class Wardrobe {
     private String endTime;
     private String startTime;
 
+    public static void main(String []args){
+        String beginTime=new String("2017-06-09");String endTime=new String("2017-05-08 11:22:22");
+//        直接用Date自带方法before()和after()比较
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Date sd1=df.parse(beginTime,new ParsePosition(0));
+        Date sd2=df.parse(endTime,new ParsePosition(0));
+        System.out.println(new Date());
+        System.out.println(sd1.before(sd2));
+        System.out.println(sd1.after(sd2));
+    }
+    public String getEndTime() {
+        modifyStatus();
+        return endTime;
+    }
     public String getStartTime() {
+        modifyStatus();
         return startTime;
     }
 
@@ -29,6 +53,7 @@ public class Wardrobe {
     }
 
     public String getMemberName() {
+        modifyStatus();
         return memberName;
     }
 
@@ -36,16 +61,13 @@ public class Wardrobe {
         this.memberName = memberName;
     }
 
-    public String getEndTime() {
-        return endTime;
-    }
 
     public void setEndTime(String endTime) {
         this.endTime = endTime.split("\\s+")[0];
     }
 
     public Double getPrice() {
-        return price;
+        modifyStatus();return price;
     }
 
     public void setPrice(Double price) {
@@ -53,7 +75,7 @@ public class Wardrobe {
     }
 
     public Integer getMemberId() {
-        return memberId;
+        modifyStatus();return memberId;
     }
 
     public void setMemberId(Integer memberId) {
@@ -69,7 +91,7 @@ public class Wardrobe {
     }
 
     public String getName() {
-        return name;
+        modifyStatus();return name;
     }
 
     public void setName(String name) {
@@ -77,7 +99,7 @@ public class Wardrobe {
     }
 
     public Integer getStatus() {
-        return status;
+        modifyStatus();return status;
     }
 
     public void setStatus(Integer status) {
@@ -85,7 +107,7 @@ public class Wardrobe {
     }
 
     public Integer getRendWardrobeLogId() {
-        return rendWardrobeLogId;
+        modifyStatus();return rendWardrobeLogId;
     }
 
     public void setRendWardrobeLogId(Integer rendWardrobeLogId) {
@@ -105,12 +127,29 @@ public class Wardrobe {
     @Override
     public String toString() {
         return "Wardrobe{" +
-                "id=" + id +
+                "isModified=" + isModified +
+                ", insertOrUpdate=" + insertOrUpdate +
+                ", id=" + id +
                 ", name='" + name + '\'' +
                 ", status=" + status +
                 ", rendWardrobeLogId=" + rendWardrobeLogId +
                 ", memberId=" + memberId +
                 ", price=" + price +
+                ", memberName='" + memberName + '\'' +
+                ", endTime='" + endTime + '\'' +
+                ", startTime='" + startTime + '\'' +
                 '}';
+    }
+
+    private void modifyStatus(){
+        if(insertOrUpdate||isModified||status==0||status==2||endTime==null) return;
+        Date endTime = ConstValue.df.parse(this.endTime,new ParsePosition(0));
+        Date now = ConstValue.df.parse(ConstValue.df.format(new Date()),new ParsePosition(0));
+        if(!now.after(endTime)) return;
+        this.status = 0;
+        this.memberId = null;
+        this.memberName=null;
+        this.endTime=null;
+        isModified = true;
     }
 }

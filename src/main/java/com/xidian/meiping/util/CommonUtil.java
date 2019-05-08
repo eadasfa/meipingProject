@@ -10,6 +10,7 @@ public class CommonUtil {
         return toUpper.substring(0, 1).toUpperCase()+ toUpper.substring(1);
     }
     public static Object newInstance(Object o, HttpServletRequest request){
+        boolean flag = false;
         Class clazz  = o.getClass();
         Method[]methods = clazz.getMethods();
         Field[] field = clazz .getDeclaredFields();
@@ -21,11 +22,17 @@ public class CommonUtil {
             if(temp!=null&&temp.equals("")) temp=null;
             String methodName = "set"+ CommonUtil.upperFirst(f.getName());
             Method method = null;
+            flag = false;
             for(Method m: methods){
                 if(methodName.equals(m.getName())){
                     method = m;
+                    flag = true;
                     break;
                 }
+            }
+            if(!flag) {
+                System.out.println("methodName:"+methodName);
+                continue;
             }
             Class[] parameterTypes = method.getParameterTypes();
 //            System.out.println("methodName:"+methodName);

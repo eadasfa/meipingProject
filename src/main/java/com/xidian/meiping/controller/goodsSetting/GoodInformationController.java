@@ -37,14 +37,15 @@ public class GoodInformationController {
     @RequestMapping(value="/good/operate",produces = "text/html;charset=UTF-8")
     public String Operate(HttpServletRequest request, HttpServletResponse response, HttpSession session){
         String operateId = request.getParameter("operateId");
+        StringBuilder context = new StringBuilder("");
         if(operateId.equals(ConstValue.SEARCH)){
             return CommonController.searchByKeyAndValue(request,goodService);
         }
         Good good = new Good();
         if(!operateId.equals(ConstValue.DELETE))
             good = (Good)newInstance(good,request);
-        CommonController.operate(operateId,goodService,request,good);
+        boolean flag = CommonController.operate(operateId,goodService,request,good,context);
         return JSONUtil.ObjecttoJson(goodService.findById(good.getId()),
-                true,"I'm houtai");
+                flag,context.toString());
     }
 }

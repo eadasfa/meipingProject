@@ -204,7 +204,7 @@ $(document).ready(function () {
         row['status'] = $("#status").val();
         row['price'] = $("#price").val();
         row['status'] = row['status']=="空闲"?0:(row['status']=="已租"?1:2);
-        var result = LoadAjaxJson(row,"addMany",url);
+        var result = LoadAjaxJson(row,ADDMANY,url);
         if(result['success']==false+""){
             isWardrobe = false;
             alert("添加失败:"+result['context']);
@@ -229,8 +229,9 @@ $(document).ready(function () {
                 wardrobes[i] = row;
             }
         }
+        var flag = updateItemCommon(row,url);
         isWardrobe = false;
-        return updateItemCommon(row,url);
+        return flag
     }
     function deleteItem() {
 

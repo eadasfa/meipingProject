@@ -6,10 +6,11 @@ $(document).ready(function () {
     init();
     function init() {
         var ii = layer.open({
+            type:1,
             async:false,
             title: '备份和恢复',
             content: $('.popUpWindow').html(),
-            area: ['450px', '320px'],//自定义文本域宽高,
+            area: ['400px', '300px'],//自定义文本域宽高,
 
             btn: ['取消'],
             yes: function(index){
@@ -94,6 +95,9 @@ $(document).ready(function () {
             // layer.close(ii);
             if(result.success==true){
                 alert("数据库恢复成功")
+            }
+            else{
+                alert(result.context);
             }
         });
     }

@@ -49,6 +49,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public int update(Member example) {
+        example.insertOrUpdate = true;
         System.out.println("update"+example);
         Integer operaterId = example.getOperaterId();
         if(operaterId==null||operaterId==0)
@@ -63,6 +64,7 @@ public class MemberServiceImpl implements MemberService {
     public int updateTopUp(Member example) {
 //        System.out.println(example);
         Member m = memberMapper.selectByPrimaryKey(example.getId());
+        m.insertOrUpdate = true;
 //        if(m.getBalance()==null) m.setBalance(0.0);
 //        System.out.println(m);
         TopUpLog topUpLog = new TopUpLog();
@@ -81,6 +83,11 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public int add(Member example) {
+        example.insertOrUpdate = true;
+        if(example.getId()!=null&&example.getId()!=0&&
+          memberMapper.selectByPrimaryKey(example.getId())!=null){
+            return 0;
+        }
         example.setStatus("可用");
         memberMapper.insert(example);
         MemberCardBuyLog log = genMCBL(example);
@@ -159,15 +166,15 @@ public class MemberServiceImpl implements MemberService {
         return list;
     }
     public void setTrainerAndWardrobe(Member member){
-        if(member==null) return ;
-        Trainer trainer = trainerMapper.selectByMemberId(member.getId());
-        if(trainer!=null){
-            Employee employee = employeeMapper.selectByPrimaryKey(trainer.getTrainerId());
-            member.setTrainerName(employee.getName());
-        }
-        Wardrobe  wardrobe = wardrobeMapper.selectByMemberId(member.getId());
-        if(wardrobe!=null){
-            member.setWardrobeId(wardrobe.getId());
-        }
+//        if(member==null) return ;
+//        Trainer trainer = trainerMapper.selectByMemberId(member.getId());
+//        if(trainer!=null){
+//            Employee employee = employeeMapper.selectByPrimaryKey(trainer.getTrainerId());
+//            member.setTrainerName(employee.getName());
+//        }
+//        Wardrobe  wardrobe = wardrobeMapper.selectByMemberId(member.getId());
+//        if(wardrobe!=null){
+//            member.setWardrobeId(wardrobe.getId());
+//        }
     }
 }

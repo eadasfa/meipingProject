@@ -1,6 +1,16 @@
 package com.xidian.meiping.entity;
 
+import com.xidian.meiping.dao.TrainerMapper;
+import com.xidian.meiping.util.ConstValue;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.text.ParsePosition;
+import java.util.Date;
+
 public class Trainer {
+
+    public boolean insertOrUpdate = false;
+    private boolean isModified=false;
     private Integer trainerId;
     private String trainerName;
     private Integer price;
@@ -17,6 +27,7 @@ public class Trainer {
     private Integer dayNumber;
 
     public String getTrainerName() {
+        modifyStatus();
         return trainerName;
     }
 
@@ -25,7 +36,7 @@ public class Trainer {
     }
 
     public String getMemberName() {
-        return memberName;
+        modifyStatus();return memberName;
     }
 
     public void setMemberName(String memberName) {
@@ -33,7 +44,7 @@ public class Trainer {
     }
 
     public String getStartTime() {
-        return startTime;
+        modifyStatus();return startTime;
     }
 
     public void setStartTime(String startTime) {
@@ -41,7 +52,7 @@ public class Trainer {
     }
 
     public String getEndTime() {
-        return endTime;
+        modifyStatus();return endTime;
     }
 
     public void setEndTime(String endTime) {
@@ -49,6 +60,7 @@ public class Trainer {
     }
 
     public Integer getDayNumber() {
+        modifyStatus();
         return dayNumber;
     }
 
@@ -57,14 +69,14 @@ public class Trainer {
     }
 
     public Integer getMemberId() {
-        return memberId;
+        modifyStatus();return memberId;
     }
 
     public void setMemberId(Integer memberId) {
         this.memberId = memberId;
     }
     public Integer getTrainerId() {
-        return trainerId;
+        modifyStatus();return trainerId;
     }
 
     public void setTrainerId(Integer trainerId) {
@@ -80,7 +92,7 @@ public class Trainer {
     }
 
     public Integer getStatus() {
-        return status;
+        modifyStatus();return status;
     }
 
     public void setStatus(Integer status) {
@@ -88,7 +100,7 @@ public class Trainer {
     }
 
     public Integer getRendTrainerLogId() {
-        return rendTrainerLogId;
+        modifyStatus();return rendTrainerLogId;
     }
 
     public void setRendTrainerLogId(Integer rendTrainerLogId) {
@@ -109,5 +121,18 @@ public class Trainer {
                 ", endTime='" + endTime + '\'' +
                 ", dayNumber=" + dayNumber +
                 '}';
+    }
+    private void modifyStatus(){
+        if(insertOrUpdate||isModified||status==0||status==2||endTime==null) return;
+        Date endTime = ConstValue.df.parse(this.endTime,new ParsePosition(0));
+        Date now = ConstValue.df.parse(ConstValue.df.format(new Date()),new ParsePosition(0));
+        if(!now.after(endTime)) return;
+//        this.memberId=null;
+        this.status = 0;
+//        this.memberName=null;
+        this.endTime=null;
+        this.dayNumber=null;
+        this.rendTrainerLogId=null;
+        isModified = true;
     }
 }

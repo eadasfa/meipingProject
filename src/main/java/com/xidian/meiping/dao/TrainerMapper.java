@@ -24,4 +24,5 @@ public interface TrainerMapper {
     List<Trainer> searchByMemberIdAndTrainerId(Integer memberId, Integer trainerId);
 
     List<Trainer> selectAll();
+    int updateByMemberId(Integer memberId);
 }

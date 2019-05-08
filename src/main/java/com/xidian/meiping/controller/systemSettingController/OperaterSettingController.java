@@ -37,6 +37,7 @@ public class OperaterSettingController {
     public String Operate(HttpServletRequest request, HttpServletResponse response, HttpSession session){
         String operateId = request.getParameter("operateId");
         Operater operater = null;
+        StringBuilder context = new StringBuilder("");
         if(!operateId.equals(ConstValue.DELETE))
             operater = Operater.newInstance(request);
         else if(operateId.equals(ConstValue.DELETE)){
@@ -48,8 +49,8 @@ public class OperaterSettingController {
                 return JSONUtil.ObjecttoJson(null,
                         false,"当前用户正在使用");
         }
-        CommonController.operate(operateId,operaterService,request,operater);
+        boolean flag =  CommonController.operate(operateId,operaterService,request,operater,context);
         return JSONUtil.ObjecttoJson(operaterService.findById(operater.getId()),
-                true,"I'm houtai");
+                flag,context.toString());
     }
 }

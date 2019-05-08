@@ -21,7 +21,7 @@ public class BackupAndRestoreController {
         switch (operateId){
             case "isAutoBackup":
                 flag = DbOperate.isAutoBackup();
-                context = (int)(DbOperate.gapHours)+"";
+                context = DbOperate.gapHours+"";
                 break;
             case "backup":
                 flag = DbOperate.dbBackUp();
@@ -34,6 +34,7 @@ public class BackupAndRestoreController {
                 break;
             case "restoreDB":
                 flag = DbOperate.dbRestore();
+                context = "当前没有备份文件";
                 break;
             default:
         }

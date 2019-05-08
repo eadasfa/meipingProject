@@ -140,6 +140,16 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <update id="updateByMemberId" parameterType="java.lang.Integer" >
+    update wardrobe
+    <set >
+      status = 0,
+      rend_wardrobe_log_id=null,
+      member_id = null,
+      start_time=null
+    </set>
+    where member_id = #{memberId,jdbcType=INTEGER}
+  </update>
   <update id="updateByPrimaryKey" parameterType="com.xidian.meiping.entity.Wardrobe" >
     update wardrobe
     set name = #{name,jdbcType=VARCHAR},

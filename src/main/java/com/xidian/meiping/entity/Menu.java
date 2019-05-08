@@ -9,6 +9,16 @@ public class Menu {
 
     private String value;
 
+    private Integer permission;
+
+    public Integer getPermission() {
+        return permission;
+    }
+
+    public void setPermission(Integer permission) {
+        this.permission = permission;
+    }
+
     public Integer getMenuId() {
         return menuId;
     }

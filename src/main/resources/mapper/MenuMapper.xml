@@ -6,9 +6,10 @@
     <result column="menu_name" property="menuName" jdbcType="VARCHAR" />
     <result column="parent_menu_id" property="parentMenuId" jdbcType="INTEGER" />
     <result column="value" property="value" jdbcType="VARCHAR" />
+    <result column="permission" property="permission" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    menu_id, menu_name, parent_menu_id, value
+    menu_id, menu_name, parent_menu_id, value, permission
   </sql>
   <select id="selectAll" resultMap="BaseResultMap">
     select

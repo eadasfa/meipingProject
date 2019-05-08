@@ -28,7 +28,8 @@ public class TrainerServiceImpl implements TrainerService {
 
     @Override
     public int update(Trainer example) {
-        return 0;
+        example.insertOrUpdate = true;
+        return trainerMapper.updateByPrimaryKeySelective(example);
     }
 
     @Override
@@ -64,6 +65,7 @@ public class TrainerServiceImpl implements TrainerService {
             if(memId!=null){
                 Trainer trainer = new Trainer();
                 trainer.setMemberId(memId);
+                trainer.setStatus(0);
                 trainer.setMemberName(memberService.findById(memId).getName());
                 trainer.setDayNumber(null);
                 list.add(trainer);

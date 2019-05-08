@@ -290,6 +290,8 @@ $(document).ready(function () {
 
             alert("退还失败");return;
         }
+        var member = getMember(row.memberId);
+        member.wardrobeId = null;
         console.log(JSON.stringify(changeData(result.data[0])))
         var commit = $("#jqxGrid").jqxGrid('updaterow', data.id, changeData(result.data[0]));
         //更新jqxGrid2
@@ -313,7 +315,6 @@ $(document).ready(function () {
             alert("当前用户已经租用了衣柜");return;
         }
         row.context = "出租";
-        member.wardrobeId = row.id;
         row.startTime = $("#from").val();
         row.endTime = $("#to").val();
         row.operaterId = operater.id;
@@ -321,9 +322,9 @@ $(document).ready(function () {
         row.status=1;
         var result = LoadAjaxJson(row,REND_WARDROBE,url);
         if(result.success==false){
-
-            alert("租用失败");return;
+            alert("租用失败:"+result.context);return false;
         }
+        member.wardrobeId = row.id;
         // console.log(JSON.stringify(changeData(result.data[0])))
         var commit = $("#jqxGrid").jqxGrid('updaterow', data.id, changeData(result.data[0]));
         //更新jqxGrid2
@@ -344,7 +345,7 @@ $(document).ready(function () {
         var result = LoadAjaxJson(row,REND_WARDROBE_MORE,url);
         if(result.success==false){
 
-            alert("租用失败");return;
+            alert("租用失败:"+result.context);return;
         }
         var commit = $("#jqxGrid").jqxGrid('updaterow', data.id, changeData(result.data[0]));
         var commit = $("#jqxGrid2").jqxGrid('addrow', null, generateGrid2Row(row));

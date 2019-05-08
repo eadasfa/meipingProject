@@ -28,7 +28,7 @@ public class GoodServiceImpl implements GoodService {
     public int add(Good example) {
         Good good = goodMapper.selectByPrimaryKey(example.getId());
         if(good==null){
-            goodMapper.insert(example);
+            return goodMapper.insert(example);
         }
         return 0;
     }

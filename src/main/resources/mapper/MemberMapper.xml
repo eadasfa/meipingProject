@@ -18,28 +18,85 @@
       <result column="card_type_name" property="cardTypeName" jdbcType="VARCHAR" />
       <result column="youxiao_cishu" property="youxiaoCishu" jdbcType="INTEGER" />
       <result column="youxiao_tianshu" property="youxiaoTianshu" jdbcType="INTEGER" />
+      <result column="trainer_name" property="trainerName" jdbcType="VARCHAR" />
+      <result column="wardrobe_id" property="wardrobeId" jdbcType="INTEGER" />
+
+      <result column="trainer_end_time" property="trainerEndTime" jdbcType="TIMESTAMP" />
+      <result column="wardrobe_end_time" property="wardrobeEndTime" jdbcType="TIMESTAMP" />
     </resultMap>
-    <sql id="Base_Column_List" >
+  <sql id="Base_Column_List" >
         id, name, agenda, birthday, tele_number, register_date, status, member_card_buy_id,
         balance, credit, total_consumption, start_date, end_date, card_type_name, youxiao_cishu,
         youxiao_tianshu
     </sql>
-    <select id="selectAll" resultMap="BaseResultMap" >
-      select
-      <include refid="Base_Column_List" />
-      from member
-    </select>
+  <sql id="Base_Column_List_Sp" >
+        member.id, member.name, member.agenda, member.birthday, member.tele_number,
+        member.register_date, member.status, member.member_card_buy_id,
+        member.balance, member.credit, member.total_consumption, member.start_date,
+        member.end_date, member.card_type_name, member.youxiao_cishu,
+        member.youxiao_tianshu,trainer_p.end_time as trainer_end_time,
+        wardrobe_p.end_time as wardrobe_end_time,trainer_p.name as trainer_name,
+        wardrobe_p.id as wardrobe_id
+    </sql>
+  <select id="selectByCardTypeId" resultMap="BaseResultMap" >
+    select member.id
+    from member,card_type as cards
+    where  cards.id = #{cardId,jdbcType=INTEGER}
+    and DATE_FORMAT(now(),'%Y-%m-%d') BETWEEN member.start_date and member.end_date
+    and member.card_type_name = cards.name
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List_Sp" />
+    from member
+    left join (select employee.name,trainer.member_id,trainer.trainer_id,rend_trainer_log.end_time
+    from trainer left join rend_trainer_log on trainer.rend_trainer_log_id = rend_trainer_log.id
+    left join employee on employee.id = trainer.trainer_id
+    where trainer.rend_trainer_log_id !=0 or trainer.rend_trainer_log_id!=null
+    )as trainer_p
+    on member.id = trainer_p.member_id
+    left join (select wardrobe.member_id,wardrobe.id,rend_wardrobe_log.end_time
+    from wardrobe left join rend_wardrobe_log
+    on wardrobe.rend_wardrobe_log_id=rend_wardrobe_log.id
+    where wardrobe.rend_wardrobe_log_id!=0 or wardrobe.rend_wardrobe_log_id!=null
+    ) as wardrobe_p
+    on member.id = wardrobe_p.member_id
+  </select>
     <select id="selectByName" resultMap="BaseResultMap">
       select
-      <include refid="Base_Column_List" />
+      <include refid="Base_Column_List_Sp" />
       from member
-      where name = #{name,jdbcType=VARCHAR}
+      left join (select employee.name,trainer.member_id,trainer.trainer_id,rend_trainer_log.end_time
+      from trainer left join rend_trainer_log on trainer.rend_trainer_log_id = rend_trainer_log.id
+      left join employee on employee.id = trainer.trainer_id
+      where trainer.rend_trainer_log_id !=0 or trainer.rend_trainer_log_id!=null
+      )as trainer_p
+      on member.id = trainer_p.member_id
+      left join (select wardrobe.member_id,wardrobe.id,rend_wardrobe_log.end_time
+      from wardrobe left join rend_wardrobe_log
+      on wardrobe.rend_wardrobe_log_id=rend_wardrobe_log.id
+      where wardrobe.rend_wardrobe_log_id!=0 or wardrobe.rend_wardrobe_log_id!=null
+      ) as wardrobe_p
+      on member.id = wardrobe_p.member_id
+      where member.name = #{name,jdbcType=VARCHAR}
     </select>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
       select
-      <include refid="Base_Column_List" />
+      <include refid="Base_Column_List_Sp" />
       from member
-      where id = #{id,jdbcType=INTEGER}
+      left join (select employee.name,trainer.member_id,trainer.trainer_id,rend_trainer_log.end_time
+      from trainer left join rend_trainer_log on trainer.rend_trainer_log_id = rend_trainer_log.id
+      left join employee on employee.id = trainer.trainer_id
+      where trainer.rend_trainer_log_id !=0 or trainer.rend_trainer_log_id!=null
+      )as trainer_p
+      on member.id = trainer_p.member_id
+      left join (select wardrobe.member_id,wardrobe.id,rend_wardrobe_log.end_time
+      from wardrobe left join rend_wardrobe_log
+      on wardrobe.rend_wardrobe_log_id=rend_wardrobe_log.id
+      where wardrobe.rend_wardrobe_log_id!=0 or wardrobe.rend_wardrobe_log_id!=null
+      ) as wardrobe_p
+      on member.id = wardrobe_p.member_id
+      where member.id = #{id,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
       delete from member

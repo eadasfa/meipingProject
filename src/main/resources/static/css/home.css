@@ -18,7 +18,7 @@
 }
 /*jqxWidget字体，背景颜色*/
 .jqx-widget-content{
-    background: #1a2226;
+    background-color: rgba(0,0,0,0);
     font-size: 25px;
 }
 /*以下为选中后的颜色设置*/
@@ -27,9 +27,24 @@
     border-color: #1a2226;
     color: #1a2226;
 }
-.skin-blue .wrapper,
-.skin-blue .main-sidebar,
-.skin-blue .left-side {
-    background-color: #1a2226;
+/*.skin-blue .wrapper, .skin-blue .main-sidebar, .skin-blue .left-side {*/
+    /*!*background-color: #A92A0F;*!*/
+    /*background-image: url(../img/bg.png);*/
+/*}*/
+.jqx-tree{
+    border-width:0px;
+}
+.skin-blue .main-header .navbar, .skin-blue .main-header .logo{
+    background-color:rgba(0,0,0,0);
+}
+/*顶部图片*/
+.main-header{
+    background-image: url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556539044984&di=a28242663d8dae0da626e3f5537d29ab&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0189485ac7910ba8012125734ee687.jpg%402o.jpg);
+}
+/*侧边图片*/
+.skin-blue .main-sidebar{
+    /*background-color: #A92A0F;*/
+    background-image: url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556539357356&di=b66990ecfb03e7a315bfbd273274130e&imgtype=0&src=http%3A%2F%2Fphoto.tuchong.com%2F1340388%2Ff%2F16400001.jpg);
+    /*background-image: url(http://photo.16pic.com/00/55/42/16pic_5542988_b.jpg);*/
 }
 /*222d32*/

@@ -194,6 +194,7 @@ $(document).ready(function () {
         // console.log("getInputRow:"+JSON.stringify(row))
         if(row == false) return false;
         row["operaterId"] = operater.id;
+        row.account=1;
         members.push(row)
         return addItemCommon(row,url);
     }
@@ -247,7 +248,7 @@ $(document).ready(function () {
         }
     }
     function getInputRow(){
-        var numCells=[{'name':'id','type':1,'beNull':false,'label':'会员卡号'},
+        var numCells=[{'name':'id','type':1,'beNull':true,'label':'会员卡号'},
             {'name':'teleNumber','type':1,'beNull':true,'label':'会员电话'}];
         return getInputRowCommon(columns,numCells)
     }

@@ -16,6 +16,7 @@ $(document).ready(function () {
         { text: '会员姓名', datafield: 'memberName', width: 180 },
         { text: '到期时间', datafield: 'endTime', width: 180 }
     ];
+    setWidth(width,columns1)
     var columns2=[
         { text: '操作时间', datafield: 'operateTime', width: 100 },
         { text: '会员卡号', datafield: 'memberId', width: 80 },
@@ -28,6 +29,7 @@ $(document).ready(function () {
         { text: '操作员姓名', datafield: 'operaterName', width: 100 },
         { text: '备注', datafield: 'context', width: 180 }
     ];
+    setWidth(width,columns2)
     function initGrid() {
         var jqxGrid="jqxGrid"
         var source =

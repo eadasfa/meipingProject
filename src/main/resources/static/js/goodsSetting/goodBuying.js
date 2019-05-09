@@ -13,6 +13,7 @@ $(document).ready(function () {
         { text: '商品库存', datafield: 'leftNumber', width: 160 },
         { text: '参考进价', datafield: 'buyingPrice', width: 100 }
     ];
+    setWidth(width,columns1);
     var columns2=[
         { text: '物品编号', datafield: 'id', width: 100 },
         { text: '物品名称', datafield: 'name', width: 148 },
@@ -20,6 +21,7 @@ $(document).ready(function () {
         { text: '进货数量', datafield: 'number', width: 100 },
         { text: '总金额', datafield: 'totalAmount', width: 100 }
     ];
+    setWidth(width,columns2);
     function initGrid() {
         var source =
             {

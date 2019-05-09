@@ -1,18 +1,19 @@
-var width=window.document.body.offsetWidth*0.82;
+var width=window.document.body.offsetWidth*0.805;
 var height=330;
 function initGrid1() {
     var columns1=[
-        { text: '销售时间', datafield: 'sellingTime', width: 160 },
-        { text: '会员卡号', datafield: 'memberId', width: 60 },
+        { text: '销售时间', datafield: 'sellingTime', width: 120 },
+        { text: '会员卡号', datafield: 'memberId', width: 100 },
         { text: '会员姓名', datafield: 'memberName', width: 100 },
         { text: '销售物品编号', datafield: 'goodId', width: 60 },
         { text: '物品名称', datafield: 'goodName', width: 120 },
-        { text: '销售单价', datafield: 'sellingPrice', width: 80 },
-        { text: '销售数量', datafield: 'number', width: 60 },
+        { text: '销售单价', datafield: 'sellingPrice', width: 100 },
+        { text: '销售数量', datafield: 'number', width: 100 },
         { text: '销售总价', datafield: 'totalAmount', width: 100 },
         { text: '操作员编号', datafield: 'operaterId', width: 60 },
         { text: '操作员姓名', datafield: 'operaterName', width: 180 }
     ];
+    setWidth(width,columns1);
     var jqxGrid = "jqxGrid1";
     var source =
         {
@@ -68,17 +69,18 @@ function initGrid1() {
 }
 function initGrid2() {
     var columns1=[
-        { text: '兑换时间', datafield: 'sellingTime', width: 160 },
-        { text: '会员卡号', datafield: 'memberId', width: 60 },
+        { text: '兑换时间', datafield: 'sellingTime', width: 120 },
+        { text: '会员卡号', datafield: 'memberId', width: 100 },
         { text: '会员姓名', datafield: 'memberName', width: 100 },
-        { text: '兑换物品编号', datafield: 'goodId', width: 60 },
+        { text: '兑换物品编号', datafield: 'goodId', width: 100 },
         { text: '物品名称', datafield: 'goodName', width: 120 },
-        { text: '所需积分', datafield: 'credit', width: 80 },
-        { text: '兑换数量', datafield: 'number', width: 60 },
+        { text: '所需积分', datafield: 'credit', width: 100 },
+        { text: '兑换数量', datafield: 'number', width: 100 },
         { text: '积分总量', datafield: 'totalAmount', width: 100 },
         { text: '操作员编号', datafield: 'operaterId', width: 60 },
         { text: '操作员姓名', datafield: 'operaterName', width: 180 }
     ];
+    setWidth(width,columns1);
     var jqxGrid = "jqxGrid2";
     var source =
         {
@@ -131,6 +133,7 @@ function initGrid3() {
         { text: '操作员编号', datafield: 'operaterId', width: 50 },
         { text: '操作员姓名', datafield: 'operaterName', width: 100 }
     ];
+    setWidth(width,columns1);
     var jqxGrid = "jqxGrid3";
     var source =
         {
@@ -176,11 +179,12 @@ function initGrid4() {
         { text: '交费日期', datafield: 'startTime', width: 180 },
         { text: '会员卡号', datafield: 'memberId', width: 120 },
         { text: '会员姓名', datafield: 'memberName', width: 180 },
-        { text: '交费金额', datafield: 'account', width: 100 },
+        { text: '交费金额', datafield: 'price', width: 100 },
         { text: '会员类型', datafield: 'cardTypeName', width: 100 },
         { text: '操作员编号', datafield: 'operaterId', width: 150 },
         { text: '操作员名称', datafield: 'operaterName', width: 150 },
     ];
+    setWidth(width,columns1);
     var jqxGrid = "jqxGrid4";
     var source =
         {
@@ -190,7 +194,7 @@ function initGrid4() {
                     { name: 'startTime'},
                     { name: 'memberId' },
                     { name: 'memberName' },
-                    { name: 'account' },
+                    { name: 'price' },
                     { name: 'cardTypeName' },
                     { name: 'operaterId' },
                     { name: 'operaterName' }
@@ -234,6 +238,7 @@ function initGrid5() {
         { text: '操作员姓名', datafield: 'operaterName', width: 100 },
         { text: '备注', datafield: 'context', width: 180 }
     ];
+    setWidth(width,columns1);
     var jqxGrid = "jqxGrid5";
     var source =
         {

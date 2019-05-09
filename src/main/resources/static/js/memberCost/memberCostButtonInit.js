@@ -572,6 +572,7 @@ function initGoodsGrid(height,width) {
         { text: '商品售价', datafield: 'sellingPrice', width: 80 },
         { text: '积分兑换', datafield: 'credit', width: 80 }
     ];
+    setWidth(520,columns)
     var source =
         {
             datatype: "json",

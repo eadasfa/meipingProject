@@ -9,6 +9,7 @@ $(document).ready(function () {
         { text: '商品售价', datafield: 'sellingPrice', width: 180 },
         { text: '积分兑换', datafield: 'credit', width: 180 }
     ];
+    setWidth(width,columns)
     var source =
         {
             datatype: "json",

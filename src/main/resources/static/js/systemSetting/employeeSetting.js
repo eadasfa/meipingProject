@@ -8,6 +8,7 @@ $(document).ready(function () {
         { text: '员工电话', datafield: 'teleNumber', width: 180 },
         { text: '员工职位', datafield: 'position', width: 180 }
     ];
+    setWidth(width,columns)
     var positions = LoadAjaxJson({},"",
         "/systemSetting/getPosition").data;
     var source =

@@ -7,6 +7,7 @@ $(document).ready(function () {
         { text: '员工权限', datafield: 'permission', width: 180 },
         { text: '员工职位', datafield: 'position', width: 180 }
     ];
+    setWidth(width,columns)
     var employees = LoadAjax({},"/systemSetting/getEmployees",false)
     var source =
         {

@@ -21,6 +21,7 @@ $(document).ready(function () {
         { text: '教练名称', datafield: 'trainerName', width: 80 },
         { text: '衣柜编号', datafield: 'wardrobeId', width: 80 }
     ];
+    setWidth(width*2,columns)
     if(cardTypes.length==0)
         cardTypes = LoadAjax({},"/systemSetting/getCards",false);
     var source =

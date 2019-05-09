@@ -22,11 +22,13 @@ $(document).ready(function () {
         { text: '操作员编号', datafield: 'operaterId', width: 60 },
         { text: '操作员姓名', datafield: 'operaterName', width: 180 }
     ];
+    setWidth(width,columns1)
     var columns2=[
         { text: '会员编号', datafield: 'memberId', width: 120 },
         { text: '会员姓名', datafield: 'memberName', width: 180 },
         { text: '花费总金额', datafield: 'totalAmount', width: 100 }
     ];
+    setWidth(width,columns2)
     function initGrid() {
         var source =
             {

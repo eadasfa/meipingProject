@@ -7,6 +7,7 @@ $(document).ready(function () {
         { text: '衣柜状态', datafield: 'status', width: 180 },
         { text: '衣柜租金', datafield: 'price', width: 180 }
     ];
+    setWidth(width,columns)
     var source =
         {
             datatype: "json",

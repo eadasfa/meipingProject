@@ -9,6 +9,7 @@ $(document).ready(function () {
         { text: '有效天数', datafield: 'youxiaoTianshu', width: 180, cellsalign: 'right' },
         { text: '价格', datafield: 'price', width: 180, cellsalign: 'right', cellsformat: 'c2' },
     ];
+    setWidth(width,columns)
     var source =
         {
             datatype: "json",

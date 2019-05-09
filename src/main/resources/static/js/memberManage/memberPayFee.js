@@ -12,17 +12,19 @@ $(document).ready(function () {
         { text: '交费日期', datafield: 'startTime', width: 180 },
         { text: '会员卡号', datafield: 'memberId', width: 120 },
         { text: '会员姓名', datafield: 'memberName', width: 180 },
-        { text: '交费金额', datafield: 'account', width: 100 },
+        { text: '交费金额', datafield: 'price', width: 100 },
         { text: '会员类型', datafield: 'cardTypeName', width: 100 },
         { text: '操作员编号', datafield: 'operaterId', width: 150 },
         { text: '操作员名称', datafield: 'operaterName', width: 150 },
     ];
+    setWidth(width,columns1)
     var columns2=[
         { text: '会员卡号', datafield: 'memberId', width: 120 },
         { text: '会员姓名', datafield: 'memberName', width: 180 },
         { text: '续费次数', datafield: 'times', width: 100 },
         { text: '总金额', datafield: 'totalAmount', width: 100 }
     ];
+    setWidth(width,columns2)
     function initGrid() {
         var source =
             {
@@ -32,7 +34,7 @@ $(document).ready(function () {
                         { name: 'startTime'},
                         { name: 'memberId' },
                         { name: 'memberName' },
-                        { name: 'account' },
+                        { name: 'price' },
                         { name: 'cardTypeName' },
                         { name: 'operaterId' },
                         { name: 'operaterName' }

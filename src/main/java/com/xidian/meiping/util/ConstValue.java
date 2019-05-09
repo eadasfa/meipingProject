@@ -22,7 +22,10 @@ public final class ConstValue {
     public static final String SEARCH_WARDROBE_LOG = "16";//查询衣柜租用记录
     public static final String BUY_GOODS = "17";//购买商品
     public static final String FIND_BY_ID = "18";//购买商品
+    public static final String LEAVE = "19";//请假
+    public static final String BACK = "20";//销假
     public static final int CREDIT_DIVISOR=10;//积分兑换比例
+
     public static final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
     //    public static final String ADD = "add";//添加

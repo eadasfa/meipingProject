@@ -14,6 +14,7 @@ $(document).ready(function () {
         { text: '教练名称', datafield: 'trainerName', width: 160 },
         { text: '购买天数', datafield: 'dayNumber', width: 100 }
     ];
+    setWidth(width,columns1)
     var columns2=[
         { text: '租用日期', datafield: 'startTime', width: 100 },
         { text: '结束日期', datafield: 'endTime', width: 100 },
@@ -22,6 +23,7 @@ $(document).ready(function () {
         { text: '操作员编号', datafield: 'operaterId', width: 50 },
         { text: '操作员姓名', datafield: 'operaterName', width: 100 }
     ];
+    setWidth(width,columns2)
     function initGrid() {
         var source =
             {

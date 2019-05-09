@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xidian.meiping.dao.OffDayMapper" >
+    <resultMap id="BaseResultMap" type="com.xidian.meiping.entity.OffDay" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="start_time" property="startTime" jdbcType="DATE" />
+        <result column="end_time" property="endTime" jdbcType="DATE" />
+        <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
+        <result column="member_id" property="memberId" jdbcType="INTEGER" />
+        <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+    off_day.id, off_day.start_time,off_day.end_time, off_day.operate_time, off_day.member_id,
+    member.name as member_name
+  </sql>
+    <select id="selectByDate" resultMap="BaseResultMap"  >
+        select
+        <include refid="Base_Column_List" />
+        from off_day,member
+        where DATE_FORMAT(off_day.operate_time,'%Y-%m-%d')
+        BETWEEN #{from,jdbcType=TIMESTAMP} and #{to,jdbcType=TIMESTAMP}
+        and member.id = off_day.member_id
+        <if test="memberId != null" >
+            and off_day.member_id = #{memberId,jdbcType=INTEGER}
+        </if>
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap"  >
+        select
+        <include refid="Base_Column_List" />
+        from off_day left join member on member.id = off_day.member_id
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from off_day left join member on member.id = off_day.member_id
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from off_day
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.xidian.meiping.entity.OffDay"
+            useGeneratedKeys="true" keyProperty="id">
+    insert into off_day (id, start_time, end_time,
+      operate_time, member_id)
+    values (#{id,jdbcType=INTEGER}, #{startTime,jdbcType=DATE}, #{endTime,jdbcType=DATE},
+      #{operateTime,jdbcType=TIMESTAMP}, #{memberId,jdbcType=INTEGER})
+  </insert>
+    <insert id="insertSelective" parameterType="com.xidian.meiping.entity.OffDay"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into off_day
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="startTime != null" >
+                start_time,
+            </if>
+            <if test="endTime != null" >
+                end_time,
+            </if>
+            <if test="operateTime != null" >
+                operate_time,
+            </if>
+            <if test="memberId != null" >
+                member_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null" >
+                #{startTime,jdbcType=DATE},
+            </if>
+            <if test="endTime != null" >
+                #{endTime,jdbcType=DATE},
+            </if>
+            <if test="operateTime != null" >
+                #{operateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="memberId != null" >
+                #{memberId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xidian.meiping.entity.OffDay" >
+        update off_day
+        <set >
+            <if test="startTime != null" >
+                start_time = #{startTime,jdbcType=DATE},
+            </if>
+            <if test="endTime != null" >
+                end_time = #{endTime,jdbcType=DATE},
+            </if>
+            <if test="operateTime != null" >
+                operate_time = #{operateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="memberId != null" >
+                member_id = #{memberId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xidian.meiping.entity.OffDay" >
+    update off_day
+    set start_time = #{startTime,jdbcType=DATE},
+      end_time = #{endTime,jdbcType=DATE},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      member_id = #{memberId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

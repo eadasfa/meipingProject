@@ -20,6 +20,7 @@ $(document).ready(function () {
         { text: '操作员编号', datafield: 'operaterId', width: 80 },
         { text: '操作员姓名', datafield: 'operaterName', width: 180 }
     ];
+    setWidth(width,columns1)
     var columns2=[
         { text: '销售物品编号', datafield: 'goodId', width: 120 },
         { text: '物品名称', datafield: 'goodName', width: 180 },
@@ -27,6 +28,7 @@ $(document).ready(function () {
         { text: '销售总数量', datafield: 'number', width: 100 },
         { text: '销售总金额', datafield: 'totalAmount', width: 100 }
     ];
+    setWidth(width,columns2)
     function initGrid() {
         var source =
             {

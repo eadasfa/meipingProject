@@ -1,0 +1,50 @@
+<html lang="en">
+<section class="content-header">
+    <h1> 员工设置</h1>
+    <ol class="breadcrumb">
+        <li><a href="../"><i class="fa fa-object-group"></i> 首页</a></li>
+        <li> 员工管理</li>
+        <li class="active"> 会员请假</li>
+    </ol>
+</section><!-- ./content-header -->
+<head>
+    <!--<script type="text/javascript" src="js/common.js"></script>-->
+    <script type="text/javascript" src="js/memberManage/offday.js"></script>
+
+    <script type="text/javascript">
+
+    </script>
+
+    <script class="popUpWindow" type="text/html">
+        <form action="">
+            <div class="popUpWindow" >
+                <table>
+
+                    <tr>
+                        <td >会员卡号：</td>
+                        <td><input type="text" id="memberId" list="memberId-list" placeholder="会员卡号" >
+                        <datalist id="memberId-list"></datalist></td>
+                    </tr>
+                    <tr>
+                        <td >会员姓名：</td>
+                        <td><input type="text" id="memberName" placeholder="会员姓名" disabled></td>
+                    </tr>
+                    <tr>
+                        <td>开始时间：</td>
+                        <td><input type="text" id="startTime" placeholder="开始时间" ></td>
+                    </tr>
+                    <tr>
+                        <td>结束时间：</td>
+                        <td><input type="text" id="endTime" placeholder="结束时间" ></td>
+                    </tr>
+
+                </table>
+            </div>
+        </form>
+    </script>
+</head>
+<section class="container-fluid">
+    <div id="jqxGrid">
+    </div>
+</section>
+</html>

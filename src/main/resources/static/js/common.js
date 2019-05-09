@@ -282,3 +282,13 @@
         // extend: 'orange/layer.css', //加载您的扩展样式,它自动从theme目录下加载这个文件
         skin: 'layui-layer-molv'  //layui-layer-orange这个就是上面我们定义css 的class
     });
+    function setWidth(width,columns,localSplitWidth) {
+        if(localSplitWidth==undefined)
+            localSplitWidth = splitWidth;
+        if(!localSplitWidth)//不平分Width
+            return;
+        var width2 = width/columns.length;
+        for(var i=0;i<columns.length;i++){
+            columns[i].width = width2;
+        }
+    }

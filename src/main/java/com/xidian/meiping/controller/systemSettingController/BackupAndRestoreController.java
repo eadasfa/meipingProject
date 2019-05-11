@@ -21,7 +21,7 @@ public class BackupAndRestoreController {
         switch (operateId){
             case "isAutoBackup":
                 flag = DbOperate.isAutoBackup();
-                context = DbOperate.gapHours+"";
+                context = DbOperate.getGapHours()+"";
                 break;
             case "backup":
                 flag = DbOperate.dbBackUp();

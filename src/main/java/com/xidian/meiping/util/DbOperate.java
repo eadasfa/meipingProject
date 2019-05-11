@@ -13,7 +13,8 @@ public class DbOperate {
     //当前是否自动备份
     private static boolean isAutoBackup = false;
     //自动备份间隔时间
-    public static double gapHours = 10;
+    //最小为 5s
+    private static double gapHours = 10;
     //是否删除上一个备份文件
     private static boolean deleteLastBackupfile = true;
     private static String serverUrl="localhost";
@@ -37,6 +38,17 @@ public class DbOperate {
             e.printStackTrace();
         }
     }
+
+    public static double getGapHours() {
+        return gapHours;
+    }
+
+    public static void setGapHours(double gapHours) {
+        if(gapHours<0.001389)
+            gapHours = 0.001389;
+        DbOperate.gapHours = gapHours;
+    }
+
     /**
      * 备份数据库db
      * @param root
@@ -45,6 +57,7 @@ public class DbOperate {
      * @param backPath
      * @param backName
      */
+
     public static Boolean dbBackUp(String root,String pwd,String dbName,String backPath,String backName) throws Exception {
         String pathSql = backPath+backName;
         File fileSql = new File(pathSql);
@@ -100,27 +113,29 @@ public class DbOperate {
 
     public static void main(String[] args) throws Exception {
 
-//        Properties props = System.getProperties();
-//        System.out.println("操作系统的名称：" + props.getProperty("os.name"));
-//        String path = "C:/Users/Administrator/Desktop/temp/";
-//        DbOperate.dbBackUp("root","123456","meiping",path,backName);
-//        dbRestore("root","123456","meiping", "C:/Users/Administrator/Desktop/temp/2019-04-08-23-05-20.sql");
-//        DbOperate.dbBackUp();
+        Properties props = System.getProperties();
+        System.out.println("操作系统的名称：" + props.getProperty("os.name"));
+//        String path = "C:/Users/Administrator/Desktop/";
+//        backName = "DBbackup";
+//        DbOperate.dbBackUp("root","123456","gms",path,backName);
+//        dbRestore("root","123456","gms",
+//                "C:/Users/Administrator/Desktop/temp/2019-04-08-23-05-20.sql");
+        DbOperate.dbBackUp();
 //        DbOperate.dbRestore();
 //        Thread.sleep(1000);
 //        DbOperate.dbBackUp();
-        DbOperate.startAutoBackup(0.002778);
-        new Thread(()->{
-            try {
-                Thread.sleep(35*1000);
-                DbOperate.startAutoBackup(0.001389);
-                Thread.sleep(20*1000);
-                DbOperate.stopAutoBackup();
-                DbOperate.startAutoBackup(0.001389);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }).start();
+//        DbOperate.startAutoBackup(0.002778);
+//        new Thread(()->{
+//            try {
+//                Thread.sleep(35*1000);
+//                DbOperate.startAutoBackup(0.001389);
+//                Thread.sleep(20*1000);
+//                DbOperate.stopAutoBackup();
+//                DbOperate.startAutoBackup(0.001389);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }).start();
 
     }
     /**
@@ -215,8 +230,12 @@ public class DbOperate {
             if(out!=null) out.println("exit");
         }
         else {
+//            System.out.println("enter");
             process = runtime.exec(getCommand()+sb.toString());
+//             process = runtime.exec("cmd /c mysqldump -uroot " +
+//                     "-p123456 gms >C:/Users/Administrator/Desktop/测试备份.sql");
         }
+//        System.out.println(process.waitFor());
         return 0==process.waitFor();
     }
 }
@@ -230,7 +249,7 @@ class AutoBackupThread extends Thread{
             try {
                 synchronized (this){
                     DbOperate.dbBackUp();
-                    wait((int)(DbOperate.gapHours*3600*1000));
+                    wait((int)(DbOperate.getGapHours()*3600*1000));
                 }
             }catch (Exception e) {
                 e.printStackTrace();

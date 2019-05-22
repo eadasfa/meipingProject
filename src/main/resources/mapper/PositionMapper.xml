@@ -23,7 +23,8 @@
     delete from positions
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.xidian.meiping.entity.Position" >
+  <insert id="insert" parameterType="com.xidian.meiping.entity.Position"
+          useGeneratedKeys="true" keyProperty="id">
     insert into positions (id, name)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR})
   </insert>

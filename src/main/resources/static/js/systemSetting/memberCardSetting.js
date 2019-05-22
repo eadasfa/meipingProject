@@ -67,9 +67,6 @@ $(document).ready(function () {
 
             source: dataAdapter,
             showtoolbar: true,
-            ready:function(){
-              members = dataAdapter.recordids;
-            },
             //这里的返回值需要根绝实际情况作调整。
             // 如果params.data获取不到。可以用dataadapter来获取
             // 如dataadapter.recordids[0].*等

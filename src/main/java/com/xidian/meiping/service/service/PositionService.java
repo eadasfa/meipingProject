@@ -4,6 +4,5 @@ import com.xidian.meiping.entity.Position;
 
 import java.util.List;
 
-public interface PositionService {
-    List<Position> getAll();
+public interface PositionService extends OperateBaseService<Position>{
 }
